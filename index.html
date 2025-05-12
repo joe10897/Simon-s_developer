@@ -15,9 +15,7 @@
       padding: 0;
       background-color: #1a1a1a;
       color: #f5f5f5;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
+      scroll-behavior: smooth;
     }
 
     /* 頁首 */
@@ -27,6 +25,10 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 100;
     }
 
     header nav a {
@@ -46,7 +48,7 @@
       border-radius: 10px;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
       max-width: 600px;
-      margin: auto;
+      margin: 80px auto;
       padding: 40px;
       text-align: center;
     }
@@ -81,6 +83,98 @@
       background-color: #0056b3;
     }
 
+    /* 聯繫表單 */
+    .contact-form {
+      max-width: 600px auto;
+      margin: 80px auto;
+      padding: 40px;
+      background-color: #333;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .contact-form h2 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .contact-form .form-group {
+      margin-bottom: 20px;
+    }
+
+    .contact-form label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      background-color: #f5f5f5;
+      color: #333;
+    }
+
+    .contact-form textarea {
+      height: 150px;
+    }
+
+    .contact-form button {
+      display: block;
+      width: 100%;
+      background-color: #007bff;
+      color: #f5f5f5;
+      border: none;
+      border-radius: 5px;
+      padding: 12px 24px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .contact-form button:hover {
+      background-color: #0056b3;
+    }
+
+    /* 下滑式網頁 */
+    section {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+
+    #home {
+      background-image: url('https://wallpapercave.com/wp/wp2955829.jpg');
+    }
+
+    #about {
+      background-color: #000000;
+    }
+
+    #about .about-content {
+      max-width: 800px;
+      padding: 40px;
+      text-align: center;
+      background-color: rgba(26, 26, 26, 0.8);
+      border-radius: 10px;
+    }
+
+    #projects {
+      background-image: url('https://wallpapercave.com/wp/wp2955791.jpg');
+    }
+
+    #contact {
+      background-image: url('https://via.placeholder.com/1920x1080');
+    }
+
     /* 打字機效果 */
     .typing-text {
       font-size: 3rem;
@@ -100,24 +194,84 @@
       50% { border-color: transparent; }
     }
   </style>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // 獲取所有導航鏈接
+      var navLinks = document.querySelectorAll('header nav a');
+
+      // 為每個導航鏈接添加點擊事件監聽器
+      navLinks.forEach(function(link) {
+        link.addEventListener('click', function(e) {
+          e.preventDefault(); // 阻止默認的鏈接行為
+
+          // 獲取目標 section 的 id
+          var targetId = this.getAttribute('href');
+
+          // 滾動到目標 section
+          document.querySelector(targetId).scrollIntoView({
+            behavior: 'smooth'
+          });
+        });
+      });
+    });
+  </script>
 </head>
 <body>
   <header>
     <nav>
-      <a href="#">Home</a>
-      <a href="#">About</a>
-      <a href="#">Projects</a>
-      <a href="#">Contact</a>
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
     </nav>
   </header>
 
-  <div class="profile-card">
-    <h1 class="typing-text">Simon Wong</h1>
-    <p>Database Management and Web Development</p>
-    <div class="buttons">
-      <a href="#">Contact Me</a>
-      <a href="#">View Projects</a>
+  <section id="home">
+    <div class="profile-card">
+      <h1 class="typing-text">Simon Wong - Software Engeneer</h1>
+      <p>Database Management and Web Development</p>
+      <div class="buttons">
+        <a href="#contact">Contact Me</a>
+        <a href="#projects">View Projects</a>
+      </div>
     </div>
-  </div>
+  </section>
+
+  <section id="about">
+    <div class="about-content">
+      <h2>About</h2>
+      <p>I am a Information Science student at the University of [Your University], with a passion for creating innovative solutions to complex problems. I have a strong background in web development, database management, and a knack for learning new technologies.</p>
+      <p>Throughout my academic journey, I have honed my skills in various programming languages, including JavaScript, Python, and SQL. I have completed several projects that showcase my ability to design and develop responsive web applications, optimize database structures, and integrate cutting-edge technologies.</p>
+      <p>In addition to my technical expertise, I am a quick learner and a team player. I believe in the power of collaboration and enjoy working with others to achieve common goals. I am a strong believer in the transformative potential of technology and am committed to using my skills to make a positive impact on the world.</p>
+    </div>
+  </section>
+
+  <section id="projects">
+    <h2>Projects</h2>
+    <!-- 在這裡添加項目內容 -->
+  </section>
+
+  <section id="contact">
+    <h2>Contact</h2>
+    <!-- 聯繫表單頁面 -->
+    <div class="contact-form">
+      <h2>聯繫我們</h2>
+      <form>
+        <div class="form-group">
+          <label for="name">姓名:</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="email">電子郵件:</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+          <label for="message">留言:</label>
+          <textarea id="message" name="message" required></textarea>
+        </div>
+        <button type="submit">送出</button>
+      </form>
+    </div>
+  </section>
 </body>
 </html>
