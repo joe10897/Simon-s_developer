@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>聯繫我們</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    /* 整體樣式 */
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #1a1a1a;
+      color: #f5f5f5;
+    }
+
+    /* 頁首 */
+    header {
+      background-color: #333;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    header nav a {
+      color: #f5f5f5;
+      text-decoration: none;
+      margin: 0 20px;
+      transition: color 0.3s;
+    }
+
+    header nav a:hover {
+      color: #007bff;
+    }
+
+    /* 聯繫表單 */
+    .contact-form {
+      max-width: 600px;
+      margin: 80px auto;
+      padding: 40px;
+      background-color: #333;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .contact-form h2 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .contact-form .form-group {
+      margin-bottom: 20px;
+    }
+
+    .contact-form label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      background-color: #f5f5f5;
+      color: #333;
+    }
+
+    .contact-form textarea {
+      height: 150px;
+    }
+
+    .contact-form button {
+      display: block;
+      width: 100%;
+      background-color: #007bff;
+      color: #f5f5f5;
+      border: none;
+      border-radius: 5px;
+      padding: 12px 24px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .contact-form button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">About</a>
+      <a href="#">Projects</a>
+      <a href="#">Contact</a>
+    </nav>
+  </header>
+
+  <div class="contact-form">
+    <h2>聯繫我們</h2>
+    <form>
+      <div class="form-group">
+        <label for="name">姓名:</label>
+        <input type="text" id="name" name="name" required>
+      </div>
+      <div class="form-group">
+        <label for="email">電子郵件:</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+      <div class="form-group">
+        <label for="message">留言:</label>
+        <textarea id="message" name="message" required></textarea>
+      </div>
+      <button type="submit">送出</button>
+    </form>
+  </div>
+</body>
+</html>
