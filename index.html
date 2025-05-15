@@ -1,14 +1,11 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Simon Wong 作品集</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    /* 整體樣式 */
     body {
       font-family: 'Roboto', sans-serif;
       margin: 0;
@@ -18,7 +15,6 @@
       scroll-behavior: smooth;
     }
 
-    /* 頁首 */
     header {
       background-color: #333;
       padding: 20px;
@@ -42,7 +38,6 @@
       color: #007bff;
     }
 
-    /* 個人資訊卡 */
     .profile-card {
       background-color: #333;
       border-radius: 10px;
@@ -63,13 +58,13 @@
       margin-bottom: 30px;
     }
 
-    .profile-card .buttons {
+    .buttons {
       display: flex;
       justify-content: center;
       gap: 20px;
     }
 
-    .profile-card .buttons a {
+    .buttons a {
       display: inline-block;
       background-color: #007bff;
       color: #f5f5f5;
@@ -79,142 +74,112 @@
       transition: background-color 0.3s;
     }
 
-    .profile-card .buttons a:hover {
+    .buttons a:hover {
       background-color: #0056b3;
     }
 
-    /* 聯繫表單 */
-    .contact-form {
-      max-width: 600px auto;
-      margin: 80px auto;
-      padding: 40px;
-      background-color: #333;
-      border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-    }
-
-    .contact-form h2 {
+    section {
+      padding: 100px 20px;
       text-align: center;
-      margin-bottom: 30px;
     }
 
-    .contact-form .form-group {
-      margin-bottom: 20px;
+    #home {
+      background-image: url('https://wallpapercave.com/wp/wp2955829.jpg');
+      background-size: cover;
+      background-attachment: fixed;
     }
 
-    .contact-form label {
-      display: block;
-      font-weight: bold;
-      margin-bottom: 5px;
+    #about, #projects, #contact {
+      background-color: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
     }
 
-    .contact-form input,
-    .contact-form textarea {
+    .about-content, .project-list, .contact-form {
+      max-width: 800px;
+      margin: auto;
+      background: rgba(26, 26, 26, 0.9);
+      padding: 40px;
+      border-radius: 10px;
+      animation: fadeInUp 1s ease;
+    }
+
+    .project-card {
+      background-color: #222;
+      margin: 20px 0;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: left;
+      transition: transform 0.3s;
+    }
+
+    .project-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .project-card h3 {
+      margin-top: 0;
+    }
+
+    .contact-form input, .contact-form textarea {
       width: 100%;
       padding: 10px;
-      border: none;
+      margin-bottom: 20px;
       border-radius: 5px;
-      background-color: #f5f5f5;
-      color: #333;
-    }
-
-    .contact-form textarea {
-      height: 150px;
+      border: none;
     }
 
     .contact-form button {
-      display: block;
       width: 100%;
-      background-color: #007bff;
-      color: #f5f5f5;
+      padding: 12px;
+      background: #007bff;
+      color: white;
       border: none;
       border-radius: 5px;
-      padding: 12px 24px;
-      font-size: 16px;
       cursor: pointer;
-      transition: background-color 0.3s;
     }
 
     .contact-form button:hover {
       background-color: #0056b3;
     }
 
-    /* 下滑式網頁 */
-    section {
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
-    }
-
-    #home {
-      background-image: url('https://wallpapercave.com/wp/wp2955829.jpg');
-    }
-
-    #about {
-      background-color: #000000;
-    }
-
-    #about .about-content {
-      max-width: 800px;
-      padding: 40px;
-      text-align: center;
-      background-color: rgba(26, 26, 26, 0.8);
-      border-radius: 10px;
-    }
-
-    #projects {
-      background-image: url('https://wallpapercave.com/wp/wp2955791.jpg');
-    }
-
-    #contact {
-      background-image: url('https://via.placeholder.com/1920x1080');
-    }
-
-    /* 打字機效果 */
     .typing-text {
-      font-size: 3rem;
+      font-size: 1.8rem;
       white-space: nowrap;
       overflow: hidden;
       border-right: 2px solid #f5f5f5;
-      width: 0;
-      animation: typing 3s steps(30, end) forwards, blink 0.75s step-end infinite;
-    }
-
-    @keyframes typing {
-      from { width: 0; }
-      to { width: 100%; }
+      display: inline-block;
+      text-align: center;
     }
 
     @keyframes blink {
-      50% { border-color: transparent; }
+      0%, 100% { border-color: transparent; }
+      50% { border-color: #f5f5f5; }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .typing-text {
+        font-size: 2rem;
+      }
+      .profile-card h1 {
+        font-size: 24px;
+      }
+      .profile-card p {
+        font-size: 16px;
+      }
     }
   </style>
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      // 獲取所有導航鏈接
-      var navLinks = document.querySelectorAll('header nav a');
-
-      // 為每個導航鏈接添加點擊事件監聽器
-      navLinks.forEach(function(link) {
-        link.addEventListener('click', function(e) {
-          e.preventDefault(); // 阻止默認的鏈接行為
-
-          // 獲取目標 section 的 id
-          var targetId = this.getAttribute('href');
-
-          // 滾動到目標 section
-          document.querySelector(targetId).scrollIntoView({
-            behavior: 'smooth'
-          });
-        });
-      });
-    });
-  </script>
 </head>
 <body>
   <header>
@@ -228,7 +193,7 @@
 
   <section id="home">
     <div class="profile-card">
-      <h1 class="typing-text">Simon Wong - Software Engeneer</h1>
+      <h1><span id="typed-text" class="typing-text"></span></h1>
       <p>Database Management and Web Development</p>
       <div class="buttons">
         <a href="#contact">Contact Me</a>
@@ -240,38 +205,98 @@
   <section id="about">
     <div class="about-content">
       <h2>About</h2>
-      <p>I am a Information Science student at the University of [Your University], with a passion for creating innovative solutions to complex problems. I have a strong background in web development, database management, and a knack for learning new technologies.</p>
-      <p>Throughout my academic journey, I have honed my skills in various programming languages, including JavaScript, Python, and SQL. I have completed several projects that showcase my ability to design and develop responsive web applications, optimize database structures, and integrate cutting-edge technologies.</p>
-      <p>In addition to my technical expertise, I am a quick learner and a team player. I believe in the power of collaboration and enjoy working with others to achieve common goals. I am a strong believer in the transformative potential of technology and am committed to using my skills to make a positive impact on the world.</p>
+      <p>I am an Information Science student with a passion for building practical software solutions.</p>
+      <p>Skilled in JavaScript, Python, SQL. I specialize in full-stack development and modern frontend frameworks.</p>
     </div>
   </section>
 
   <section id="projects">
-    <h2>Projects</h2>
-    <!-- 在這裡添加項目內容 -->
+    <div class="project-list">
+      <h2>Projects</h2>
+      <div class="project-card">
+        <h3>1. Portfolio Website</h3>
+        <p>HTML/CSS/JS portfolio website with smooth scrolling and responsive layout.</p>
+      </div>
+      <div class="project-card">
+        <h3>2. Todo List App</h3>
+        <p>A full-stack todo list with Node.js + MongoDB backend, React frontend.</p>
+      </div>
+      <div class="project-card">
+        <h3>3. XRF Analysis Parser</h3>
+        <p>Python script to process XRF data and export Excel with summary and rankings.</p>
+      </div>
+      <div class="project-card">
+        <h3>4. Line Bot Integration</h3>
+        <p>Automated order + payment workflow using Line + Google Form + ECPay.</p>
+      </div>
+      <div class="project-card">
+        <h3>5. Auction Database System</h3>
+        <p>Relational DB system for cataloging historical auctions and provenance.</p>
+      </div>
+      <div class="project-card">
+        <h3>6. Antique NFT Issuance Platform</h3>
+        <p>Prototype using Solidity + IPFS to issue artifact-backed NFTs for verification.</p>
+      </div>
+    </div>
   </section>
 
   <section id="contact">
-    <h2>Contact</h2>
-    <!-- 聯繫表單頁面 -->
     <div class="contact-form">
       <h2>聯繫我們</h2>
-      <form>
-        <div class="form-group">
-          <label for="name">姓名:</label>
-          <input type="text" id="name" name="name" required>
-        </div>
-        <div class="form-group">
-          <label for="email">電子郵件:</label>
-          <input type="email" id="email" name="email" required>
-        </div>
-        <div class="form-group">
-          <label for="message">留言:</label>
-          <textarea id="message" name="message" required></textarea>
-        </div>
+      <form action="https://formspree.io/f/xanoagyl" method="POST">
+        <input type="text" name="name" placeholder="您的姓名" required />
+        <input type="email" name="email" placeholder="電子郵件" required />
+        <textarea name="message" placeholder="您的留言" required></textarea>
         <button type="submit">送出</button>
       </form>
     </div>
   </section>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const textElement = document.getElementById("typed-text");
+      const texts = [
+        "Simon Wong - Software Engineer",
+        "Frontend / Backend Developer",
+        "Tech Enthusiast & Problem Solver"
+      ];
+      let textIndex = 0;
+      let charIndex = 0;
+      let isDeleting = false;
+
+      function typeLoop() {
+        const currentText = texts[textIndex];
+        if (isDeleting) {
+          charIndex--;
+        } else {
+          charIndex++;
+        }
+
+        textElement.textContent = currentText.substring(0, charIndex);
+        textElement.style.borderRight = '2px solid #f5f5f5';
+
+        let typingSpeed = isDeleting ? 50 : 100;
+
+        if (!isDeleting && charIndex === currentText.length) {
+          setTimeout(() => isDeleting = true, 1000);
+        } else if (isDeleting && charIndex === 0) {
+          isDeleting = false;
+          textIndex = (textIndex + 1) % texts.length;
+        }
+
+        setTimeout(typeLoop, typingSpeed);
+      }
+
+      typeLoop();
+
+      document.querySelectorAll('header nav a').forEach(link => {
+        link.addEventListener('click', e => {
+          e.preventDefault();
+          const targetId = link.getAttribute('href');
+          document.querySelector(targetId).scrollIntoView({ behavior: 'smooth' });
+        });
+      });
+    });
+  </script>
 </body>
 </html>
