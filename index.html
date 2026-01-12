@@ -1,465 +1,439 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="zh-TW" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Simon Wong 作品集</title>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
-    rel="stylesheet"
-  />
-  <style>
-    /* Reset & Global Styles */
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Roboto', sans-serif;
-      background-color: #1a1a1a;
-      color: #f5f5f5;
-      scroll-behavior: smooth;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simon Wong | Software Engineer</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
 
-    /* Header */
-    header {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      background-color: #333;
-      padding: 20px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 100;
-    }
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 
-    header nav a {
-      margin: 0 20px;
-      color: #f5f5f5;
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-
-    header nav a:hover {
-      color: #007bff;
-    }
-
-    /* Sections */
-    section {
-      padding: 100px 20px;
-      text-align: center;
-    }
-
-    #home {
-      background-image: url('https://wallpapercave.com/wp/wp2955829.jpg');
-      background-size: cover;
-      background-attachment: fixed;
-    }
-
-    /* Common Section Background */
-    #about,
-    #projects,
-    #contact,
-    .project-detail {
-      background-color: rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-    }
-
-    /* Containers */
-    .profile-card,
-    .about-content,
-    .project-list,
-    .contact-form,
-    .detail-content {
-      max-width: 800px;
-      margin: auto;
-      background: rgba(26, 26, 26, 0.9);
-      padding: 40px;
-      border-radius: 10px;
-      animation: fadeInUp 1s ease;
-    }
-
-    /* Profile Card */
-    .profile-card {
-      max-width: 600px;
-      margin-top: 120px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-    }
-
-    .profile-card h1 {
-      font-size: 24px;
-      margin-bottom: 10px;
-    }
-
-    .profile-card p {
-      font-size: 18px;
-      margin-bottom: 30px;
-    }
-
-    /* Typing Effect */
-    .typing-text {
-      font-size: 1.5rem;
-      white-space: nowrap;
-      overflow: hidden;
-      border-right: 2px solid #f5f5f5;
-      display: inline-block;
-      animation: blink 0.75s step-end infinite;
-      text-align: center;
-    }
-
-    /* Buttons */
-    .buttons {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-    }
-
-    .buttons a {
-      background-color: #007bff;
-      color: #f5f5f5;
-      padding: 12px 24px;
-      border-radius: 5px;
-      text-decoration: none;
-      transition: background-color 0.3s;
-    }
-
-    .buttons a:hover {
-      background-color: #0056b3;
-    }
-
-    /* Projects Grid */
-    .project-list {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
-    }
-
-    .project-card {
-      background-color: #222;
-      padding: 20px;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: transform 0.3s;
-      text-align: left;
-    }
-
-    .project-card:hover {
-      transform: translateY(-5px);
-    }
-
-    .project-card h3 {
-      margin-top: 0;
-    }
-
-    /* 美化 Project Detail 排版 */
-    .project-detail .detail-content {
-      padding: 60px 40px;
-      line-height: 1.7;
-    }
-
-    /* 小標題 */
-    .project-detail .detail-content h3 {
-      margin-top: 2rem;
-      margin-bottom: 0.75rem;
-      font-size: 1.6rem;
-      color: #ffd54f;           /* 黃金色，與深色背景對比 */
-      border-bottom: 2px solid #ffd54f;
-      display: inline-block;
-      padding-bottom: 0.25rem;
-    }
-
-    /* 段落 */
-    .project-detail .detail-content p {
-      margin-bottom: 1.25rem;
-      font-size: 1rem;
-      color: #e0e0e0;
-    }
-
-    /* 有序、無序列表 */
-    .project-detail .detail-content ul,
-    .project-detail .detail-content ol {
-      margin: 0 0 1.5rem 1.5rem;
-      padding: 0;
-    }
-
-    /* 列點與編號 */
-    .project-detail .detail-content ul li,
-    .project-detail .detail-content ol li {
-      margin-bottom: 0.6rem;
-      font-size: 0.95rem;
-    }
-
-    /* 自訂 List Marker 顏色 */
-    .project-detail .detail-content ul li::marker {
-      color: #4fc3f7; /* 天空藍 */
-    }
-    .project-detail .detail-content ol li::marker {
-      color: #ff8a65; /* 橘紅 */
-    }
-
-
-    /* Detail Section */
-    .project-detail {
-      padding-top: 120px;
-    }
-
-    .detail-content img {
-      width: 100%;
-      border-radius: 10px;
-      margin-bottom: 20px;
-    }
-
-    .back-link {
-      display: inline-block;
-      margin-top: 20px;
-      color: #007bff;
-      text-decoration: none;
-    }
-
-    /* Contact Form */
-    .contact-form input,
-    .contact-form textarea {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 20px;
-      border-radius: 5px;
-      border: none;
-    }
-
-    .contact-form button {
-      width: 100%;
-      padding: 12px;
-      background: #007bff;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    .contact-form button:hover {
-      background-color: #0056b3;
-    }
-
-    /* Animations */
-    @keyframes blink {
-      0%,
-      100% {
-        border-color: transparent;
-      }
-      50% {
-        border-color: #f5f5f5;
-      }
-    }
-
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    /* Responsive */
-    @media (max-width: 600px) {
-      .typing-text {
-        font-size: 1.2rem;
-      }
-      .profile-card h1 {
-        font-size: 20px;
-      }
-      .profile-card p {
-        font-size: 16px;
-      }
-    }
-  </style>
-</head>
-<body>
-  <header>
-    <nav>
-      <a href="#home">Home</a>
-      <a href="#about">About</a>
-      <a href="#projects">Projects</a>
-      <a href="#contact">Contact</a>
-    </nav>
-  </header>
-
-  <section id="home">
-    <div class="profile-card">
-      <h1>
-        <span id="typed-text" class="typing-text"></span>
-      </h1>
-      <p>Database Management and Web Development</p>
-      <div class="buttons">
-        <a href="#contact">Contact Me</a>
-        <a href="#projects">View Projects</a>
-      </div>
-    </div>
-  </section>
-
-  <section id="about">
-    <div class="about-content">
-      <h2>About</h2>
-      <p>
-        I am an Information Science student with a passion for building practical software
-        solutions.
-      </p>
-      <p>Skilled in JavaScript, Python, SQL. I specialize in full-stack development and modern frontend frameworks.</p>
-    </div>
-  </section>
-
-  <section id="projects">
-    <div class="project-list">
-      <div class="project-card" onclick="location.href='#project1-detail'">
-        <h3>BBL Auto Project – 專利申請自動化工具</h3>
-        <p>在傳統專利申請流程中，跟據客戶需求開發</p>
-      </div>
-      <div class="project-card" onclick="location.href='#project2-detail'">
-        <h3>向量化可微柵格之應用</h3>
-        <p>使用可微柵格的繪畫式渲染技術整合貝茲曲線，並比較 L2 Loss 與 LPIPS Loss 的效性。</p>
-      </div>
-      <div class="project-card" onclick="location.href='#project3-detail'">
-        <h3>Project2</h3>
-        <p>Project2</p>
-      </div>
-      <!-- 其他 project-cards 可依此結構新增 -->
-    </div>
-  </section>
-
-  <!-- Project 1 Detail -->
-  <section id="project1-detail" class="project-detail">
-    <div class="detail-content">
-      <h2>BBL Auto Project – 專利申請自動化工具</h2>
-      <img src="/project/project1/overview.png" alt="BBL Auto Project Overview" />
-
-      <h3>開發背景與目的</h3>
-      <p>
-        在傳統專利申請流程中，撰寫多項專利請求項（claims）與蒐集相關專利／學術資料，
-        往往耗時又容易漏失細節。  
-        本專案旨在：
-      </p>
-      <ul>
-        <li>自動化生成專利範圍文件（Word／docx），減少手動輸入與格式設定時間。</li>
-        <li>自動化蒐集 Lens.org 上的專利與學術結構化資料，包含專利申請趨勢、活躍機構、熱門領域等，方便掌握市場脈動。</li>
-      </ul>
-
-      <h3>核心功能與特色</h3>
-      <ol>
-        <li>
-          <strong>Google 試算表關鍵字讀取：</strong>
-          透過 <code>pandas</code> 動態抓取申請案號及對應要素（本案特色、成分、方法、用途……）。
-        </li>
-        <li>
-          <strong>專利範圍文件自動生成：</strong>
-          使用 <code>python-docx</code> 建立 Word 檔，依試算表自動排版多條請求項（claims）。
-        </li>
-        <li>
-          <strong>Lens.org 自動化爬蟲：</strong>
-          採用 Selenium，執行專利（Patents）與學術（Scholarly）搜尋、自動下載各種統計表格與圖表。
-        </li>
-        <li>
-          <strong>命令列互動介面：</strong>
-          啟動時可選擇「生成文件」或「執行爬取」，並自動開啟下載資料夾，便於後續檢視。
-        </li>
-      </ol>
-
-      <h3>使用技術／工具</h3>
-      <ul>
-        <li>Python 3.x</li>
-        <li>selenium、python-docx、pandas、fake_useragent</li>
-        <li>ChromeDriver + Selenium WebDriver</li>
-        <li>Google Sheets CSV 讀取</li>
-        <li>PyInstaller 打包發佈</li>
-      </ul>
-
-      <h3>我的角色與貢獻</h3>
-      <ul>
-        <li>架構設計：規劃從試算表到 Word、爬蟲到本地資料夾的全流程。</li>
-        <li>模組開發：claims 文檔生成函式與 Lens.org 爬蟲模組實作。</li>
-        <li>錯誤處理：試算表欄位完整性檢查與 Selenium 元素等待機制。</li>
-        <li>跨平台打包：整合 PyInstaller，產出單一可執行檔。</li>
-      </ul>
-
-      <h3>專案成果與效益</h3>
-      <ul>
-        <li>效率大幅提升：文件生成由 30 分鐘縮短至 1 分鐘內。</li>
-        <li>資料更完整：自動下載 10+ 報表，可直接做後續分析。</li>
-        <li>易於維護：CLI 介面簡潔，更新試算表即可。</li>
-        <li>高可擴展性：未來可新增更多資料來源、模板或視覺化工具。</li>
-      </ul>
-
-      <a href="#projects" class="back-link">← 返回 Projects</a>
-    </div>
-  </section>
-
-
-  <!-- Project 2 Detail -->
-  <section id="project2-detail" class="project-detail">
-    <div class="detail-content">
-      <h2>向量化可微檢格之應用</h2>
-      <img src="/project/project1/1.jpg" alt="Vectorized Differentiable Grid Demo" />
-      <p>
-        此專案示範如何於可微柵格 (Differentiable Grid) 架構下，進行貝茲曲線 (Bézier Curve)
-        的繪製，並比較 L2 Loss 與 LPIPS Loss 在重建品質上的差異。透過 Python 與 PyTorch
-        實作，並使用 matplotlib 進行視覺化呈現。
-      </p>
-      <a href="#projects" class="back-link">← 返回 Projects</a>
-    </div>
-  </section>
-
-  <section id="contact">
-    <div class="contact-form">
-      <h2>聯繫我們</h2>
-      <form action="https://formspree.io/f/xanoagyl" method="POST">
-        <input type="text" name="name" placeholder="您的姓名" required />
-        <input type="email" name="email" placeholder="電子郵件" required />
-        <textarea name="message" placeholder="您的留言" required></textarea>
-        <button type="submit">送出</button>
-      </form>
-    </div>
-  </section>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const textElement = document.getElementById('typed-text');
-      const texts = [
-        'Simon Wong - Software Engineer',
-        'Frontend / Backend Developer',
-        'Tech Enthast & Problem Solver'
-      ];
-      let textIndex = 0;
-      let charIndex = 0;
-      let isDeleting = false;
-
-      function typeLoop() {
-        const currentText = texts[textIndex];
-        isDeleting ? charIndex-- : charIndex++;
-        textElement.textContent = currentText.substring(0, charIndex);
-
-        const speed = isDeleting ? 50 : 100;
-
-        if (!isDeleting && charIndex === currentText.length) {
-          setTimeout(() => (isDeleting = true), 1000);
-        } else if (isDeleting && charIndex === 0) {
-          isDeleting = false;
-          textIndex = (textIndex + 1) % texts.length;
+    <!-- Custom Styles for Animations that Tailwind doesn't cover by default -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: black;
+            color: white;
+            overflow-x: hidden;
+        }
+        
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
         }
 
-        setTimeout(typeLoop, speed);
-      }
+        /* Custom Selection Color */
+        ::selection {
+            background-color: white;
+            color: black;
+        }
 
-      typeLoop();
+        /* Animation Classes mimicking Framer Motion */
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
 
-      document.querySelectorAll('header nav a').forEach(link => {
-        link.addEventListener('click', e => {
-          e.preventDefault();
-          const targetId = link.getAttribute('href');
-          document.querySelector(targetId).scrollIntoView({ behavior: 'smooth' });
+        .reveal-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Typewriter Cursor */
+        .cursor-blink {
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* Slider Transitions */
+        .slider-content {
+            transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+        }
+        
+        .fade-out {
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+
+        .fade-in {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        /* Nav Mix Blend Mode for visibility on light/dark backgrounds */
+        .nav-blend {
+            mix-blend-mode: difference;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 px-8 py-6 flex justify-between items-center nav-blend text-white">
+        <div class="text-xl font-bold tracking-tighter reveal-on-scroll is-visible" style="transition-delay: 0.1s;">
+            SIMON WONG
+        </div>
+        <div class="hidden md:flex gap-8 text-sm uppercase tracking-widest">
+            <a href="#work" class="hover:line-through transition-all cursor-pointer">Work</a>
+            <a href="#experience" class="hover:line-through transition-all cursor-pointer">Experience</a>
+            <a href="#certs" class="hover:line-through transition-all cursor-pointer">Certs</a>
+            <a href="#contact" class="hover:line-through transition-all cursor-pointer">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="h-screen flex flex-col justify-center items-center px-4 relative overflow-hidden">
+        <!-- Background Image -->
+        <div class="absolute inset-0 z-0 pointer-events-none opacity-25" 
+             style="background-image: url('https://images.unsplash.com/photo-1555099962-4199c345e5dd?auto=format&fit=crop&q=80&w=2000'); background-size: cover; background-position: center; transform: scale(1.1);">
+        </div>
+        
+        <div class="z-10 text-center">
+            <h1 class="text-5xl md:text-8xl font-black mb-6 tracking-tighter min-h-[1.2em] flex justify-center items-center">
+                <span id="typewriter-text"></span>
+                <span class="inline-block w-[4px] h-[0.8em] bg-white ml-2 cursor-blink"></span>
+            </h1>
+            
+            <div class="flex flex-wrap justify-center gap-6 text-gray-400 opacity-0 reveal-on-scroll" id="hero-skills" style="transition-delay: 1.5s;">
+                <span class="flex items-center gap-2 border-r border-gray-800 pr-6"><i data-lucide="code" class="w-4 h-4"></i> 前端開發</span>
+                <span class="flex items-center gap-2 border-r border-gray-800 pr-6"><i data-lucide="terminal" class="w-4 h-4"></i> 自動化開發</span>
+                <span class="flex items-center gap-2"><i data-lucide="camera" class="w-4 h-4"></i> 視覺美感</span>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-10 animate-bounce">
+            <div class="w-[1px] h-20 bg-gradient-to-b from-white to-transparent"></div>
+        </div>
+    </section>
+
+    <!-- Projects Slider Section -->
+    <section id="work" class="py-24 px-4 md:px-24 bg-white text-black">
+        <div class="flex justify-between items-end mb-16">
+            <div>
+                <h2 class="text-sm uppercase tracking-widest text-gray-500 mb-2">Selected Projects</h2>
+                <h3 class="text-4xl font-bold">精選開發成果</h3>
+            </div>
+            <div class="flex gap-4">
+                <button onclick="prevProject()" class="p-4 border border-black hover:bg-black hover:text-white transition-all">
+                    <i data-lucide="chevron-left"></i>
+                </button>
+                <button onclick="nextProject()" class="p-4 border border-black hover:bg-black hover:text-white transition-all">
+                    <i data-lucide="chevron-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="relative overflow-hidden h-auto md:h-[600px] border border-gray-200 shadow-2xl rounded-sm">
+            <div id="project-container" class="md:absolute inset-0 flex flex-col md:grid md:grid-cols-2 h-full slider-content fade-in">
+                <!-- Content will be injected by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Certifications Section -->
+    <section id="certs" class="py-20 bg-gray-50 text-black">
+        <div class="max-w-6xl mx-auto px-8">
+            <h3 class="text-2xl font-bold mb-12 flex items-center gap-3">
+                <i data-lucide="award" class="text-blue-600"></i> 專業證照與認證
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Cert 1 -->
+                <div class="p-6 bg-white border border-gray-200 rounded-lg shadow-sm flex flex-col items-center text-center hover:-translate-y-1 transition-transform cursor-default">
+                    <div class="mb-4 p-3 bg-gray-100 rounded-full text-black"><i data-lucide="shield-check"></i></div>
+                    <h4 class="font-bold text-sm mb-1">Microsoft Azure Fundamentals (AZ-900)</h4>
+                    <p class="text-xs text-gray-500">Microsoft</p>
+                </div>
+                <!-- Cert 2 -->
+                <div class="p-6 bg-white border border-gray-200 rounded-lg shadow-sm flex flex-col items-center text-center hover:-translate-y-1 transition-transform cursor-default">
+                    <div class="mb-4 p-3 bg-gray-100 rounded-full text-black"><i data-lucide="database"></i></div>
+                    <h4 class="font-bold text-sm mb-1">Google Analytics (分析) 個人認證</h4>
+                    <p class="text-xs text-gray-500">Google</p>
+                </div>
+                <!-- Cert 3 -->
+                <div class="p-6 bg-white border border-gray-200 rounded-lg shadow-sm flex flex-col items-center text-center hover:-translate-y-1 transition-transform cursor-default">
+                    <div class="mb-4 p-3 bg-gray-100 rounded-full text-black"><i data-lucide="award"></i></div>
+                    <h4 class="font-bold text-sm mb-1">商用數據應用師</h4>
+                    <p class="text-xs text-gray-500">專業認證</p>
+                </div>
+                <!-- Cert 4 -->
+                <div class="p-6 bg-white border border-gray-200 rounded-lg shadow-sm flex flex-col items-center text-center hover:-translate-y-1 transition-transform cursor-default">
+                    <div class="mb-4 p-3 bg-gray-100 rounded-full text-black"><i data-lucide="briefcase"></i></div>
+                    <h4 class="font-bold text-sm mb-1">PMA 專案助理認證</h4>
+                    <p class="text-xs text-gray-500">專案管理</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience & Skills Section -->
+    <section id="experience" class="py-24 bg-black">
+        <div class="max-w-6xl mx-auto px-8 grid md:grid-cols-2 gap-20">
+            <!-- Timeline -->
+            <div>
+                <h3 class="text-2xl font-bold mb-12 border-b border-gray-800 pb-4 flex items-center gap-2">
+                   <i data-lucide="briefcase"></i> 實務經歷
+                </h3>
+                <div class="space-y-12">
+                    
+                    <div class="relative pl-8 border-l border-gray-800 reveal-on-scroll">
+                        <div class="absolute left-[-5px] top-0 w-[10px] h-[10px] bg-white rounded-full"></div>
+                        <span class="text-xs text-gray-500 mb-1 block font-mono">2024/07 - 2025/07</span>
+                        <h4 class="text-xl font-bold text-white">基律科技智財有限公司 (Biobizlaw Inc)</h4>
+                        <p class="text-blue-400 text-sm mb-2 font-medium">軟體開發工程師</p>
+                        <p class="text-gray-500 text-sm leading-relaxed">自動化軟體開發 (專利服務)、商標檢索資料分析、網頁設計開發 (前/後端)、區塊鏈驗證平台與 Python 爬蟲實作。</p>
+                    </div>
+
+                    <div class="relative pl-8 border-l border-gray-800 reveal-on-scroll">
+                        <div class="absolute left-[-5px] top-0 w-[10px] h-[10px] bg-white rounded-full"></div>
+                        <span class="text-xs text-gray-500 mb-1 block font-mono">2024/10 - 2025/04</span>
+                        <h4 class="text-xl font-bold text-white">新境傳播有限公司</h4>
+                        <p class="text-blue-400 text-sm mb-2 font-medium">新聞編播 / 現場導播</p>
+                        <p class="text-gray-500 text-sm leading-relaxed">負責現場導播、新聞稿處理、影片剪接、YouTube 與社群媒體平台管理及電子書編輯。</p>
+                    </div>
+
+                    <div class="relative pl-8 border-l border-gray-800 reveal-on-scroll">
+                        <div class="absolute left-[-5px] top-0 w-[10px] h-[10px] bg-white rounded-full"></div>
+                        <span class="text-xs text-gray-500 mb-1 block font-mono">2018/09 - 2023/09</span>
+                        <h4 class="text-xl font-bold text-white">Lensbank 鏡頭銀行</h4>
+                        <p class="text-blue-400 text-sm mb-2 font-medium">技術專員 (店員)</p>
+                        <p class="text-gray-500 text-sm leading-relaxed">處理攝影器材整理、門市業務、文書處理及高端影像設備技術支援。</p>
+                    </div>
+
+                    <div class="relative pl-8 border-l border-gray-800 reveal-on-scroll">
+                        <div class="absolute left-[-5px] top-0 w-[10px] h-[10px] bg-white rounded-full"></div>
+                        <span class="text-xs text-gray-500 mb-1 block font-mono">2020/02 - 2021/02</span>
+                        <h4 class="text-xl font-bold text-white">Photographic Society Hong Kong Media</h4>
+                        <p class="text-blue-400 text-sm mb-2 font-medium">新聞攝影師</p>
+                        <p class="text-gray-500 text-sm leading-relaxed">負責社會新聞紀錄、攝影採訪、協助撰寫新聞稿，完成高品質報導作業。</p>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Skills -->
+            <div id="skills">
+                <h3 class="text-2xl font-bold mb-12 border-b border-gray-800 pb-4">技術棧與優勢</h3>
+                <div class="grid grid-cols-2 gap-4 mb-12">
+                    <!-- Skill Items (Static for SEO, JS not needed for simple hover) -->
+                    <div class="p-4 border border-gray-800 flex items-center justify-between group transition-all hover:bg-white hover:text-black hover:scale-105 cursor-default">
+                        <span class="font-mono text-sm">React</span>
+                        <i data-lucide="chevron-right" class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                    </div>
+                    <div class="p-4 border border-gray-800 flex items-center justify-between group transition-all hover:bg-white hover:text-black hover:scale-105 cursor-default">
+                        <span class="font-mono text-sm">JavaScript</span>
+                        <i data-lucide="chevron-right" class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                    </div>
+                    <div class="p-4 border border-gray-800 flex items-center justify-between group transition-all hover:bg-white hover:text-black hover:scale-105 cursor-default">
+                        <span class="font-mono text-sm">Python (Selenium)</span>
+                        <i data-lucide="chevron-right" class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                    </div>
+                    <div class="p-4 border border-gray-800 flex items-center justify-between group transition-all hover:bg-white hover:text-black hover:scale-105 cursor-default">
+                        <span class="font-mono text-sm">PHP & WordPress</span>
+                        <i data-lucide="chevron-right" class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                    </div>
+                    <div class="p-4 border border-gray-800 flex items-center justify-between group transition-all hover:bg-white hover:text-black hover:scale-105 cursor-default">
+                        <span class="font-mono text-sm">MySQL</span>
+                        <i data-lucide="chevron-right" class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                    </div>
+                    <div class="p-4 border border-gray-800 flex items-center justify-between group transition-all hover:bg-white hover:text-black hover:scale-105 cursor-default">
+                        <span class="font-mono text-sm">SEO / GA</span>
+                        <i data-lucide="chevron-right" class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                    </div>
+                </div>
+                
+                <div class="p-8 border border-white/10 rounded-lg bg-white/5 backdrop-blur-sm reveal-on-scroll">
+                    <h4 class="flex items-center gap-2 mb-4 font-bold text-gray-300 italic">
+                        <i data-lucide="terminal" class="w-5 h-5"></i> Simon's Philosophy
+                    </h4>
+                    <p class="text-sm text-gray-400 leading-loose">
+                        身為一名 38 歲的資管學生，我將社會閱歷轉化為敏銳的商業觀察力。在 <strong>基律科技</strong> 的經驗讓我精通自動化流程優化；在 <strong>新聞傳播</strong> 的背景則讓我擁有流暢的跨部門溝通能力。
+                        我能將複雜的數據邏輯，轉化為直覺且具美感的數位產品。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 bg-white text-black text-center">
+        <div class="reveal-on-scroll">
+            <h2 class="text-5xl md:text-8xl font-black mb-8 tracking-tighter">LET'S CONNECT.</h2>
+            <div class="flex flex-col items-center gap-6">
+                <a href="mailto:842679135jjj@gmail.com" class="text-2xl font-bold hover:line-through transition-all">
+                    842679135jjj@gmail.com
+                </a>
+                <div class="flex gap-6 mt-8">
+                    <a href="https://github.com/joe10897" target="_blank" class="p-4 border border-black rounded-full hover:bg-black hover:text-white transition-all transform hover:-translate-y-1">
+                        <i data-lucide="github"></i>
+                    </a>
+                    <a href="https://nomochrome.site/Simon-s_developer/" target="_blank" class="p-4 border border-black rounded-full hover:bg-black hover:text-white transition-all transform hover:-translate-y-1">
+                        <i data-lucide="globe"></i>
+                    </a>
+                    <a href="mailto:842679135jjj@gmail.com" class="p-4 border border-black rounded-full hover:bg-black hover:text-white transition-all transform hover:-translate-y-1">
+                        <i data-lucide="mail"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 bg-black border-t border-gray-900 text-center text-gray-600 text-[10px] tracking-widest uppercase">
+        © 2026 SIMON WONG CHAK YIN. BUILT FOR PRECISION.
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // 1. Initialize Icons
+        lucide.createIcons();
+
+        // 2. Typewriter Effect
+        const typeText = "Simon Wong Developer";
+        const typeDelay = 120;
+        let typeIndex = 0;
+        const typeWriterElement = document.getElementById('typewriter-text');
+
+        function typeWriter() {
+            if (typeIndex < typeText.length) {
+                typeWriterElement.innerHTML += typeText.charAt(typeIndex);
+                typeIndex++;
+                setTimeout(typeWriter, typeDelay);
+            } else {
+                // Show hero skills after typing is done
+                document.getElementById('hero-skills').classList.add('is-visible');
+            }
+        }
+        
+        // Start typing after a short delay
+        setTimeout(typeWriter, 500);
+
+        // 3. Project Slider Data & Logic
+        const projects = [
+            {
+                category: "AI / Smart Transportation",
+                title: "專題行車方案開發",
+                desc: "運用 YOLOv8 進行即時路況偵測與行車路徑優化。整合機器學習模型分析駕駛行為，提升行車安全與運輸效率，解決都市交通壅塞痛點。",
+                tech: ["Python", "YOLOv8", "OpenCV", "Path Planning"],
+                link: "https://nomochrome.site/Simon-s_developer/",
+                image: "https://images.unsplash.com/photo-1555617766-c94804975da3?auto=format&fit=crop&q=80&w=800"
+            },
+            {
+                category: "Deep Learning / Graphics",
+                title: "向量圖可微分柵格化應用",
+                desc: "北科大畢業論文。分析 L2 與 LPIPS Loss 演算法特徵，並應用於 Painterly Rendering 演算法，實現高品質的圖像風格化生成。",
+                tech: ["Python", "PyTorch", "Computer Vision"],
+                link: "https://nomochrome.site/Simon-s_developer/",
+                image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&q=80&w=800"
+            },
+            {
+                category: "Web Development",
+                title: "HKongsCinema 線上訂票系統",
+                desc: "具備完整 RWD 佈局的電影票預約平台。採用模組化組件設計，優化極端流量下的使用者購票體驗與介面流暢度。",
+                tech: ["JavaScript", "HTML5", "CSS3", "CoffeeScript"],
+                link: "https://nomochrome.site/Simon-s_developer/",
+                image: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&q=80&w=800"
+            },
+            {
+                category: "Professional Experience",
+                title: "自動化商標檢索平台",
+                desc: "於基律科技開發之自動化爬蟲與區塊鏈驗證平台，大幅提升專利服務檢索效率，並確保資料存證的安全性。",
+                tech: ["Python", "Selenium", "Blockchain", "Web Crawling"],
+                link: "https://nomochrome.site/Simon-s_developer/",
+                image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800"
+            }
+        ];
+
+        let activeIndex = 0;
+        const container = document.getElementById('project-container');
+
+        function renderProject(index) {
+            const project = projects[index];
+            const techBadges = project.tech.map(t => `<span class="px-3 py-1 bg-gray-100 text-[10px] uppercase font-bold tracking-wider">${t}</span>`).join('');
+            
+            const html = `
+                <div class="order-2 md:order-1 p-8 md:p-16 flex flex-col justify-center bg-white min-h-[400px]">
+                    <span class="text-xs font-bold uppercase tracking-widest text-blue-600 mb-4 flex items-center gap-2">
+                        <i data-lucide="navigation" class="w-3 h-3"></i> ${project.category}
+                    </span>
+                    <h4 class="text-3xl md:text-5xl font-black mb-6 leading-tight">
+                        ${project.title}
+                    </h4>
+                    <p class="text-gray-600 mb-8 leading-relaxed">
+                        ${project.desc}
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-8">
+                        ${techBadges}
+                    </div>
+                    <a href="${project.link}" target="_blank" class="flex items-center gap-2 font-bold group w-fit">
+                        EXPLORE PROJECT <i data-lucide="external-link" class="w-4 h-4 group-hover:rotate-45 transition-transform"></i>
+                    </a>
+                </div>
+                
+                <div class="order-1 md:order-2 h-[250px] md:h-full w-full bg-cover bg-center grayscale hover:grayscale-0 transition-all duration-1000"
+                     style="background-image: url('${project.image}')">
+                </div>
+            `;
+            
+            container.innerHTML = html;
+            lucide.createIcons(); // Re-init icons for new content
+        }
+
+        function changeProject(direction) {
+            // Fade out
+            container.classList.remove('fade-in');
+            container.classList.add('fade-out');
+
+            setTimeout(() => {
+                if (direction === 'next') {
+                    activeIndex = (activeIndex + 1) % projects.length;
+                } else {
+                    activeIndex = (activeIndex - 1 + projects.length) % projects.length;
+                }
+                
+                renderProject(activeIndex);
+                
+                // Fade in
+                container.classList.remove('fade-out');
+                container.classList.add('fade-in');
+            }, 400); // Wait for CSS transition
+        }
+
+        function nextProject() { changeProject('next'); }
+        function prevProject() { changeProject('prev'); }
+
+        // Initial Render
+        renderProject(0);
+
+        // 4. Scroll Animation Observer (Mimicking Framer Motion whileInView)
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target); // Once visible, stay visible
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal-on-scroll').forEach(el => {
+            observer.observe(el);
         });
-      });
-    });
-  </script>
+
+    </script>
 </body>
 </html>
