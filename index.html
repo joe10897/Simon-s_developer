@@ -95,7 +95,7 @@
     <section class="h-screen flex flex-col justify-center items-center px-4 relative overflow-hidden">
         <!-- Background Image -->
         <div class="absolute inset-0 z-0 pointer-events-none opacity-25" 
-             style="background-image: url('https://images.unsplash.com/photo-1555099962-4199c345e5dd?auto=format&fit=crop&q=80&w=2000'); background-size: cover; background-position: center; transform: scale(1.1);">
+             style="background-image: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=2000'); background-size: cover; background-position: center; transform: scale(1.1);">
         </div>
         
         <div class="z-10 text-center">
@@ -117,26 +117,21 @@
         </div>
     </section>
 
-    <!-- Projects Slider Section -->
+    <!-- Projects Grid Section (GitHub Style) -->
     <section id="work" class="py-24 px-4 md:px-24 bg-white text-black">
-        <div class="flex justify-between items-end mb-16">
-            <div>
-                <h2 class="text-sm uppercase tracking-widest text-gray-500 mb-2">Selected Projects</h2>
-                <h3 class="text-4xl font-bold">精選開發成果</h3>
+        <div class="max-w-6xl mx-auto">
+            <div class="flex justify-between items-end mb-12">
+                <div>
+                    <h2 class="text-sm uppercase tracking-widest text-gray-500 mb-2">Selected Projects</h2>
+                    <h3 class="text-4xl font-bold">精選開發成果</h3>
+                </div>
+                <a href="https://github.com/joe10897" target="_blank" rel="noopener" class="text-sm font-medium hover:underline flex items-center gap-1">
+                    View all on GitHub <i data-lucide="external-link" class="w-3 h-3"></i>
+                </a>
             </div>
-            <div class="flex gap-4">
-                <button onclick="prevProject()" class="p-4 border border-black hover:bg-black hover:text-white transition-all">
-                    <i data-lucide="chevron-left"></i>
-                </button>
-                <button onclick="nextProject()" class="p-4 border border-black hover:bg-black hover:text-white transition-all">
-                    <i data-lucide="chevron-right"></i>
-                </button>
-            </div>
-        </div>
 
-        <div class="relative overflow-hidden h-auto md:h-[600px] border border-gray-200 shadow-2xl rounded-sm">
-            <div id="project-container" class="md:absolute inset-0 flex flex-col md:grid md:grid-cols-2 h-full slider-content fade-in">
-                <!-- Content will be injected by JS -->
+            <div id="project-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Projects will be injected by JS -->
             </div>
         </div>
     </section>
@@ -149,28 +144,34 @@
             </h3>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <!-- Cert 1 -->
-                <div class="p-6 bg-white border border-gray-200 rounded-lg shadow-sm flex flex-col items-center text-center hover:-translate-y-1 transition-transform cursor-default">
-                    <div class="mb-4 p-3 bg-gray-100 rounded-full text-black"><i data-lucide="shield-check"></i></div>
-                    <h4 class="font-bold text-sm mb-1">Microsoft Azure Fundamentals (AZ-900)</h4>
-                    <p class="text-xs text-gray-500">Microsoft</p>
+                <div onclick="window.open('img/certification/Azure AI Fundamentals_證書.pdf', '_blank')" class="p-6 bg-white border border-gray-200 rounded-lg shadow-sm flex flex-col items-center text-center hover:-translate-y-1 hover:shadow-md transition-all cursor-pointer group">
+                    <div class="mb-4 p-3 bg-gray-100 rounded-full text-black group-hover:bg-blue-50 group-hover:text-blue-600 transition-colors"><i data-lucide="shield-check"></i></div>
+                    <h4 class="font-bold text-sm mb-1">Microsoft Azure AI Fundamentals</h4>
+                    <p class="text-xs text-gray-500">Microsoft (AZ-900)</p>
                 </div>
                 <!-- Cert 2 -->
-                <div class="p-6 bg-white border border-gray-200 rounded-lg shadow-sm flex flex-col items-center text-center hover:-translate-y-1 transition-transform cursor-default">
-                    <div class="mb-4 p-3 bg-gray-100 rounded-full text-black"><i data-lucide="database"></i></div>
+                <div onclick="window.open('img/certification/Google Analytics Certification(Google Analytics 分析認證).jpg', '_blank')" class="p-6 bg-white border border-gray-200 rounded-lg shadow-sm flex flex-col items-center text-center hover:-translate-y-1 hover:shadow-md transition-all cursor-pointer group">
+                    <div class="mb-4 p-3 bg-gray-100 rounded-full text-black group-hover:bg-blue-50 group-hover:text-blue-600 transition-colors"><i data-lucide="database"></i></div>
                     <h4 class="font-bold text-sm mb-1">Google Analytics (分析) 個人認證</h4>
                     <p class="text-xs text-gray-500">Google</p>
                 </div>
                 <!-- Cert 3 -->
-                <div class="p-6 bg-white border border-gray-200 rounded-lg shadow-sm flex flex-col items-center text-center hover:-translate-y-1 transition-transform cursor-default">
-                    <div class="mb-4 p-3 bg-gray-100 rounded-full text-black"><i data-lucide="award"></i></div>
+                <div onclick="window.open('img/certification/商用數據應用師GP011778_證書.pdf', '_blank')" class="p-6 bg-white border border-gray-200 rounded-lg shadow-sm flex flex-col items-center text-center hover:-translate-y-1 hover:shadow-md transition-all cursor-pointer group">
+                    <div class="mb-4 p-3 bg-gray-100 rounded-full text-black group-hover:bg-blue-50 group-hover:text-blue-600 transition-colors"><i data-lucide="award"></i></div>
                     <h4 class="font-bold text-sm mb-1">商用數據應用師</h4>
                     <p class="text-xs text-gray-500">專業認證</p>
                 </div>
                 <!-- Cert 4 -->
-                <div class="p-6 bg-white border border-gray-200 rounded-lg shadow-sm flex flex-col items-center text-center hover:-translate-y-1 transition-transform cursor-default">
-                    <div class="mb-4 p-3 bg-gray-100 rounded-full text-black"><i data-lucide="briefcase"></i></div>
-                    <h4 class="font-bold text-sm mb-1">PMA 專案助理認證</h4>
-                    <p class="text-xs text-gray-500">專案管理</p>
+                <div onclick="window.open('img/certification/PVQC ICT Specialist 計算機類--專業級.jpg', '_blank')" class="p-6 bg-white border border-gray-200 rounded-lg shadow-sm flex flex-col items-center text-center hover:-translate-y-1 hover:shadow-md transition-all cursor-pointer group">
+                    <div class="mb-4 p-3 bg-gray-100 rounded-full text-black group-hover:bg-blue-50 group-hover:text-blue-600 transition-colors"><i data-lucide="monitor"></i></div>
+                    <h4 class="font-bold text-sm mb-1">PVQC ICT Specialist</h4>
+                    <p class="text-xs text-gray-500">計算機類--專業級</p>
+                </div>
+                <!-- Cert 5 (New) -->
+                <div onclick="window.open('img/certification/Application Engineer of Business Data(商用數據應用師).jpg', '_blank')" class="p-6 bg-white border border-gray-200 rounded-lg shadow-sm flex flex-col items-center text-center hover:-translate-y-1 hover:shadow-md transition-all cursor-pointer group">
+                    <div class="mb-4 p-3 bg-gray-100 rounded-full text-black group-hover:bg-blue-50 group-hover:text-blue-600 transition-colors"><i data-lucide="award"></i></div>
+                    <h4 class="font-bold text-sm mb-1">商用數據應用師 (JPG)</h4>
+                    <p class="text-xs text-gray-500">專業認證</p>
                 </div>
             </div>
         </div>
@@ -235,6 +236,22 @@
                         <i data-lucide="chevron-right" class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity"></i>
                     </div>
                     <div class="p-4 border border-gray-800 flex items-center justify-between group transition-all hover:bg-white hover:text-black hover:scale-105 cursor-default">
+                        <span class="font-mono text-sm">Supabase</span>
+                        <i data-lucide="chevron-right" class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                    </div>
+                    <div class="p-4 border border-gray-800 flex items-center justify-between group transition-all hover:bg-white hover:text-black hover:scale-105 cursor-default">
+                        <span class="font-mono text-sm">IoT (ESP32 / Pi)</span>
+                        <i data-lucide="chevron-right" class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                    </div>
+                    <div class="p-4 border border-gray-800 flex items-center justify-between group transition-all hover:bg-white hover:text-black hover:scale-105 cursor-default">
+                        <span class="font-mono text-sm">C# (.NET)</span>
+                        <i data-lucide="chevron-right" class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                    </div>
+                    <div class="p-4 border border-gray-800 flex items-center justify-between group transition-all hover:bg-white hover:text-black hover:scale-105 cursor-default">
+                        <span class="font-mono text-sm">HTML / React</span>
+                        <i data-lucide="chevron-right" class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                    </div>
+                    <div class="p-4 border border-gray-800 flex items-center justify-between group transition-all hover:bg-white hover:text-black hover:scale-105 cursor-default">
                         <span class="font-mono text-sm">Python (Selenium)</span>
                         <i data-lucide="chevron-right" class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity"></i>
                     </div>
@@ -246,9 +263,8 @@
                         <span class="font-mono text-sm">MySQL</span>
                         <i data-lucide="chevron-right" class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity"></i>
                     </div>
-                    <div class="p-4 border border-gray-800 flex items-center justify-between group transition-all hover:bg-white hover:text-black hover:scale-105 cursor-default">
-                        <span class="font-mono text-sm">SEO / GA</span>
-                        <i data-lucide="chevron-right" class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                    <div class="p-4 border border-gray-800 flex items-center justify-between group transition-all hover:bg-white hover:text-black hover:scale-105 cursor-default text-gray-500 italic">
+                        <span class="font-mono text-sm">More coming soon...</span>
                     </div>
                 </div>
                 
@@ -257,7 +273,7 @@
                         <i data-lucide="terminal" class="w-5 h-5"></i> Simon's Philosophy
                     </h4>
                     <p class="text-sm text-gray-400 leading-loose">
-                        身為一名 38 歲的資管學生，我將社會閱歷轉化為敏銳的商業觀察力。在 <strong>基律科技</strong> 的經驗讓我精通自動化流程優化；在 <strong>新聞傳播</strong> 的背景則讓我擁有流暢的跨部門溝通能力。
+                        身為一名26歲的資管學生，我將社會閱歷轉化為敏銳的商業觀察力。在 <strong>基律科技</strong> 的經驗讓我精通自動化流程優化；在 <strong>新聞傳播</strong> 的背景則讓我擁有流暢的跨部門溝通能力。
                         我能將複雜的數據邏輯，轉化為直覺且具美感的數位產品。
                     </p>
                 </div>
@@ -274,10 +290,10 @@
                     842679135jjj@gmail.com
                 </a>
                 <div class="flex gap-6 mt-8">
-                    <a href="https://github.com/joe10897" target="_blank" class="p-4 border border-black rounded-full hover:bg-black hover:text-white transition-all transform hover:-translate-y-1">
+                    <a href="https://github.com/joe10897" target="_blank" rel="noopener" class="p-4 border border-black rounded-full hover:bg-black hover:text-white transition-all transform hover:-translate-y-1">
                         <i data-lucide="github"></i>
                     </a>
-                    <a href="https://nomochrome.site/Simon-s_developer/" target="_blank" class="p-4 border border-black rounded-full hover:bg-black hover:text-white transition-all transform hover:-translate-y-1">
+                    <a href="https://nomochrome.site/Simon-s_developer/" target="_blank" rel="noopener" class="p-4 border border-black rounded-full hover:bg-black hover:text-white transition-all transform hover:-translate-y-1">
                         <i data-lucide="globe"></i>
                     </a>
                     <a href="mailto:842679135jjj@gmail.com" class="p-4 border border-black rounded-full hover:bg-black hover:text-white transition-all transform hover:-translate-y-1">
@@ -319,101 +335,107 @@
         setTimeout(typeWriter, 500);
 
         // 3. Project Slider Data & Logic
+        // 3. Project Grid Data & Logic
         const projects = [
             {
-                category: "AI / Smart Transportation",
-                title: "專題行車方案開發",
-                desc: "運用 YOLOv8 進行即時路況偵測與行車路徑優化。整合機器學習模型分析駕駛行為，提升行車安全與運輸效率，解決都市交通壅塞痛點。",
-                tech: ["Python", "YOLOv8", "OpenCV", "Path Planning"],
-                link: "https://nomochrome.site/Simon-s_developer/",
-                image: "https://images.unsplash.com/photo-1555617766-c94804975da3?auto=format&fit=crop&q=80&w=800"
+                title: "東方森煌古文物鑑定智能助理",
+                desc: "為專業鑑定中心開發的 24/7 混合型智能客服。整合 Gemini 1.5 Flash 與 LINE Messaging API。",
+                tech: ["Python", "Gemini API", "LINE Bot SDK"],
+                language: "Python",
+                langColor: "#3572A5",
+                link: "https://github.com/joe10897/Senhuang_linebot",
+                stars: "12",
+                forks: "4"
             },
             {
-                category: "Deep Learning / Graphics",
+                title: "V.I.S.O.R. 行車助理",
+                desc: "結合 YOLOv8n 與多感測器融合技術，開發低成本機車駕駛輔助系統。支援 AR/HUD 警示顯示。",
+                tech: ["Python", "YOLOv8", "OpenCV"],
+                language: "Python",
+                langColor: "#3572A5",
+                link: "https://github.com/joe10897/VISOR_APP",
+                stars: "45",
+                forks: "8"
+            },
+            {
                 title: "向量圖可微分柵格化應用",
-                desc: "北科大畢業論文。分析 L2 與 LPIPS Loss 演算法特徵，並應用於 Painterly Rendering 演算法，實現高品質的圖像風格化生成。",
-                tech: ["Python", "PyTorch", "Computer Vision"],
-                link: "https://nomochrome.site/Simon-s_developer/",
-                image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&q=80&w=800"
+                desc: "北科大畢業論文。應用於 Painterly Rendering 演算法，實現高品質的圖像風格化生成。",
+                tech: ["Python", "PyTorch", "CV"],
+                language: "Python",
+                langColor: "#3572A5",
+                link: "https://github.com/joe10897",
+                stars: "8",
+                forks: "2"
             },
             {
-                category: "Web Development",
-                title: "HKongsCinema 線上訂票系統",
-                desc: "具備完整 RWD 佈局的電影票預約平台。採用模組化組件設計，優化極端流量下的使用者購票體驗與介面流暢度。",
-                tech: ["JavaScript", "HTML5", "CSS3", "CoffeeScript"],
-                link: "https://nomochrome.site/Simon-s_developer/",
-                image: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&q=80&w=800"
+                title: "IoT 智慧排隊系統",
+                desc: "2016 香港大學發明大賽作品。基於 Raspberry Pi 與 Arduino，整合 RFID 與 ESP8266。",
+                tech: ["Arduino", "MySQL", "IoT"],
+                language: "C++",
+                langColor: "#f34b7d",
+                link: "https://github.com/joe10897",
+                stars: "15",
+                forks: "3"
             },
             {
-                category: "Professional Experience",
-                title: "自動化商標檢索平台",
-                desc: "於基律科技開發之自動化爬蟲與區塊鏈驗證平台，大幅提升專利服務檢索效率，並確保資料存證的安全性。",
-                tech: ["Python", "Selenium", "Blockchain", "Web Crawling"],
+                title: "HKongsCinema 訂票系統",
+                desc: "具備完整 RWD 佈局的電影票預約平台。採用模組化組件設計，優化購票體驗。",
+                tech: ["JavaScript", "HTML5", "CSS3"],
+                language: "JavaScript",
+                langColor: "#f1e05a",
                 link: "https://nomochrome.site/Simon-s_developer/",
-                image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800"
+                stars: "22",
+                forks: "5"
+            },
+            {
+                title: "任務罐 Task Jar APP",
+                desc: "結合目標管理與遊戲化的單頁應用 (SPA)。整合 Gemini AI 助手與 Google Apps Script。",
+                tech: ["React", "Tailwind CSS", "Gemini"],
+                language: "TypeScript",
+                langColor: "#3178c6",
+                link: "https://github.com/joe10897/TimeFlow",
+                stars: "34",
+                forks: "12"
             }
         ];
 
-        let activeIndex = 0;
-        const container = document.getElementById('project-container');
-
-        function renderProject(index) {
-            const project = projects[index];
-            const techBadges = project.tech.map(t => `<span class="px-3 py-1 bg-gray-100 text-[10px] uppercase font-bold tracking-wider">${t}</span>`).join('');
-            
-            const html = `
-                <div class="order-2 md:order-1 p-8 md:p-16 flex flex-col justify-center bg-white min-h-[400px]">
-                    <span class="text-xs font-bold uppercase tracking-widest text-blue-600 mb-4 flex items-center gap-2">
-                        <i data-lucide="navigation" class="w-3 h-3"></i> ${project.category}
-                    </span>
-                    <h4 class="text-3xl md:text-5xl font-black mb-6 leading-tight">
-                        ${project.title}
-                    </h4>
-                    <p class="text-gray-600 mb-8 leading-relaxed">
-                        ${project.desc}
-                    </p>
-                    <div class="flex flex-wrap gap-2 mb-8">
-                        ${techBadges}
+        function renderProjects() {
+            const grid = document.getElementById('project-grid');
+            grid.innerHTML = projects.map(p => `
+                <div class="group p-5 border border-gray-200 rounded-md hover:border-gray-300 hover:shadow-sm transition-all bg-white flex flex-col justify-between h-full">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <a href="${p.link}" target="_blank" rel="noopener" class="flex items-center gap-2 font-bold text-blue-600 hover:underline">
+                                <i data-lucide="book" class="w-4 h-4 text-gray-500"></i>
+                                ${p.title}
+                            </a>
+                            <span class="text-[10px] px-2 py-0.5 border border-gray-200 rounded-full text-gray-500 font-medium">Public</span>
+                        </div>
+                        <p class="text-xs text-gray-600 mb-4 line-clamp-2 leading-relaxed">
+                            ${p.desc}
+                        </p>
                     </div>
-                    <a href="${project.link}" target="_blank" class="flex items-center gap-2 font-bold group w-fit">
-                        EXPLORE PROJECT <i data-lucide="external-link" class="w-4 h-4 group-hover:rotate-45 transition-transform"></i>
-                    </a>
+                    
+                    <div class="flex items-center gap-4 text-[10px] text-gray-500">
+                        <div class="flex items-center gap-1.5">
+                            <span class="w-3 h-3 rounded-full" style="background-color: ${p.langColor}"></span>
+                            ${p.language}
+                        </div>
+                        <div class="flex items-center gap-1">
+                            <i data-lucide="star" class="w-3 h-3"></i> ${p.stars}
+                        </div>
+                        <div class="flex items-center gap-1">
+                            <i data-lucide="git-fork" class="w-3 h-3"></i> ${p.forks}
+                        </div>
+                    </div>
                 </div>
-                
-                <div class="order-1 md:order-2 h-[250px] md:h-full w-full bg-cover bg-center grayscale hover:grayscale-0 transition-all duration-1000"
-                     style="background-image: url('${project.image}')">
-                </div>
-            `;
+            `).join('');
             
-            container.innerHTML = html;
-            lucide.createIcons(); // Re-init icons for new content
+            lucide.createIcons();
         }
-
-        function changeProject(direction) {
-            // Fade out
-            container.classList.remove('fade-in');
-            container.classList.add('fade-out');
-
-            setTimeout(() => {
-                if (direction === 'next') {
-                    activeIndex = (activeIndex + 1) % projects.length;
-                } else {
-                    activeIndex = (activeIndex - 1 + projects.length) % projects.length;
-                }
-                
-                renderProject(activeIndex);
-                
-                // Fade in
-                container.classList.remove('fade-out');
-                container.classList.add('fade-in');
-            }, 400); // Wait for CSS transition
-        }
-
-        function nextProject() { changeProject('next'); }
-        function prevProject() { changeProject('prev'); }
 
         // Initial Render
-        renderProject(0);
+        renderProjects();
 
         // 4. Scroll Animation Observer (Mimicking Framer Motion whileInView)
         const observerOptions = {
