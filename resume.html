@@ -34,26 +34,24 @@
 </head>
 <body class="p-4">
 
-    <!-- Print Button -->
-    <div class="max-w-[210mm] mx-auto mb-4 flex justify-end no-print font-sans">
-        <button onclick="window.print()" class="bg-blue-600 text-white px-6 py-2 rounded-lg shadow hover:bg-blue-700 transition-colors flex items-center gap-2 no-print">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
-            列印履歷
-        </button>
-    </div>
-
     <div class="a4-page">
         <!-- Header -->
-        <header class="border-b-2 border-gray-100 pb-8 mb-8 flex items-center gap-8">
-            <img src="img/profile.jpeg" alt="Simon Wong" class="w-32 h-32 rounded-full object-cover border-2 border-gray-200 shadow-md">
+        <header class="border-b-2 border-gray-100 pb-8 mb-8 flex items-center gap-8 relative">
+            <img src="img/profile.jpeg" alt="Simon Wong" class="w-24 h-24 rounded-full object-cover border-2 border-gray-200 shadow-sm">
             <div class="flex-grow">
-                <h1 class="text-4xl font-bold tracking-tight text-gray-900 mb-2">Simon Wong</h1>
-                <p class="text-lg text-blue-600 font-semibold tracking-wide uppercase">Software Engineer / IT Engineer</p>
+                <h1 class="text-3xl font-bold tracking-tight text-gray-900 mb-1">Simon Wong</h1>
+                <p class="text-base text-blue-600 font-semibold tracking-wide uppercase mb-2">Software Engineer / IT Engineer</p>
+                <div class="text-xs text-gray-500 space-y-0.5">
+                    <p>📧 842679135jjj@gmail.com</p>
+                    <p>🔗 github.com/joe10897</p>
+                    <p>📍 Taipei, Taiwan</p>
+                </div>
             </div>
-            <div class="text-right text-sm text-gray-600">
-                <p>842679135jjj@gmail.com</p>
-                <p>github.com/joe10897</p>
-                <p>Taipei, Taiwan</p>
+            <div class="text-right">
+                <div class="bg-white p-1 border border-gray-100 inline-block mb-1 shadow-sm">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=https://nomochrome.site/Simon-s_developer/" alt="Portfolio QR Code" class="w-16 h-16">
+                </div>
+                <p class="text-[9px] text-gray-400 font-mono tracking-tighter">Scan for Online Portfolio</p>
             </div>
         </header>
 
@@ -64,8 +62,12 @@
                 <section class="mb-10">
                     <h2 class="text-xs font-bold text-blue-600 uppercase tracking-widest mb-4">學歷背景</h2>
                     <div class="mb-4">
-                        <h3 class="font-bold text-gray-900">國立臺北科技大學</h3>
-                        <p class="text-xs text-gray-600 italic">資訊工程系 (就讀中)</p>
+                        <h3 class="font-bold text-gray-900 text-sm">致理科技大學</h3>
+                        <p class="text-[10px] text-gray-600 italic">資訊管理系 (大三)</p>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-gray-900 text-sm">國立臺北科技大學</h3>
+                        <p class="text-[10px] text-gray-600 italic">資訊工程系 (大四轉出)</p>
                     </div>
                 </section>
 
@@ -100,6 +102,7 @@
                 <section>
                     <h2 class="text-xs font-bold text-blue-600 uppercase tracking-widest mb-4">專業證照</h2>
                     <ul class="text-[10px] text-gray-600 space-y-2">
+                        <li>• iPas AI 應用規劃師</li>
                         <li>• Microsoft Azure AI Fundamentals</li>
                         <li>• Google Analytics (GA4) 個人認證</li>
                         <li>• 商用數據應用師</li>
@@ -111,10 +114,12 @@
             <!-- Main Content -->
             <div class="col-span-2">
                 <!-- Summary -->
-                <section class="mb-10">
+                <section class="mb-10 text-justify">
                     <h2 class="text-xs font-bold text-blue-600 uppercase tracking-widest mb-4">專業概覽</h2>
-                    <p class="text-xs text-gray-600 leading-relaxed">
-                        目前就讀於國立臺北科技大學資訊工程系。擅長以 <strong>Python</strong> 進行軟體開發與自動化測試，具備自動化流程開發與專利檢索分析的實務經驗。此外，對<strong>機器學習</strong>有一定理解，聚焦於影像處理、物件追蹤與資料視覺化。具備 <strong>Microsoft Azure</strong> 使用經驗，能靈活運用雲端資源進行專案部署。
+                    <p class="text-[11px] text-gray-600 leading-relaxed">
+                        您好，我是 <strong>Simon</strong>，過去曾擔任<strong>新聞攝影師</strong>一年，並有一年<strong>軟體開發工程師</strong>經歷，也涉獵媒體相關領域。<br><br>
+                        我擅長以 <strong>Python</strong> 進行<strong>軟體開發與自動化測試</strong>，具備<strong>自動化流程開發與專利檢索分析</strong>的實務經驗。曾參與多項與 <strong>LINE Bot</strong>、<strong>自動化工具開發</strong>相關的專案。<br><br>
+                        此外，我對<strong>機器學習</strong>有一定理解，近期的 side project 聚焦於<strong>影像處理、物件追蹤、資料視覺化</strong>等領域。在雲端服務方面，具備 <strong>Microsoft Azure</strong> 使用經驗與相關證照，能靈活運用<strong>雲端資源進行專案部署</strong>。
                     </p>
                 </section>
 
