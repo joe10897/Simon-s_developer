@@ -74,6 +74,80 @@
         .nav-blend {
             mix-blend-mode: difference;
         }
+
+        /* ===== NEW INTERACTIVE EFFECTS ===== */
+
+        /* Cursor Follower Glow */
+        .cursor-glow {
+            position: fixed;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(59,130,246,0.15) 0%, transparent 70%);
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            transition: opacity 0.3s ease;
+            will-change: transform;
+        }
+
+        /* Gradient Text Animation */
+        .gradient-text {
+            background: linear-gradient(135deg, #ffffff 0%, #3b82f6 25%, #8b5cf6 50%, #3b82f6 75%, #ffffff 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient-shift 4s ease-in-out infinite;
+        }
+
+        @keyframes gradient-shift {
+            0% { background-position: 0% center; }
+            50% { background-position: 100% center; }
+            100% { background-position: 0% center; }
+        }
+
+        /* 3D Card Tilt Container */
+        .card-tilt {
+            transform-style: preserve-3d;
+            perspective: 800px;
+        }
+
+        .card-tilt-inner {
+            transition: transform 0.2s cubic-bezier(0.33, 1, 0.68, 1);
+            transform-style: preserve-3d;
+        }
+        .card-tilt-inner:hover {
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+        }
+
+        /* Magnetic Button */
+        .magnetic-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s cubic-bezier(0.33, 1, 0.68, 1);
+            will-change: transform;
+        }
+
+        /* Active Nav Link */
+        .nav-link-active {
+            text-decoration: line-through;
+            opacity: 1;
+        }
+
+        /* Nav scroll background */
+        .nav-scrolled {
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            padding-top: 4px;
+            padding-bottom: 4px;
+        }
+        .nav-scrolled .nav-blend {
+            mix-blend-mode: normal;
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -94,6 +168,8 @@
 
     <!-- Hero Section -->
     <section class="h-screen flex flex-col justify-center items-center px-4 relative overflow-hidden">
+        <!-- Cursor Glow -->
+        <div class="cursor-glow" id="cursor-glow"></div>
         <!-- Background Image -->
         <div class="absolute inset-0 z-0 pointer-events-none opacity-25" 
              style="background-image: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=2000'); background-size: cover; background-position: center; transform: scale(1.1);">
@@ -307,19 +383,19 @@
     <!-- Contact Section -->
     <section id="contact" class="py-24 bg-white text-black text-center">
         <div class="reveal-on-scroll">
-            <h2 class="text-5xl md:text-8xl font-black mb-8 tracking-tighter">LET'S CONNECT.</h2>
+            <h2 class="text-5xl md:text-8xl font-black mb-8 tracking-tighter gradient-text">LET'S CONNECT.</h2>
             <div class="flex flex-col items-center gap-6">
                 <a href="mailto:842679135jjj@gmail.com" class="text-2xl font-bold hover:line-through transition-all">
                     842679135jjj@gmail.com
                 </a>
                 <div class="flex gap-6 mt-8">
-                    <a href="https://github.com/joe10897" target="_blank" rel="noopener" class="p-4 border border-black rounded-full hover:bg-black hover:text-white transition-all transform hover:-translate-y-1 flex items-center justify-center">
+                    <a href="https://github.com/joe10897" target="_blank" rel="noopener" class="magnetic-btn p-4 border border-black rounded-full hover:bg-black hover:text-white transition-all transform hover:-translate-y-1 flex items-center justify-center">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
                     </a>
-                    <a href="https://nomochrome.site/Simon-s_developer/" target="_blank" rel="noopener" class="p-4 border border-black rounded-full hover:bg-black hover:text-white transition-all transform hover:-translate-y-1">
+                    <a href="https://nomochrome.site/Simon-s_developer/" target="_blank" rel="noopener" class="magnetic-btn p-4 border border-black rounded-full hover:bg-black hover:text-white transition-all transform hover:-translate-y-1">
                         <i data-lucide="globe"></i>
                     </a>
-                    <a href="mailto:842679135jjj@gmail.com" class="p-4 border border-black rounded-full hover:bg-black hover:text-white transition-all transform hover:-translate-y-1">
+                    <a href="mailto:842679135jjj@gmail.com" class="magnetic-btn p-4 border border-black rounded-full hover:bg-black hover:text-white transition-all transform hover:-translate-y-1">
                         <i data-lucide="mail"></i>
                     </a>
                 </div>
@@ -424,37 +500,40 @@
 
         function renderProjects() {
             const grid = document.getElementById('project-grid');
-            grid.innerHTML = projects.map(p => `
-                <div class="group p-5 border border-gray-200 rounded-md hover:border-gray-300 hover:shadow-sm transition-all bg-white flex flex-col justify-between h-full">
-                    <div>
-                        <div class="flex items-center justify-between mb-2">
-                            <a href="${p.link}" target="_blank" rel="noopener" class="flex items-center gap-2 font-bold text-blue-600 hover:underline">
-                                <i data-lucide="book" class="w-4 h-4 text-gray-500"></i>
-                                ${p.title}
-                            </a>
-                            <span class="text-[10px] px-2 py-0.5 border border-gray-200 rounded-full text-gray-500 font-medium">Public</span>
+            grid.innerHTML = projects.map((p, i) => `
+                <div class="card-tilt" style="animation-delay: ${0.1 * i}s">
+                    <div class="card-tilt-inner group p-5 border border-gray-200 rounded-md hover:border-gray-300 hover:shadow-sm bg-white flex flex-col justify-between h-full">
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <a href="${p.link}" target="_blank" rel="noopener" class="flex items-center gap-2 font-bold text-blue-600 hover:underline">
+                                    <i data-lucide="book" class="w-4 h-4 text-gray-500"></i>
+                                    ${p.title}
+                                </a>
+                                <span class="text-[10px] px-2 py-0.5 border border-gray-200 rounded-full text-gray-500 font-medium">Public</span>
+                            </div>
+                            <p class="text-xs text-gray-600 mb-4 line-clamp-2 leading-relaxed">
+                                ${p.desc}
+                            </p>
                         </div>
-                        <p class="text-xs text-gray-600 mb-4 line-clamp-2 leading-relaxed">
-                            ${p.desc}
-                        </p>
-                    </div>
-                    
-                    <div class="flex items-center gap-4 text-[10px] text-gray-500">
-                        <div class="flex items-center gap-1.5">
-                            <span class="w-3 h-3 rounded-full" style="background-color: ${p.langColor}"></span>
-                            ${p.language}
-                        </div>
-                        <div class="flex items-center gap-1">
-                            <i data-lucide="star" class="w-3 h-3"></i> ${p.stars}
-                        </div>
-                        <div class="flex items-center gap-1">
-                            <i data-lucide="git-fork" class="w-3 h-3"></i> ${p.forks}
+                        
+                        <div class="flex items-center gap-4 text-[10px] text-gray-500">
+                            <div class="flex items-center gap-1.5">
+                                <span class="w-3 h-3 rounded-full" style="background-color: ${p.langColor}"></span>
+                                ${p.language}
+                            </div>
+                            <div class="flex items-center gap-1">
+                                <i data-lucide="star" class="w-3 h-3"></i> ${p.stars}
+                            </div>
+                            <div class="flex items-center gap-1">
+                                <i data-lucide="git-fork" class="w-3 h-3"></i> ${p.forks}
+                            </div>
                         </div>
                     </div>
                 </div>
             `).join('');
             
             lucide.createIcons();
+            initCardTilt();
         }
 
         // Initial Render
@@ -478,6 +557,108 @@
         document.querySelectorAll('.reveal-on-scroll').forEach(el => {
             observer.observe(el);
         });
+
+        // ===== NEW INTERACTIVE EFFECTS =====
+
+        // 5. Cursor Follower Glow (hero section only)
+        const cursorGlow = document.getElementById('cursor-glow');
+        let glowTimeout;
+
+        document.addEventListener('mousemove', (e) => {
+            if (cursorGlow) {
+                cursorGlow.style.left = e.clientX + 'px';
+                cursorGlow.style.top = e.clientY + 'px';
+                cursorGlow.style.opacity = '1';
+                clearTimeout(glowTimeout);
+                glowTimeout = setTimeout(() => {
+                    cursorGlow.style.opacity = '0';
+                }, 3000);
+            }
+        });
+
+        document.addEventListener('mouseleave', () => {
+            if (cursorGlow) cursorGlow.style.opacity = '0';
+        });
+
+        // 6. 3D Card Tilt Effect
+        function initCardTilt() {
+            document.querySelectorAll('.card-tilt').forEach(card => {
+                const inner = card.querySelector('.card-tilt-inner');
+                if (!inner) return;
+
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    const rotateY = ((x - centerX) / centerX) * 8;
+                    const rotateX = ((centerY - y) / centerY) * 8;
+                    inner.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02,1.02,1.02)`;
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    inner.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg) scale3d(1,1,1)';
+                });
+            });
+        }
+
+        // 7. Scroll-Active Nav Highlight & Nav Background
+        function initNavScroll() {
+            const nav = document.querySelector('nav');
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('nav a[href^="#"]');
+
+            function updateNav() {
+                const scrollY = window.scrollY;
+
+                // Nav background transition
+                if (scrollY > window.innerHeight * 0.8) {
+                    nav.classList.add('nav-scrolled');
+                } else {
+                    nav.classList.remove('nav-scrolled');
+                }
+
+                // Active section highlight
+                let currentSection = '';
+                sections.forEach(section => {
+                    const top = section.offsetTop - 150;
+                    const bottom = top + section.offsetHeight;
+                    if (scrollY >= top && scrollY < bottom) {
+                        currentSection = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('nav-link-active');
+                    const href = link.getAttribute('href').replace('#', '');
+                    if (href === currentSection) {
+                        link.classList.add('nav-link-active');
+                    }
+                });
+            }
+
+            window.addEventListener('scroll', updateNav, { passive: true });
+            updateNav();
+        }
+        initNavScroll();
+
+        // 8. Magnetic Buttons
+        function initMagneticButtons() {
+            document.querySelectorAll('.magnetic-btn').forEach(btn => {
+                btn.addEventListener('mousemove', (e) => {
+                    const rect = btn.getBoundingClientRect();
+                    const x = e.clientX - rect.left - rect.width / 2;
+                    const y = e.clientY - rect.top - rect.height / 2;
+                    btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+                });
+
+                btn.addEventListener('mouseleave', () => {
+                    btn.style.transform = 'translate(0, 0)';
+                });
+            });
+        }
+        initMagneticButtons();
 
     </script>
 </body>
