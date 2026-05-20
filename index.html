@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html lang="zh-TW" class="scroll-smooth">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simon Wong | Software Engineer</title>
-    
+
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
+
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
 
     <!-- Custom Styles for Animations that Tailwind doesn't cover by default -->
     <style>
@@ -22,7 +25,7 @@
             color: white;
             overflow-x: hidden;
         }
-        
+
         .font-mono {
             font-family: 'JetBrains Mono', monospace;
         }
@@ -51,15 +54,22 @@
         }
 
         @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
         }
 
         /* Slider Transitions */
         .slider-content {
             transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
         }
-        
+
         .fade-out {
             opacity: 0;
             transform: translateX(-20px);
@@ -69,7 +79,7 @@
             opacity: 1;
             transform: translateX(0);
         }
-        
+
         /* Nav Mix Blend Mode for visibility on light/dark backgrounds */
         .nav-blend {
             mix-blend-mode: difference;
@@ -83,7 +93,7 @@
             width: 300px;
             height: 300px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(59,130,246,0.15) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 70%);
             pointer-events: none;
             transform: translate(-50%, -50%);
             z-index: 1;
@@ -102,9 +112,17 @@
         }
 
         @keyframes gradient-shift {
-            0% { background-position: 0% center; }
-            50% { background-position: 100% center; }
-            100% { background-position: 0% center; }
+            0% {
+                background-position: 0% center;
+            }
+
+            50% {
+                background-position: 100% center;
+            }
+
+            100% {
+                background-position: 0% center;
+            }
         }
 
         /* 3D Card Tilt Container */
@@ -117,8 +135,9 @@
             transition: transform 0.2s cubic-bezier(0.33, 1, 0.68, 1);
             transform-style: preserve-3d;
         }
+
         .card-tilt-inner:hover {
-            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
         }
 
         /* Magnetic Button */
@@ -138,18 +157,20 @@
 
         /* Nav scroll background */
         .nav-scrolled {
-            background: rgba(0,0,0,0.85);
+            background: rgba(0, 0, 0, 0.85);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            border-bottom: 1px solid rgba(255,255,255,0.06);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
             padding-top: 4px;
             padding-bottom: 4px;
         }
+
         .nav-scrolled .nav-blend {
             mix-blend-mode: normal;
         }
     </style>
 </head>
+
 <body class="antialiased">
 
     <!-- Navigation -->
@@ -162,7 +183,8 @@
             <a href="#experience" class="hover:line-through transition-all cursor-pointer">Experience</a>
             <a href="#certs" class="hover:line-through transition-all cursor-pointer">Certs</a>
             <a href="#contact" class="hover:line-through transition-all cursor-pointer">Contact</a>
-            <a href="resume.html" target="_blank" class="hover:line-through transition-all cursor-pointer text-blue-400">Resume</a>
+            <a href="resume.html" target="_blank"
+                class="hover:line-through transition-all cursor-pointer text-blue-400">Resume</a>
         </div>
     </nav>
 
@@ -171,24 +193,29 @@
         <!-- Cursor Glow -->
         <div class="cursor-glow" id="cursor-glow"></div>
         <!-- Background Image -->
-        <div class="absolute inset-0 z-0 pointer-events-none opacity-25" 
-             style="background-image: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=2000'); background-size: cover; background-position: center; transform: scale(1.1);">
+        <div class="absolute inset-0 z-0 pointer-events-none opacity-25"
+            style="background-image: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=2000'); background-size: cover; background-position: center; transform: scale(1.1);">
         </div>
-        
+
         <div class="z-10 text-center">
-            <h1 class="text-5xl md:text-8xl font-black mb-6 tracking-tighter min-h-[1.2em] flex justify-center items-center">
+            <h1
+                class="text-5xl md:text-8xl font-black mb-6 tracking-tighter min-h-[1.2em] flex justify-center items-center">
                 <span id="typewriter-text"></span>
                 <span class="inline-block w-[4px] h-[0.8em] bg-white ml-2 cursor-blink"></span>
             </h1>
-            
-            <div class="flex flex-wrap justify-center gap-6 text-gray-400 opacity-0 reveal-on-scroll" id="hero-skills" style="transition-delay: 1.5s;">
-                <span class="flex items-center gap-2 border-r border-gray-800 pr-6"><i data-lucide="code" class="w-4 h-4"></i> 前端開發</span>
-                <span class="flex items-center gap-2 border-r border-gray-800 pr-6"><i data-lucide="terminal" class="w-4 h-4"></i> 自動化開發</span>
+
+            <div class="flex flex-wrap justify-center gap-6 text-gray-400 opacity-0 reveal-on-scroll" id="hero-skills"
+                style="transition-delay: 1.5s;">
+                <span class="flex items-center gap-2 border-r border-gray-800 pr-6"><i data-lucide="code"
+                        class="w-4 h-4"></i> 前端開發</span>
+                <span class="flex items-center gap-2 border-r border-gray-800 pr-6"><i data-lucide="terminal"
+                        class="w-4 h-4"></i> 自動化開發</span>
                 <span class="flex items-center gap-2"><i data-lucide="camera" class="w-4 h-4"></i> 視覺美感</span>
             </div>
 
             <div class="mt-12 opacity-0 reveal-on-scroll" style="transition-delay: 1.8s;">
-                <a href="resume.html" target="_blank" class="px-8 py-3 border border-white text-white rounded-full hover:bg-white hover:text-black transition-all flex items-center gap-2 group mx-auto w-max">
+                <a href="resume.html" target="_blank"
+                    class="px-8 py-3 border border-white text-white rounded-full hover:bg-white hover:text-black transition-all flex items-center gap-2 group mx-auto w-max">
                     <span>檢視履歷 (Resume)</span>
                     <i data-lucide="external-link" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
                 </a>
@@ -209,7 +236,8 @@
                     <h2 class="text-sm uppercase tracking-widest text-gray-500 mb-2">Selected Projects</h2>
                     <h3 class="text-4xl font-bold">精選開發成果</h3>
                 </div>
-                <a href="https://github.com/joe10897" target="_blank" rel="noopener" class="text-sm font-medium hover:underline flex items-center gap-1">
+                <a href="https://github.com/joe10897" target="_blank" rel="noopener"
+                    class="text-sm font-medium hover:underline flex items-center gap-1">
                     View all on GitHub <i data-lucide="external-link" class="w-3 h-3"></i>
                 </a>
             </div>
@@ -228,38 +256,62 @@
             </h3>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <!-- Cert 1 -->
-                <div onclick="window.open('img/certification/Azure AI Fundamentals_證書.pdf', '_blank')" class="p-6 bg-white border border-gray-200 rounded-lg shadow-sm flex flex-col items-center text-center hover:-translate-y-1 hover:shadow-md transition-all cursor-pointer group">
-                    <div class="mb-4 p-3 bg-gray-100 rounded-full text-black group-hover:bg-blue-50 group-hover:text-blue-600 transition-colors"><i data-lucide="shield-check"></i></div>
+                <div onclick="window.open('img/certification/Azure AI Fundamentals_證書.pdf', '_blank')"
+                    class="p-6 bg-white border border-gray-200 rounded-lg shadow-sm flex flex-col items-center text-center hover:-translate-y-1 hover:shadow-md transition-all cursor-pointer group">
+                    <div
+                        class="mb-4 p-3 bg-gray-100 rounded-full text-black group-hover:bg-blue-50 group-hover:text-blue-600 transition-colors">
+                        <i data-lucide="shield-check"></i>
+                    </div>
                     <h4 class="font-bold text-sm mb-1">Microsoft Azure AI Fundamentals</h4>
                     <p class="text-xs text-gray-500">Microsoft (AZ-900)</p>
                 </div>
                 <!-- Cert 2 -->
-                <div onclick="window.open('img/certification/Google Analytics Certification(Google Analytics 分析認證).jpg', '_blank')" class="p-6 bg-white border border-gray-200 rounded-lg shadow-sm flex flex-col items-center text-center hover:-translate-y-1 hover:shadow-md transition-all cursor-pointer group">
-                    <div class="mb-4 p-3 bg-gray-100 rounded-full text-black group-hover:bg-blue-50 group-hover:text-blue-600 transition-colors"><i data-lucide="database"></i></div>
+                <div onclick="window.open('img/certification/Google Analytics Certification(Google Analytics 分析認證).jpg', '_blank')"
+                    class="p-6 bg-white border border-gray-200 rounded-lg shadow-sm flex flex-col items-center text-center hover:-translate-y-1 hover:shadow-md transition-all cursor-pointer group">
+                    <div
+                        class="mb-4 p-3 bg-gray-100 rounded-full text-black group-hover:bg-blue-50 group-hover:text-blue-600 transition-colors">
+                        <i data-lucide="database"></i>
+                    </div>
                     <h4 class="font-bold text-sm mb-1">Google Analytics (分析) 個人認證</h4>
                     <p class="text-xs text-gray-500">Google</p>
                 </div>
                 <!-- Cert 3 -->
-                <div onclick="window.open('img/certification/商用數據應用師GP011778_證書.pdf', '_blank')" class="p-6 bg-white border border-gray-200 rounded-lg shadow-sm flex flex-col items-center text-center hover:-translate-y-1 hover:shadow-md transition-all cursor-pointer group">
-                    <div class="mb-4 p-3 bg-gray-100 rounded-full text-black group-hover:bg-blue-50 group-hover:text-blue-600 transition-colors"><i data-lucide="award"></i></div>
+                <div onclick="window.open('img/certification/商用數據應用師GP011778_證書.pdf', '_blank')"
+                    class="p-6 bg-white border border-gray-200 rounded-lg shadow-sm flex flex-col items-center text-center hover:-translate-y-1 hover:shadow-md transition-all cursor-pointer group">
+                    <div
+                        class="mb-4 p-3 bg-gray-100 rounded-full text-black group-hover:bg-blue-50 group-hover:text-blue-600 transition-colors">
+                        <i data-lucide="award"></i>
+                    </div>
                     <h4 class="font-bold text-sm mb-1">商用數據應用師</h4>
                     <p class="text-xs text-gray-500">專業認證</p>
                 </div>
                 <!-- Cert 4 -->
-                <div onclick="window.open('img/certification/PVQC ICT Specialist 計算機類--專業級.jpg', '_blank')" class="p-6 bg-white border border-gray-200 rounded-lg shadow-sm flex flex-col items-center text-center hover:-translate-y-1 hover:shadow-md transition-all cursor-pointer group">
-                    <div class="mb-4 p-3 bg-gray-100 rounded-full text-black group-hover:bg-blue-50 group-hover:text-blue-600 transition-colors"><i data-lucide="monitor"></i></div>
+                <div onclick="window.open('img/certification/PVQC ICT Specialist 計算機類--專業級.jpg', '_blank')"
+                    class="p-6 bg-white border border-gray-200 rounded-lg shadow-sm flex flex-col items-center text-center hover:-translate-y-1 hover:shadow-md transition-all cursor-pointer group">
+                    <div
+                        class="mb-4 p-3 bg-gray-100 rounded-full text-black group-hover:bg-blue-50 group-hover:text-blue-600 transition-colors">
+                        <i data-lucide="monitor"></i>
+                    </div>
                     <h4 class="font-bold text-sm mb-1">PVQC ICT Specialist</h4>
                     <p class="text-xs text-gray-500">計算機類--專業級</p>
                 </div>
                 <!-- Cert 5 (New) -->
-                <div onclick="window.open('img/certification/Application Engineer of Business Data(商用數據應用師).jpg', '_blank')" class="p-6 bg-white border border-gray-200 rounded-lg shadow-sm flex flex-col items-center text-center hover:-translate-y-1 hover:shadow-md transition-all cursor-pointer group">
-                    <div class="mb-4 p-3 bg-gray-100 rounded-full text-black group-hover:bg-blue-50 group-hover:text-blue-600 transition-colors"><i data-lucide="award"></i></div>
+                <div onclick="window.open('img/certification/Application Engineer of Business Data(商用數據應用師).jpg', '_blank')"
+                    class="p-6 bg-white border border-gray-200 rounded-lg shadow-sm flex flex-col items-center text-center hover:-translate-y-1 hover:shadow-md transition-all cursor-pointer group">
+                    <div
+                        class="mb-4 p-3 bg-gray-100 rounded-full text-black group-hover:bg-blue-50 group-hover:text-blue-600 transition-colors">
+                        <i data-lucide="award"></i>
+                    </div>
                     <h4 class="font-bold text-sm mb-1">商用數據應用師 (JPG)</h4>
                     <p class="text-xs text-gray-500">專業認證</p>
                 </div>
                 <!-- Cert 6 -->
-                <div class="p-6 bg-white border border-gray-200 rounded-lg shadow-sm flex flex-col items-center text-center hover:-translate-y-1 hover:shadow-md transition-all cursor-default group">
-                    <div class="mb-4 p-3 bg-gray-100 rounded-full text-black group-hover:bg-blue-50 group-hover:text-blue-600 transition-colors"><i data-lucide="cpu"></i></div>
+                <div
+                    class="p-6 bg-white border border-gray-200 rounded-lg shadow-sm flex flex-col items-center text-center hover:-translate-y-1 hover:shadow-md transition-all cursor-default group">
+                    <div
+                        class="mb-4 p-3 bg-gray-100 rounded-full text-black group-hover:bg-blue-50 group-hover:text-blue-600 transition-colors">
+                        <i data-lucide="cpu"></i>
+                    </div>
                     <h4 class="font-bold text-sm mb-1">iPas AI 應用規劃師</h4>
                     <p class="text-xs text-gray-500">經濟部 (iPas)</p>
                 </div>
@@ -273,48 +325,69 @@
             <!-- Timeline -->
             <div>
                 <h3 class="text-2xl font-bold mb-12 border-b border-gray-800 pb-4 flex items-center gap-2">
-                   <i data-lucide="briefcase"></i> 實務經歷
+                    <i data-lucide="briefcase"></i> 實務經歷
                 </h3>
                 <div class="space-y-12">
-                    
+
                     <div class="relative pl-8 border-l border-gray-800 reveal-on-scroll">
-                        <div class="absolute left-[-5px] top-0 w-[10px] h-[10px] bg-white rounded-full transition-transform group-hover:scale-125"></div>
+                        <div
+                            class="absolute left-[-5px] top-0 w-[10px] h-[10px] bg-white rounded-full transition-transform group-hover:scale-125">
+                        </div>
                         <span class="text-xs text-gray-500 mb-1 block font-mono">2025/03 - 現在</span>
-                        <h4 class="text-xl font-bold text-white">東方森煌古物鑑定所_賓州科訊股份有限公司</h4>
-                        <p class="text-blue-400 text-sm mb-2 font-medium">IT Engineer</p>
-                        <p class="text-gray-500 text-sm leading-relaxed">負責管理和維護計算機系統和網路基礎設施，包括伺服器、存儲設備、網路設備等。</p>
+                        <h4 class="text-xl font-bold text-white">東方森煌古物鑑定所 (賓州科訊)</h4>
+                        <p class="text-blue-400 text-sm mb-3 font-medium">IT Engineer</p>
+                        <div class="space-y-3 text-gray-400 text-sm leading-relaxed">
+                            <p><strong class="text-gray-200 font-semibold">雲端部署與網站營運：</strong>負責企業官方網站的開發與日常維護，並運用 Railway 平台進行專案的雲端架設與環境部署，確保系統的高可用性與交付效率。</p>
+                            <p><strong class="text-gray-200 font-semibold">LINE 生態系整合開發：</strong>獨立開發與建置 LINE Mini App，優化行動端使用者的互動體驗，協助企業服務數位化與流程輕量化。</p>
+                            <p><strong class="text-gray-200 font-semibold">第三方金流 API 串接：</strong>實作並整合線上金流支付系統，處理交易邏輯與資料安全，確保消費者支付流程的順暢與穩定。</p>
+                            <p><strong class="text-gray-200 font-semibold">系統架構與全端整合：</strong>統籌前端介面、後端服務與外部 API 的串接整合，持續優化現有系統的效能與使用者體驗。</p>
+                        </div>
                     </div>
 
                     <div class="relative pl-8 border-l border-gray-800 reveal-on-scroll">
                         <div class="absolute left-[-5px] top-0 w-[10px] h-[10px] bg-white rounded-full"></div>
                         <span class="text-xs text-gray-500 mb-1 block font-mono">2024/07 - 2025/07</span>
                         <h4 class="text-xl font-bold text-white">新境傳播有限公司</h4>
-                        <p class="text-blue-400 text-sm mb-2 font-medium">新聞編播 / 現場導播</p>
-                        <p class="text-gray-500 text-sm leading-relaxed">負責現場導播、新聞稿處理、影片剪接、YouTube 與社群媒體平台管理及電子書編輯。</p>
+                        <p class="text-blue-400 text-sm mb-3 font-medium">新聞編播 / 現場導播</p>
+                        <div class="space-y-3 text-gray-400 text-sm leading-relaxed">
+                            <p><strong class="text-gray-200 font-semibold">專案統籌與現場控管：</strong>統籌新聞現場製播流程，精準掌控導播節奏並即時應對突發狀況。</p>
+                            <p><strong class="text-gray-200 font-semibold">多媒體內容產製：</strong>獨立執行影片剪輯、新聞稿編寫及電子書數位內容編輯。</p>
+                            <p><strong class="text-gray-200 font-semibold">社群平台營運：</strong>經營 YouTube 及各大社群媒體平台，優化內容上架流程，提升影音曝光度與受眾互動。</p>
+                        </div>
                     </div>
-
+ 
                     <div class="relative pl-8 border-l border-gray-800 reveal-on-scroll">
                         <div class="absolute left-[-5px] top-0 w-[10px] h-[10px] bg-white rounded-full"></div>
                         <span class="text-xs text-gray-500 mb-1 block font-mono">2024/10 - 2025/04</span>
                         <h4 class="text-xl font-bold text-white">Lensbank 鏡頭銀行</h4>
-                        <p class="text-blue-400 text-sm mb-2 font-medium">技術專員 (店員)</p>
-                        <p class="text-gray-500 text-sm leading-relaxed">處理攝影器材整理、門市業務、文書處理及高端影像設備技術支援。</p>
+                        <p class="text-blue-400 text-sm mb-3 font-medium">技術專員</p>
+                        <div class="space-y-3 text-gray-400 text-sm leading-relaxed">
+                            <p><strong class="text-gray-200 font-semibold">技術支援與維護：</strong>提供高端影視攝影設備的技術支援、測試與故障排除，確保器材妥善率。</p>
+                            <p><strong class="text-gray-200 font-semibold">營運與流程優化：</strong>協助門市業務與客戶技術諮詢，優化器材管理流程與行政文書作業，提升借測與租賃效率。</p>
+                        </div>
                     </div>
-
+ 
                     <div class="relative pl-8 border-l border-gray-800 reveal-on-scroll">
                         <div class="absolute left-[-5px] top-0 w-[10px] h-[10px] bg-white rounded-full"></div>
                         <span class="text-xs text-gray-500 mb-1 block font-mono">2022/02 - 2023/09</span>
                         <h4 class="text-xl font-bold text-white">基律科技智財有限公司 (Biobizlaw Inc)</h4>
-                        <p class="text-blue-400 text-sm mb-2 font-medium">軟體開發工程師</p>
-                        <p class="text-gray-500 text-sm leading-relaxed">自動化軟體開發 (專利服務)、商標檢索資料分析、網頁設計開發 (前/後端)、區塊鏈驗證平台與 Python 爬蟲實作。</p>
+                        <p class="text-blue-400 text-sm mb-3 font-medium">軟體開發工程師</p>
+                        <div class="space-y-3 text-gray-400 text-sm leading-relaxed">
+                            <p><strong class="text-gray-200 font-semibold">自動化與爬蟲開發：</strong>以 Python 實作網路爬蟲與自動化工作流，大幅提升商標檢索與專利資料分析的處理效率。</p>
+                            <p><strong class="text-gray-200 font-semibold">系統與全端開發：</strong>負責企業網頁的前端與後端系統開發，並參與區塊鏈驗證平台的架構建置與實作。</p>
+                            <p><strong class="text-gray-200 font-semibold">智慧化工具導入：</strong>結合 AI Agent 與自動化腳本，優化傳統專利服務的資料處理流程，提升系統的智能化與執行效率。</p>
+                        </div>
                     </div>
-
+ 
                     <div class="relative pl-8 border-l border-gray-800 reveal-on-scroll">
                         <div class="absolute left-[-5px] top-0 w-[10px] h-[10px] bg-white rounded-full"></div>
                         <span class="text-xs text-gray-500 mb-1 block font-mono">2020/02 - 2021/02</span>
                         <h4 class="text-xl font-bold text-white">Photographic Society Hong Kong Media</h4>
-                        <p class="text-blue-400 text-sm mb-2 font-medium">新聞攝影師</p>
-                        <p class="text-gray-500 text-sm leading-relaxed">負責社會新聞紀錄、攝影採訪、協助撰寫新聞稿，完成高品質報導作業。</p>
+                        <p class="text-blue-400 text-sm mb-3 font-medium">新聞攝影師</p>
+                        <div class="space-y-3 text-gray-400 text-sm leading-relaxed">
+                            <p><strong class="text-gray-200 font-semibold">前線採訪與紀實：</strong>執行前線社會新聞採訪與紀實攝影，具備敏銳的視覺敘事與動態捕捉能力。</p>
+                            <p><strong class="text-gray-200 font-semibold">高壓環境產出：</strong>協助撰寫新聞通稿，能於高壓與快節奏的新聞環境中，穩定交付高品質的媒體報導作業。</p>
+                        </div>
                     </div>
 
                 </div>
@@ -325,55 +398,79 @@
                 <h3 class="text-2xl font-bold mb-12 border-b border-gray-800 pb-4">技術棧與優勢</h3>
                 <div class="grid grid-cols-2 gap-4 mb-12">
                     <!-- Skill Items (Static for SEO, JS not needed for simple hover) -->
-                    <div class="p-4 border border-gray-800 flex items-center justify-between group transition-all hover:bg-white hover:text-black hover:scale-105 cursor-default">
+                    <div
+                        class="p-4 border border-gray-800 flex items-center justify-between group transition-all hover:bg-white hover:text-black hover:scale-105 cursor-default">
                         <span class="font-mono text-sm">React</span>
-                        <i data-lucide="chevron-right" class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                        <i data-lucide="chevron-right"
+                            class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity"></i>
                     </div>
-                    <div class="p-4 border border-gray-800 flex items-center justify-between group transition-all hover:bg-white hover:text-black hover:scale-105 cursor-default">
+                    <div
+                        class="p-4 border border-gray-800 flex items-center justify-between group transition-all hover:bg-white hover:text-black hover:scale-105 cursor-default">
                         <span class="font-mono text-sm">JavaScript</span>
-                        <i data-lucide="chevron-right" class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                        <i data-lucide="chevron-right"
+                            class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity"></i>
                     </div>
-                    <div class="p-4 border border-gray-800 flex items-center justify-between group transition-all hover:bg-white hover:text-black hover:scale-105 cursor-default">
+                    <div
+                        class="p-4 border border-gray-800 flex items-center justify-between group transition-all hover:bg-white hover:text-black hover:scale-105 cursor-default">
                         <span class="font-mono text-sm">Supabase</span>
-                        <i data-lucide="chevron-right" class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                        <i data-lucide="chevron-right"
+                            class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity"></i>
                     </div>
-                    <div class="p-4 border border-gray-800 flex items-center justify-between group transition-all hover:bg-white hover:text-black hover:scale-105 cursor-default">
+                    <div
+                        class="p-4 border border-gray-800 flex items-center justify-between group transition-all hover:bg-white hover:text-black hover:scale-105 cursor-default">
                         <span class="font-mono text-sm">IoT (ESP32 / Pi)</span>
-                        <i data-lucide="chevron-right" class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                        <i data-lucide="chevron-right"
+                            class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity"></i>
                     </div>
-                    <div class="p-4 border border-gray-800 flex items-center justify-between group transition-all hover:bg-white hover:text-black hover:scale-105 cursor-default">
+                    <div
+                        class="p-4 border border-gray-800 flex items-center justify-between group transition-all hover:bg-white hover:text-black hover:scale-105 cursor-default">
                         <span class="font-mono text-sm">C# (.NET)</span>
-                        <i data-lucide="chevron-right" class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                        <i data-lucide="chevron-right"
+                            class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity"></i>
                     </div>
-                    <div class="p-4 border border-gray-800 flex items-center justify-between group transition-all hover:bg-white hover:text-black hover:scale-105 cursor-default">
+                    <div
+                        class="p-4 border border-gray-800 flex items-center justify-between group transition-all hover:bg-white hover:text-black hover:scale-105 cursor-default">
                         <span class="font-mono text-sm">HTML / React</span>
-                        <i data-lucide="chevron-right" class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                        <i data-lucide="chevron-right"
+                            class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity"></i>
                     </div>
-                    <div class="p-4 border border-gray-800 flex items-center justify-between group transition-all hover:bg-white hover:text-black hover:scale-105 cursor-default">
+                    <div
+                        class="p-4 border border-gray-800 flex items-center justify-between group transition-all hover:bg-white hover:text-black hover:scale-105 cursor-default">
                         <span class="font-mono text-sm">Python (Selenium)</span>
-                        <i data-lucide="chevron-right" class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                        <i data-lucide="chevron-right"
+                            class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity"></i>
                     </div>
-                    <div class="p-4 border border-gray-800 flex items-center justify-between group transition-all hover:bg-white hover:text-black hover:scale-105 cursor-default">
+                    <div
+                        class="p-4 border border-gray-800 flex items-center justify-between group transition-all hover:bg-white hover:text-black hover:scale-105 cursor-default">
                         <span class="font-mono text-sm">PHP & WordPress</span>
-                        <i data-lucide="chevron-right" class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                        <i data-lucide="chevron-right"
+                            class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity"></i>
                     </div>
-                    <div class="p-4 border border-gray-800 flex items-center justify-between group transition-all hover:bg-white hover:text-black hover:scale-105 cursor-default">
+                    <div
+                        class="p-4 border border-gray-800 flex items-center justify-between group transition-all hover:bg-white hover:text-black hover:scale-105 cursor-default">
                         <span class="font-mono text-sm">MySQL</span>
-                        <i data-lucide="chevron-right" class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                        <i data-lucide="chevron-right"
+                            class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity"></i>
                     </div>
-                    <div class="p-4 border border-gray-800 flex items-center justify-between group transition-all hover:bg-white hover:text-black hover:scale-105 cursor-default text-gray-500 italic">
+                    <div
+                        class="p-4 border border-gray-800 flex items-center justify-between group transition-all hover:bg-white hover:text-black hover:scale-105 cursor-default text-gray-500 italic">
                         <span class="font-mono text-sm">More coming soon...</span>
                     </div>
                 </div>
-                
+
                 <div class="p-8 border border-white/10 rounded-lg bg-white/5 backdrop-blur-sm reveal-on-scroll">
                     <h4 class="flex items-center gap-2 mb-4 font-bold text-gray-300 italic">
                         <i data-lucide="terminal" class="w-5 h-5"></i> Simon's Professional Summary
                     </h4>
                     <p class="text-sm text-gray-400 leading-loose">
-                        您好，我是 <strong>Simon</strong>，過去曾擔任<strong>新聞攝影師</strong>一年，並有一年<strong>軟體開發工程師</strong>經歷，也涉獵媒體相關領域。<br><br>
-                        我擅長以 <strong>Python</strong> 進行<strong>軟體開發與自動化測試</strong>，具備<strong>自動化流程開發與專利檢索分析</strong>的實務經驗。曾參與多項與 <strong>LINE Bot</strong>、<strong>自動化工具開發</strong>相關的專案。<br><br>
-                        此外，我對<strong>機器學習</strong>有一定理解，近期的 side project 聚焦於<strong>影像處理、物件追蹤、資料視覺化</strong>等領域。在雲端服務方面，具備 <strong>Microsoft Azure</strong> 使用經驗與相關證照，能靈活運用<strong>雲端資源進行專案部署</strong>。
+                        您好，我是
+                        <strong>Simon</strong>，過去曾擔任<strong>新聞攝影師</strong>一年，並有一年<strong>軟體開發工程師</strong>經歷，也涉獵媒體相關領域。<br><br>
+                        我擅長以 <strong>Python</strong>
+                        進行<strong>軟體開發與自動化測試</strong>，具備<strong>自動化流程開發與專利檢索分析</strong>的實務經驗。曾參與多項與 <strong>LINE
+                            Bot</strong>、<strong>自動化工具開發</strong>相關的專案。<br><br>
+                        此外，我對<strong>機器學習</strong>有一定理解，近期的 side project
+                        聚焦於<strong>影像處理、物件追蹤、資料視覺化</strong>等領域。在雲端服務方面，具備 <strong>Microsoft Azure</strong>
+                        使用經驗與相關證照，能靈活運用<strong>雲端資源進行專案部署</strong>。
                     </p>
                 </div>
             </div>
@@ -389,13 +486,22 @@
                     842679135jjj@gmail.com
                 </a>
                 <div class="flex gap-6 mt-8">
-                    <a href="https://github.com/joe10897" target="_blank" rel="noopener" class="magnetic-btn p-4 border border-black rounded-full hover:bg-black hover:text-white transition-all transform hover:-translate-y-1 flex items-center justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+                    <a href="https://github.com/joe10897" target="_blank" rel="noopener"
+                        class="magnetic-btn p-4 border border-black rounded-full hover:bg-black hover:text-white transition-all transform hover:-translate-y-1 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="w-6 h-6">
+                            <path
+                                d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
+                            <path d="M9 18c-4.51 2-5-2-7-2" />
+                        </svg>
                     </a>
-                    <a href="https://nomochrome.site/Simon-s_developer/" target="_blank" rel="noopener" class="magnetic-btn p-4 border border-black rounded-full hover:bg-black hover:text-white transition-all transform hover:-translate-y-1">
+                    <a href="https://nomochrome.site/Simon-s_developer/" target="_blank" rel="noopener"
+                        class="magnetic-btn p-4 border border-black rounded-full hover:bg-black hover:text-white transition-all transform hover:-translate-y-1">
                         <i data-lucide="globe"></i>
                     </a>
-                    <a href="mailto:842679135jjj@gmail.com" class="magnetic-btn p-4 border border-black rounded-full hover:bg-black hover:text-white transition-all transform hover:-translate-y-1">
+                    <a href="mailto:842679135jjj@gmail.com"
+                        class="magnetic-btn p-4 border border-black rounded-full hover:bg-black hover:text-white transition-all transform hover:-translate-y-1">
                         <i data-lucide="mail"></i>
                     </a>
                 </div>
@@ -404,7 +510,8 @@
     </section>
 
     <!-- Footer -->
-    <footer class="py-12 bg-black border-t border-gray-900 text-center text-gray-600 text-[10px] tracking-widest uppercase">
+    <footer
+        class="py-12 bg-black border-t border-gray-900 text-center text-gray-600 text-[10px] tracking-widest uppercase">
         © 2026 SIMON WONG CHAK YIN. BUILT FOR PRECISION.
     </footer>
 
@@ -429,7 +536,7 @@
                 document.getElementById('hero-skills').classList.add('is-visible');
             }
         }
-        
+
         // Start typing after a short delay
         setTimeout(typeWriter, 500);
 
@@ -442,9 +549,19 @@
                 tech: ["Python", "Gemini API", "LINE Bot SDK"],
                 language: "Python",
                 langColor: "#3572A5",
-                link: "https://github.com/joe10897/Senhuang_linebot",
+                link: "https://github.com/joe10897/Senhuang_linebot-",
                 stars: "12",
                 forks: "4"
+            },
+            {
+                title: "東方森煌建單與報告系統",
+                desc: "文物鑑定送驗建單 Web 應用。整合批量 QR Code 列印、標籤掃描自動建單，並自動生成 Word 鑑定報告 (.docx)。",
+                tech: ["Next.js", "Postgres", "Vercel Blob", "docxtemplater"],
+                language: "TypeScript",
+                langColor: "#3178c6",
+                link: "https://github.com/joe10897/senhuang-report",
+                stars: "16",
+                forks: "3"
             },
             {
                 title: "V.I.S.O.R. 行車助理",
@@ -501,14 +618,14 @@
         function renderProjects() {
             const grid = document.getElementById('project-grid');
             grid.innerHTML = projects.map((p, i) => `
-                <div class="card-tilt" style="animation-delay: ${0.1 * i}s">
+                <a href="${p.link}" target="_blank" rel="noopener" class="card-tilt block no-underline text-current" style="animation-delay: ${0.1 * i}s">
                     <div class="card-tilt-inner group p-5 border border-gray-200 rounded-md hover:border-gray-300 hover:shadow-sm bg-white flex flex-col justify-between h-full">
                         <div>
                             <div class="flex items-center justify-between mb-2">
-                                <a href="${p.link}" target="_blank" rel="noopener" class="flex items-center gap-2 font-bold text-blue-600 hover:underline">
+                                <span class="flex items-center gap-2 font-bold text-blue-600 group-hover:underline">
                                     <i data-lucide="book" class="w-4 h-4 text-gray-500"></i>
                                     ${p.title}
-                                </a>
+                                </span>
                                 <span class="text-[10px] px-2 py-0.5 border border-gray-200 rounded-full text-gray-500 font-medium">Public</span>
                             </div>
                             <p class="text-xs text-gray-600 mb-4 line-clamp-2 leading-relaxed">
@@ -529,9 +646,9 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </a>
             `).join('');
-            
+
             lucide.createIcons();
             initCardTilt();
         }
@@ -662,4 +779,5 @@
 
     </script>
 </body>
+
 </html>
