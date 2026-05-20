@@ -637,8 +637,8 @@
             const grid = document.getElementById('project-grid');
             grid.innerHTML = projects.map((p, i) => {
                 const hasLinks = p.links && p.links.length > 0;
-                const wrapperStart = hasLinks 
-                    ? `<div class="card-tilt block text-current animate-fade-in" style="animation-delay: ${0.1 * i}s">`
+                const wrapperStart = hasLinks
+                    ? `<div class="block text-current animate-fade-in" style="animation-delay: ${0.1 * i}s">`
                     : `<a href="${p.link}" target="_blank" rel="noopener" class="card-tilt block no-underline text-current animate-fade-in" style="animation-delay: ${0.1 * i}s">`;
                 const wrapperEnd = hasLinks ? `</div>` : `</a>`;
 
