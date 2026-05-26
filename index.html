@@ -125,10 +125,15 @@
             }
         }
 
-        /* 3D Card Tilt Container */
+        /* Card Entrance Animation */
         .card-tilt {
             transform-style: preserve-3d;
             perspective: 800px;
+            animation: card-entrance 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+        @keyframes card-entrance {
+            from { opacity: 0; transform: translateY(20px) scale(0.97); }
+            to   { opacity: 1; transform: translateY(0) scale(1); }
         }
 
         .card-tilt-inner {
@@ -638,8 +643,8 @@
             grid.innerHTML = projects.map((p, i) => {
                 const hasLinks = p.links && p.links.length > 0;
                 const wrapperStart = hasLinks
-                    ? `<div class="block text-current animate-fade-in" style="animation-delay: ${0.1 * i}s">`
-                    : `<a href="${p.link}" target="_blank" rel="noopener" class="card-tilt block no-underline text-current animate-fade-in" style="animation-delay: ${0.1 * i}s">`;
+                    ? `<div class="card-tilt block text-current" style="animation-delay: ${0.1 * i}s">`
+                    : `<a href="${p.link}" target="_blank" rel="noopener" class="card-tilt block no-underline text-current" style="animation-delay: ${0.1 * i}s">`;
                 const wrapperEnd = hasLinks ? `</div>` : `</a>`;
 
                 const titleHtml = hasLinks
