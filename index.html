@@ -6,11 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simon Wong | Software Engineer</title>
 
+    <!-- Unified Favicon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="alternate icon" type="image/png" href="favicon.png">
+    <link rel="apple-touch-icon" href="favicon.png">
+
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Three.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
     <!-- Google Fonts -->
     <link
@@ -87,18 +95,30 @@
 
         /* ===== NEW INTERACTIVE EFFECTS ===== */
 
-        /* Cursor Follower Glow */
+        /* Cursor Follower Glow - Monochrome Hacker Style */
         .cursor-glow {
             position: fixed;
-            width: 300px;
-            height: 300px;
+            width: 320px;
+            height: 320px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.02) 45%, transparent 70%);
             pointer-events: none;
             transform: translate(-50%, -50%);
             z-index: 1;
             transition: opacity 0.3s ease;
             will-change: transform;
+        }
+
+        /* Hacker Scanlines & Vignette Overlay */
+        .hacker-overlay {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background: 
+                radial-gradient(circle at center, transparent 35%, rgba(0, 0, 0, 0.85) 100%),
+                linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.28) 50%);
+            background-size: 100% 100%, 100% 4px;
+            z-index: 1;
         }
 
         /* Gradient Text Animation */
@@ -173,10 +193,109 @@
         .nav-scrolled .nav-blend {
             mix-blend-mode: normal;
         }
+
+        /* Preloader Shimmer */
+        @keyframes shimmer-sweep {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        .animate-shimmer {
+            animation: shimmer-sweep 1.8s infinite;
+        }
+
+        /* Cyber Pet Floating & Pulse */
+        @keyframes cyber-float {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-8px) rotate(1deg);
+            }
+        }
+        .cyber-pet-float {
+            animation: cyber-float 3.5s ease-in-out infinite;
+        }
+
+        @keyframes antenna-glow {
+            0%, 100% {
+                opacity: 0.5;
+                filter: drop-shadow(0 0 2px #34d399);
+            }
+            50% {
+                opacity: 1;
+                filter: drop-shadow(0 0 8px #34d399);
+            }
+        }
+        .antenna-glow {
+            animation: antenna-glow 2s ease-in-out infinite;
+        }
+
+        /* Speech Bubble Arrow */
+        .speech-bubble-arrow::after {
+            content: '';
+            position: absolute;
+            bottom: -7px;
+            right: 32px;
+            border-width: 7px 7px 0;
+            border-style: solid;
+            border-color: rgba(9, 9, 11, 0.95) transparent transparent transparent;
+            display: block;
+            width: 0;
+        }
+
+        /* Hamburger Active State */
+        .menu-open #menu-bar-1 {
+            transform: translateY(6px) rotate(45deg);
+        }
+        .menu-open #menu-bar-2 {
+            opacity: 0;
+        }
+        .menu-open #menu-bar-3 {
+            transform: translateY(-6px) rotate(-45deg);
+        }
     </style>
 </head>
 
 <body class="antialiased">
+
+    <!-- 2-Second Hacker Preloader -->
+    <div id="preloader" class="fixed inset-0 z-[100] bg-black flex flex-col items-center justify-center transition-opacity duration-700 select-none">
+        <div class="w-full max-w-xs px-6 flex flex-col items-center text-center">
+            <!-- Pulsing Cyber Logo Badge -->
+            <div class="relative mb-6">
+                <div class="w-16 h-16 rounded-2xl border border-white/20 flex items-center justify-center bg-white/5 backdrop-blur-md relative overflow-hidden shadow-[0_0_25px_rgba(255,255,255,0.08)]">
+                    <span class="font-mono text-2xl font-black tracking-tighter text-white">SW</span>
+                    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer"></div>
+                </div>
+                <div class="absolute -inset-2 rounded-2xl border border-white/10 animate-ping opacity-20 pointer-events-none"></div>
+            </div>
+
+            <!-- Terminal Typewriter / Loading status -->
+            <div class="font-mono text-xs tracking-widest text-zinc-400 mb-3 flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span id="preloader-status">INITIALIZING SYSTEM...</span>
+            </div>
+
+            <!-- Progress bar -->
+            <div class="w-full bg-zinc-900 border border-zinc-800 rounded-full h-1.5 overflow-hidden mb-2.5">
+                <div id="preloader-bar" class="h-full bg-gradient-to-r from-zinc-400 to-white transition-all duration-75 ease-out" style="width: 0%;"></div>
+            </div>
+
+            <!-- Counter & Subtext -->
+            <div class="w-full flex justify-between font-mono text-[10px] text-zinc-600">
+                <span id="preloader-step">// 0x00_BOOT</span>
+                <span id="preloader-percent" class="text-zinc-400 font-bold">0%</span>
+            </div>
+
+            <!-- Skip prompt -->
+            <button id="preloader-skip" class="mt-8 text-[10px] font-mono text-zinc-500 hover:text-zinc-300 transition-colors uppercase tracking-widest cursor-pointer">
+                [ Click to Skip ]
+            </button>
+        </div>
+    </div>
+
+    <!-- Top Scroll Progress Bar -->
+    <div id="scroll-progress-bar" class="fixed top-0 left-0 h-[2.5px] bg-gradient-to-r from-zinc-500 via-white to-blue-400 z-[60] transition-all duration-75 ease-out" style="width: 0%;"></div>
 
     <!-- Navigation -->
     <nav class="fixed top-0 w-full z-50 px-8 py-6 flex justify-between items-center nav-blend text-white">
@@ -192,36 +311,78 @@
             <a href="resume.html" target="_blank"
                 class="hover:line-through transition-all cursor-pointer text-blue-400">Resume</a>
         </div>
+        <!-- Mobile Menu Toggle Button -->
+        <button id="mobile-menu-btn" aria-label="Toggle Navigation" class="md:hidden flex flex-col justify-center items-center w-10 h-10 border border-white/20 rounded-md bg-black/40 backdrop-blur-md text-white hover:border-white transition-all p-2 z-50">
+            <span class="w-5 h-0.5 bg-white transition-transform duration-300 mb-1" id="menu-bar-1"></span>
+            <span class="w-5 h-0.5 bg-white transition-opacity duration-300 mb-1" id="menu-bar-2"></span>
+            <span class="w-5 h-0.5 bg-white transition-transform duration-300" id="menu-bar-3"></span>
+        </button>
     </nav>
 
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobile-drawer" class="fixed inset-0 z-40 bg-black/95 backdrop-blur-2xl flex flex-col justify-center items-center opacity-0 pointer-events-none transition-all duration-300 md:hidden">
+        <div class="flex flex-col items-center gap-7 text-xl uppercase tracking-widest font-mono text-zinc-300">
+            <a href="#hero" class="mobile-nav-link hover:text-white hover:line-through transition-all">Home</a>
+            <a href="#work" class="mobile-nav-link hover:text-white hover:line-through transition-all">Work</a>
+            <a href="#paper" class="mobile-nav-link hover:text-white hover:line-through transition-all">Paper</a>
+            <a href="#certs" class="mobile-nav-link hover:text-white hover:line-through transition-all">Certs</a>
+            <a href="#experience" class="mobile-nav-link hover:text-white hover:line-through transition-all">Experience</a>
+            <a href="#contact" class="mobile-nav-link hover:text-white hover:line-through transition-all">Contact</a>
+            <a href="resume.html" target="_blank" class="mobile-nav-link text-blue-400 hover:text-blue-300 flex items-center gap-2">
+                Resume <i data-lucide="external-link" class="w-4 h-4"></i>
+            </a>
+        </div>
+        <div class="absolute bottom-8 font-mono text-[10px] text-zinc-600 tracking-widest uppercase">
+            © 2026 Simon Wong CHAK YIN
+        </div>
+    </div>
+
     <!-- Hero Section -->
-    <section class="h-screen flex flex-col justify-center items-center px-4 relative overflow-hidden">
+    <section id="hero" class="h-screen flex flex-col justify-center items-center px-4 relative overflow-hidden bg-black">
         <!-- Cursor Glow -->
         <div class="cursor-glow" id="cursor-glow"></div>
-        <!-- Background Image -->
-        <div class="absolute inset-0 z-0 pointer-events-none opacity-25"
-            style="background-image: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=2000'); background-size: cover; background-position: center; transform: scale(1.1);">
+
+        <!-- Three.js Hacker Particle Canvas Container -->
+        <div id="hero-particles-container" class="absolute inset-0 z-0 pointer-events-none"></div>
+
+        <!-- Hacker Scanline & Vignette Overlay -->
+        <div class="hacker-overlay"></div>
+
+        <!-- Hacker Telemetry Badges (Desktop) -->
+        <div class="absolute top-24 left-8 hidden lg:flex flex-col gap-1 font-mono text-[10px] text-zinc-500 z-10 select-none tracking-widest pointer-events-none">
+            <span class="text-zinc-300 font-bold flex items-center gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+                <span>SYS // ONLINE</span>
+            </span>
+            <span>// CYBER_PARTICLE_MATRIX</span>
+            <span class="text-zinc-600">LOC: TAIPEI [25.03° N]</span>
         </div>
 
-        <div class="z-10 text-center">
+        <div class="absolute bottom-10 right-8 hidden lg:flex flex-col items-end gap-1 font-mono text-[10px] text-zinc-500 z-10 select-none tracking-widest pointer-events-none">
+            <span class="text-zinc-400 font-bold">// CYBER_CONSTELLATION</span>
+            <span>MATRIX: B&W DYNAMIC</span>
+            <span class="text-zinc-600">FPS: 60 [THREE.JS WEBGL]</span>
+        </div>
+
+        <div class="z-10 text-center relative pointer-events-auto">
             <h1
-                class="text-5xl md:text-8xl font-black mb-6 tracking-tighter min-h-[1.2em] flex justify-center items-center">
+                class="text-5xl md:text-8xl font-black mb-6 tracking-tighter min-h-[1.2em] flex justify-center items-center text-white drop-shadow-lg">
                 <span id="typewriter-text"></span>
                 <span class="inline-block w-[4px] h-[0.8em] bg-white ml-2 cursor-blink"></span>
             </h1>
 
-            <div class="flex flex-wrap justify-center gap-6 text-gray-400 opacity-0 reveal-on-scroll" id="hero-skills"
+            <div class="flex flex-wrap justify-center gap-6 text-gray-300 opacity-0 reveal-on-scroll" id="hero-skills"
                 style="transition-delay: 1.5s;">
-                <span class="flex items-center gap-2 border-r border-gray-800 pr-6"><i data-lucide="code"
-                        class="w-4 h-4"></i> 前端開發</span>
-                <span class="flex items-center gap-2 border-r border-gray-800 pr-6"><i data-lucide="terminal"
-                        class="w-4 h-4"></i> 自動化開發</span>
-                <span class="flex items-center gap-2"><i data-lucide="camera" class="w-4 h-4"></i> 視覺美感</span>
+                <span class="flex items-center gap-2 border-r border-gray-700/80 pr-6"><i data-lucide="code"
+                        class="w-4 h-4 text-gray-300"></i> 前端開發</span>
+                <span class="flex items-center gap-2 border-r border-gray-700/80 pr-6"><i data-lucide="terminal"
+                        class="w-4 h-4 text-gray-300"></i> 自動化開發</span>
+                <span class="flex items-center gap-2"><i data-lucide="camera" class="w-4 h-4 text-gray-300"></i> 視覺美感</span>
             </div>
 
             <div class="mt-12 opacity-0 reveal-on-scroll" style="transition-delay: 1.8s;">
                 <a href="resume.html" target="_blank"
-                    class="px-8 py-3 border border-white text-white rounded-full hover:bg-white hover:text-black transition-all flex items-center gap-2 group mx-auto w-max">
+                    class="px-8 py-3 border border-white/80 text-white rounded-full hover:bg-white hover:text-black transition-all flex items-center gap-2 group mx-auto w-max backdrop-blur-sm bg-black/40 shadow-lg shadow-black/50">
                     <span>檢視履歷 (Resume)</span>
                     <i data-lucide="external-link" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
                 </a>
@@ -229,7 +390,7 @@
         </div>
 
         <!-- Scroll Indicator -->
-        <div class="absolute bottom-10 animate-bounce">
+        <div class="absolute bottom-10 animate-bounce z-10 pointer-events-none">
             <div class="w-[1px] h-20 bg-gradient-to-b from-white to-transparent"></div>
         </div>
     </section>
@@ -547,6 +708,140 @@
         © 2026 SIMON WONG CHAK YIN. BUILT FOR PRECISION.
     </footer>
 
+    <!-- Back to Top Button -->
+    <button id="back-to-top" aria-label="Back to Top"
+        class="fixed bottom-6 left-6 z-40 w-11 h-11 rounded-full bg-zinc-950/90 border border-zinc-700 text-white backdrop-blur-md shadow-2xl flex items-center justify-center opacity-0 pointer-events-none translate-y-3 hover:border-white hover:bg-white hover:text-black transition-all duration-300 group cursor-pointer">
+        <i data-lucide="arrow-up" class="w-4 h-4 group-hover:-translate-y-0.5 transition-transform"></i>
+    </button>
+
+    <!-- Cyber Hacker Desk Pet (賽博桌寵) -->
+    <div id="cyber-pet-container" class="fixed bottom-6 right-6 z-40 flex flex-col items-end select-none">
+        
+        <!-- Interactive Speech Bubble -->
+        <div id="cyber-pet-bubble" class="speech-bubble-arrow mb-3 mr-2 bg-zinc-950/95 border border-zinc-800 rounded-2xl p-4 shadow-2xl text-left backdrop-blur-xl w-[280px] sm:w-[320px] transition-all duration-300 transform origin-bottom-right scale-95 opacity-0 pointer-events-none">
+            <!-- Header bar -->
+            <div class="flex items-center justify-between pb-2 mb-2 border-b border-zinc-800/80">
+                <div class="flex items-center gap-1.5 font-mono text-[10px] text-zinc-400">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+                    <span class="font-bold text-zinc-300">CYBER_PET v2.6</span>
+                    <span class="text-zinc-600">// AI_BOT</span>
+                </div>
+                <div class="flex items-center gap-1">
+                    <button id="cyber-pet-minimize" class="text-zinc-500 hover:text-zinc-300 p-0.5 text-xs transition-colors cursor-pointer" title="收起桌寵">
+                        <i data-lucide="minus" class="w-3.5 h-3.5"></i>
+                    </button>
+                    <button id="cyber-pet-close" class="text-zinc-500 hover:text-zinc-300 p-0.5 text-xs transition-colors cursor-pointer" title="關閉對話">
+                        <i data-lucide="x" class="w-3.5 h-3.5"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Topic Badge & Morphicon Header -->
+            <div class="flex items-center gap-2 mb-2">
+                <span id="cyber-pet-icon-wrap" class="w-6 h-6 rounded-md bg-white/10 flex items-center justify-center text-emerald-400 transition-all duration-300 transform scale-100">
+                    <i id="cyber-pet-topic-icon" data-lucide="bot" class="w-3.5 h-3.5"></i>
+                </span>
+                <span id="cyber-pet-tag" class="font-mono text-[10px] text-zinc-400 font-semibold tracking-wider uppercase">[SYS.COMPANION]</span>
+            </div>
+
+            <!-- Speech text -->
+            <div id="cyber-pet-text" class="text-xs text-zinc-200 leading-relaxed font-sans min-h-[3.2em]">
+                您好，我是 Simon 的賽博終端桌寵，隨時點選下方快捷項或與我互動以導覽作品集。
+            </div>
+
+            <!-- Quick Action Pills with Morphicons -->
+            <div class="flex flex-wrap gap-1.5 mt-3 pt-2 border-t border-zinc-800/60">
+                <a href="#paper" class="cyber-pet-action inline-flex items-center gap-1.5 text-[10px] font-mono px-2.5 py-1 rounded bg-zinc-900 border border-zinc-700 text-zinc-300 hover:bg-white hover:text-black hover:border-white transition-colors">
+                    <i data-lucide="file-text" class="w-3 h-3 text-blue-400"></i>
+                    <span>FC 2026 論文</span>
+                </a>
+                <a href="#work" class="cyber-pet-action inline-flex items-center gap-1.5 text-[10px] font-mono px-2.5 py-1 rounded bg-zinc-900 border border-zinc-700 text-zinc-300 hover:bg-white hover:text-black hover:border-white transition-colors">
+                    <i data-lucide="layers" class="w-3 h-3 text-indigo-400"></i>
+                    <span>精選專案</span>
+                </a>
+                <button id="cyber-pet-random-btn" class="cyber-pet-action inline-flex items-center gap-1.5 text-[10px] font-mono px-2.5 py-1 rounded bg-zinc-900 border border-zinc-700 text-zinc-300 hover:bg-white hover:text-black hover:border-white transition-colors cursor-pointer">
+                    <i data-lucide="shuffle" class="w-3 h-3 text-emerald-400"></i>
+                    <span>隨機專案</span>
+                </button>
+                <a href="mailto:842679135jjj@gmail.com" class="cyber-pet-action inline-flex items-center gap-1.5 text-[10px] font-mono px-2.5 py-1 rounded bg-zinc-900 border border-zinc-700 text-blue-400 hover:bg-blue-500 hover:text-white hover:border-blue-500 transition-colors">
+                    <i data-lucide="mail" class="w-3 h-3 text-cyan-400"></i>
+                    <span>聯絡 Simon</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Robot Body & Badge Wrapper -->
+        <div class="relative flex items-center justify-end">
+            <!-- Minimized restore badge (Visible by default) -->
+            <button id="cyber-pet-badge" aria-label="展開桌寵" class="font-mono text-[10px] px-3.5 py-2 rounded-full bg-zinc-950/90 border border-zinc-700 text-zinc-300 hover:text-white hover:border-white flex items-center gap-2 shadow-2xl transition-all cursor-pointer backdrop-blur-md hover:scale-105 active:scale-95 group">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <i data-lucide="bot" class="w-3.5 h-3.5 text-emerald-400"></i>
+                <span class="tracking-wider font-semibold">CYBER_PET</span>
+                <span class="text-zinc-500 group-hover:text-zinc-300 transition-colors text-[9px]">// 展開</span>
+            </button>
+
+            <!-- Cyber Bot SVG Avatar (Collapsed by default) -->
+            <div id="cyber-pet-bot" class="cyber-pet-float cursor-pointer transition-transform duration-200 hover:scale-110 active:scale-95 group relative hidden">
+                <!-- Floating Glow Aura -->
+                <div class="absolute inset-0 rounded-full bg-blue-500/10 blur-md pointer-events-none group-hover:bg-blue-500/20 transition-all"></div>
+
+                <!-- SVG Artwork of Cyber Companion -->
+                <svg id="cyber-pet-svg" width="76" height="76" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" class="filter drop-shadow-[0_4px_16px_rgba(0,0,0,0.8)]">
+                    <!-- Antenna Stem -->
+                    <line x1="50" y1="20" x2="50" y2="9" stroke="#71717a" stroke-width="2.5" stroke-linecap="round" />
+                    <!-- Antenna Signal Sphere -->
+                    <circle cx="50" cy="8" r="4.5" fill="#10b981" class="antenna-glow" />
+
+                    <!-- Left Thruster Ear -->
+                    <path d="M22 45 L12 40 L12 56 L22 53 Z" fill="#18181b" stroke="#52525b" stroke-width="1.8" />
+                    <line x1="10" y1="48" x2="6" y2="48" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" class="animate-pulse" />
+
+                    <!-- Right Thruster Ear -->
+                    <path d="M78 45 L88 40 L88 56 L78 53 Z" fill="#18181b" stroke="#52525b" stroke-width="1.8" />
+                    <line x1="90" y1="48" x2="94" y2="48" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" class="animate-pulse" />
+
+                    <!-- Main Robot Chassis -->
+                    <rect x="20" y="20" width="60" height="56" rx="28" fill="#18181b" stroke="#71717a" stroke-width="2" />
+                    <!-- Shiny Metallic Top Highlight -->
+                    <path d="M28 28 C34 24, 66 24, 72 28" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-linecap="round" />
+
+                    <!-- Digital Screen Visor -->
+                    <rect x="26" y="32" width="48" height="30" rx="14" fill="#09090b" stroke="#3f3f46" stroke-width="1.5" />
+
+                    <!-- LED Left Eye Socket -->
+                    <g id="pet-eye-left-socket">
+                        <circle cx="40" cy="46" r="6" fill="#042f2e" />
+                        <!-- Left Pupil (tracks mouse) -->
+                        <circle id="pet-pupil-left" cx="40" cy="46" r="3.5" fill="#34d399" filter="drop-shadow(0 0 3px #10b981)" />
+                        <!-- Left Eye Slit (for sleep mode) -->
+                        <line id="pet-sleep-left" x1="35" y1="46" x2="45" y2="46" stroke="#10b981" stroke-width="2" stroke-linecap="round" class="hidden" />
+                    </g>
+
+                    <!-- LED Right Eye Socket -->
+                    <g id="pet-eye-right-socket">
+                        <circle cx="60" cy="46" r="6" fill="#042f2e" />
+                        <!-- Right Pupil (tracks mouse) -->
+                        <circle id="pet-pupil-right" cx="60" cy="46" r="3.5" fill="#34d399" filter="drop-shadow(0 0 3px #10b981)" />
+                        <!-- Right Eye Slit (for sleep mode) -->
+                        <line id="pet-sleep-right" x1="55" y1="46" x2="65" y2="46" stroke="#10b981" stroke-width="2" stroke-linecap="round" class="hidden" />
+                    </g>
+
+                    <!-- Cute Cheek Blush (Subtle neon cyan) -->
+                    <circle cx="32" cy="53" r="2" fill="rgba(56, 189, 248, 0.4)" />
+                    <circle cx="68" cy="53" r="2" fill="rgba(56, 189, 248, 0.4)" />
+
+                    <!-- Mini Core Indicator -->
+                    <circle cx="50" cy="67" r="2" fill="#38bdf8" class="animate-ping" opacity="0.6" />
+                </svg>
+
+                <!-- Tooltip badge on hover -->
+                <span class="absolute -top-2 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity font-mono text-[9px] bg-white text-black px-1.5 py-0.5 rounded shadow pointer-events-none whitespace-nowrap">
+                    點擊互動
+                </span>
+            </div>
+        </div>
+    </div>
+
     <!-- JAVASCRIPT LOGIC -->
     <script>
         // 1. Initialize Icons
@@ -557,24 +852,139 @@
         const typeDelay = 120;
         let typeIndex = 0;
         const typeWriterElement = document.getElementById('typewriter-text');
+        let typewriterStarted = false;
+
+        function startTypewriter() {
+            if (typewriterStarted) return;
+            typewriterStarted = true;
+            typeWriter();
+        }
 
         function typeWriter() {
+            if (!typeWriterElement) return;
             if (typeIndex < typeText.length) {
                 typeWriterElement.innerHTML += typeText.charAt(typeIndex);
                 typeIndex++;
                 setTimeout(typeWriter, typeDelay);
             } else {
                 // Show hero skills after typing is done
-                document.getElementById('hero-skills').classList.add('is-visible');
+                const heroSkills = document.getElementById('hero-skills');
+                if (heroSkills) heroSkills.classList.add('is-visible');
             }
         }
 
-        // Start typing after a short delay
-        setTimeout(typeWriter, 500);
+        // 0. 2-Second Hacker Preloader Logic
+        function initPreloader() {
+            const preloader = document.getElementById('preloader');
+            const preloaderBar = document.getElementById('preloader-bar');
+            const preloaderPercent = document.getElementById('preloader-percent');
+            const preloaderStatus = document.getElementById('preloader-status');
+            const preloaderStep = document.getElementById('preloader-step');
+            const skipBtn = document.getElementById('preloader-skip');
+            if (!preloader) {
+                startTypewriter();
+                return;
+            }
+
+            let progress = 0;
+            const duration = 2000; // 2 seconds
+            const interval = 20; // 20ms
+            const stepIncrement = 100 / (duration / interval);
+            let finished = false;
+
+            const bootSteps = [
+                { threshold: 25, status: "SYSTEM BOOT [0x7F]...", step: "// 0x01_CORE" },
+                { threshold: 55, status: "COMPILING THREE.JS PARTICLES...", step: "// 0x02_SHADERS" },
+                { threshold: 85, status: "SYNCING NEURAL REPOSITORIES...", step: "// 0x03_PROJECTS" },
+                { threshold: 100, status: "BOOT COMPLETE // ACCESS GRANTED", step: "// 0x04_READY" }
+            ];
+
+            function finishPreloader() {
+                if (finished) return;
+                finished = true;
+                clearInterval(loaderTimer);
+                if (preloaderBar) preloaderBar.style.width = '100%';
+                if (preloaderPercent) preloaderPercent.innerText = '100%';
+                if (preloaderStatus) preloaderStatus.innerText = 'BOOT COMPLETE // ACCESS GRANTED';
+                
+                setTimeout(() => {
+                    preloader.classList.add('opacity-0', 'pointer-events-none');
+                    setTimeout(() => {
+                        preloader.style.display = 'none';
+                        startTypewriter();
+                    }, 700);
+                }, 150);
+            }
+
+            const loaderTimer = setInterval(() => {
+                progress += stepIncrement;
+                if (progress >= 100) {
+                    finishPreloader();
+                } else {
+                    const rounded = Math.floor(progress);
+                    if (preloaderBar) preloaderBar.style.width = rounded + '%';
+                    if (preloaderPercent) preloaderPercent.innerText = rounded + '%';
+
+                    const currentStep = bootSteps.find(s => rounded <= s.threshold);
+                    if (currentStep) {
+                        if (preloaderStatus) preloaderStatus.innerText = currentStep.status;
+                        if (preloaderStep) preloaderStep.innerText = currentStep.step;
+                    }
+                }
+            }, interval);
+
+            if (skipBtn) {
+                skipBtn.addEventListener('click', finishPreloader);
+            }
+            window.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') finishPreloader();
+            });
+
+            // Safety timeout
+            setTimeout(finishPreloader, 2500);
+        }
+        initPreloader();
 
         // 3. Project Slider Data & Logic
         // 3. Project Grid Data & Logic
         const projects = [
+            {
+                title: "2026 台灣六都選情觀測站",
+                desc: "《2026 台灣六都選情觀測站》 是專為選民打造的公開選情資訊平台。我們將複雜的民調數據轉化為清晰、好讀的互動圖表，幫助您一眼掌握台北市、新北市、桃園市、台中市、台南市與高雄市的最新選情。",
+                tech: ["JavaScript", "Data Visualization", "Open Data", "Tailwind CSS"],
+                language: "JavaScript",
+                langColor: "#f1e05a",
+                link: "https://github.com/joe10897/2026-Taiwan-Election-Neural-Visualizer",
+                stars: "26",
+                forks: "5",
+                links: [
+                    { label: "線上展示觀測站", url: "https://monochromelab.idv.tw/2026-Taiwan-Election-Neural-Visualizer/" }
+                ]
+            },
+            {
+                title: "VISOR Dashcam 離線 AI 行車記錄器",
+                desc: "完全離線（100% On-Device / Zero-Cloud）的 Android AI 行車記錄器與 ADAS 輔助系統。採用最新 YOLO26n 雙頭無 NMS 架構進行即時碰撞預警 (FCW)、前車起步提醒 (LVDA) 與 G-Sensor 智慧鎖檔。",
+                tech: ["Kotlin", "Android", "YOLO26n", "ONNX Runtime", "CameraX", "Room"],
+                language: "Kotlin",
+                langColor: "#A97BFF",
+                link: "https://github.com/joe10897/VISOR_dashcam",
+                stars: "36",
+                forks: "7"
+            },
+            {
+                title: "Corner Museum 角落博物館 · 零碳策展",
+                desc: "全台首創零碳古文明企業策展體系。攜手東方森煌鑑定中心，整合 Shopify Liquid、Three.js 深空星場宇宙視覺、SROI 效益量化試算與 Google/AI 語意 SEO 雙核優化架構。",
+                tech: ["Shopify", "Liquid", "Three.js", "JavaScript", "Tailwind CSS", "SEO/AEO"],
+                language: "Liquid",
+                langColor: "#67b8de",
+                link: "https://github.com/joe10897/cornermuseum",
+                stars: "22",
+                forks: "4",
+                links: [
+                    { label: "官方正式站", url: "https://cornermuseum.org" },
+                    { label: "ESG 零碳專頁", url: "https://cornermuseum.org/pages/esg" }
+                ]
+            },
             {
                 title: "VisiFlow 視覺驅動自動化測試框架",
                 desc: "挑戰傳統 DOM 選擇器的視覺導向 E2E 測試框架。結合 YOLOv8 與 EasyOCR 技術，實現本地端 100% 離線的網頁與 App 元件自動定位與自我修復點擊。",
@@ -872,6 +1282,641 @@
             });
         }
         initMagneticButtons();
+
+        // 9. Three.js Black & White Hacker Particle System
+        function initHackerParticles() {
+            const container = document.getElementById('hero-particles-container');
+            const heroSection = document.getElementById('hero');
+            if (!container || !heroSection || typeof THREE === 'undefined') return;
+
+            let width = heroSection.clientWidth || window.innerWidth;
+            let height = heroSection.clientHeight || window.innerHeight;
+
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(60, width / height, 1, 3000);
+            camera.position.z = 600;
+
+            const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            renderer.setSize(width, height);
+            renderer.setClearColor(0x000000, 0); // Transparent so CSS vignette & scanlines overlay neatly
+            container.appendChild(renderer.domElement);
+
+            // Glowing circular particle texture
+            const canvas = document.createElement('canvas');
+            canvas.width = 64;
+            canvas.height = 64;
+            const ctx = canvas.getContext('2d');
+            const grad = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
+            grad.addColorStop(0, 'rgba(255, 255, 255, 1)');
+            grad.addColorStop(0.25, 'rgba(240, 240, 240, 0.9)');
+            grad.addColorStop(0.55, 'rgba(180, 180, 180, 0.3)');
+            grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, 0, 64, 64);
+            const particleTexture = new THREE.CanvasTexture(canvas);
+
+            // Core Network Nodes (Hacker Constellation)
+            const nodeCount = 135;
+            const spreadX = 900;
+            const spreadY = 550;
+            const spreadZ = 450;
+
+            const nodePositions = new Float32Array(nodeCount * 3);
+            const nodeData = [];
+
+            for (let i = 0; i < nodeCount; i++) {
+                const x = (Math.random() - 0.5) * spreadX;
+                const y = (Math.random() - 0.5) * spreadY;
+                const z = (Math.random() - 0.5) * spreadZ;
+                nodePositions[i * 3] = x;
+                nodePositions[i * 3 + 1] = y;
+                nodePositions[i * 3 + 2] = z;
+
+                nodeData.push({
+                    x, y, z,
+                    vx: (Math.random() - 0.5) * 0.6,
+                    vy: (Math.random() - 0.5) * 0.6,
+                    vz: (Math.random() - 0.5) * 0.6
+                });
+            }
+
+            const nodeGeometry = new THREE.BufferGeometry();
+            nodeGeometry.setAttribute('position', new THREE.BufferAttribute(nodePositions, 3));
+
+            const nodeMaterial = new THREE.PointsMaterial({
+                size: 7.5,
+                map: particleTexture,
+                transparent: true,
+                blending: THREE.AdditiveBlending,
+                depthWrite: false,
+                color: 0xffffff
+            });
+
+            const nodePoints = new THREE.Points(nodeGeometry, nodeMaterial);
+            scene.add(nodePoints);
+
+            // Dynamic Constellation Lines
+            const maxLines = (nodeCount * (nodeCount - 1)) / 2;
+            const linePositions = new Float32Array(maxLines * 6);
+            const lineColors = new Float32Array(maxLines * 6);
+
+            const linesGeometry = new THREE.BufferGeometry();
+            linesGeometry.setAttribute('position', new THREE.BufferAttribute(linePositions, 3));
+            linesGeometry.setAttribute('color', new THREE.BufferAttribute(lineColors, 3));
+
+            const linesMaterial = new THREE.LineBasicMaterial({
+                vertexColors: true,
+                transparent: true,
+                blending: THREE.AdditiveBlending,
+                depthWrite: false
+            });
+
+            const linesMesh = new THREE.LineSegments(linesGeometry, linesMaterial);
+            scene.add(linesMesh);
+
+            // Deep Ambient Cyber Dust (Fine monochrome data noise)
+            const dustCount = 1200;
+            const dustPositions = new Float32Array(dustCount * 3);
+            for (let i = 0; i < dustCount; i++) {
+                dustPositions[i * 3] = (Math.random() - 0.5) * 1600;
+                dustPositions[i * 3 + 1] = (Math.random() - 0.5) * 1200;
+                dustPositions[i * 3 + 2] = (Math.random() - 0.5) * 1200;
+            }
+            const dustGeometry = new THREE.BufferGeometry();
+            dustGeometry.setAttribute('position', new THREE.BufferAttribute(dustPositions, 3));
+            const dustMaterial = new THREE.PointsMaterial({
+                size: 3.5,
+                map: particleTexture,
+                transparent: true,
+                blending: THREE.AdditiveBlending,
+                depthWrite: false,
+                opacity: 0.45,
+                color: 0xcccccc
+            });
+            const dustPoints = new THREE.Points(dustGeometry, dustMaterial);
+            scene.add(dustPoints);
+
+            // Mouse tracking & Interactive 3D Parallax
+            const mouse = { x: 0, y: 0, targetX: 0, targetY: 0, worldX: 0, worldY: 0, active: false };
+            heroSection.addEventListener('mousemove', (e) => {
+                const rect = heroSection.getBoundingClientRect();
+                mouse.targetX = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+                mouse.targetY = -(((e.clientY - rect.top) / rect.height) * 2 - 1);
+                mouse.worldX = (e.clientX - rect.left) - rect.width / 2;
+                mouse.worldY = -((e.clientY - rect.top) - rect.height / 2);
+                mouse.active = true;
+            });
+
+            heroSection.addEventListener('mouseleave', () => {
+                mouse.targetX = 0;
+                mouse.targetY = 0;
+                mouse.active = false;
+            });
+
+            // Window resize handler
+            function handleResize() {
+                width = heroSection.clientWidth || window.innerWidth;
+                height = heroSection.clientHeight || window.innerHeight;
+                camera.aspect = width / height;
+                camera.updateProjectionMatrix();
+                renderer.setSize(width, height);
+            }
+            window.addEventListener('resize', handleResize);
+
+            // Visibility optimization (Throttle when scrolled out of view)
+            let isVisible = true;
+            const heroObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    isVisible = entry.isIntersecting;
+                });
+            }, { threshold: 0.05 });
+            heroObserver.observe(heroSection);
+
+            // 60FPS Hacker Constellation Render Loop
+            const clock = new THREE.Clock();
+            const connectDist = 125;
+            const connectDistSq = connectDist * connectDist;
+
+            function animate() {
+                requestAnimationFrame(animate);
+
+                if (!isVisible) return; // Zero GPU / battery cost when reading lower sections
+
+                const time = clock.getElapsedTime();
+
+                // Smooth camera parallax
+                mouse.x += (mouse.targetX - mouse.x) * 0.05;
+                mouse.y += (mouse.targetY - mouse.y) * 0.05;
+                camera.position.x = mouse.x * 70;
+                camera.position.y = mouse.y * 45;
+                camera.lookAt(scene.position);
+
+                // Rotate ambient dust field
+                dustPoints.rotation.y = time * 0.015;
+                dustPoints.rotation.x = time * 0.008;
+
+                // Update node physics & interactive deflection
+                const pos = nodeGeometry.attributes.position.array;
+                let lineIdx = 0;
+                let colIdx = 0;
+                let lineCount = 0;
+
+                for (let i = 0; i < nodeCount; i++) {
+                    const node = nodeData[i];
+                    node.x += node.vx;
+                    node.y += node.vy;
+                    node.z += node.vz;
+
+                    if (node.x < -spreadX / 2 || node.x > spreadX / 2) node.vx *= -1;
+                    if (node.y < -spreadY / 2 || node.y > spreadY / 2) node.vy *= -1;
+                    if (node.z < -spreadZ / 2 || node.z > spreadZ / 2) node.vz *= -1;
+
+                    // Mouse deflection in 2D projection
+                    if (mouse.active) {
+                        const mdx = node.x - mouse.worldX;
+                        const mdy = node.y - mouse.worldY;
+                        const mDistSq = mdx * mdx + mdy * mdy;
+                        if (mDistSq < 16000 && mDistSq > 1) {
+                            const mDist = Math.sqrt(mDistSq);
+                            const force = (1 - mDist / 126) * 1.6;
+                            node.x += (mdx / mDist) * force;
+                            node.y += (mdy / mDist) * force;
+                        }
+                    }
+
+                    // Cyber wave oscillation
+                    const curY = node.y + Math.sin(time * 1.8 + node.x * 0.015) * 6;
+
+                    pos[i * 3] = node.x;
+                    pos[i * 3 + 1] = curY;
+                    pos[i * 3 + 2] = node.z;
+
+                    // Calculate connection lines with subsequent nodes
+                    for (let j = i + 1; j < nodeCount; j++) {
+                        const other = nodeData[j];
+                        const dx = node.x - other.x;
+                        const otherCurY = other.y + Math.sin(time * 1.8 + other.x * 0.015) * 6;
+                        const dy = curY - otherCurY;
+                        const dz = node.z - other.z;
+                        const distSq = dx * dx + dy * dy + dz * dz;
+
+                        if (distSq < connectDistSq) {
+                            const dist = Math.sqrt(distSq);
+                            const alpha = (1 - dist / connectDist) * 0.55;
+
+                            linePositions[lineIdx++] = node.x;
+                            linePositions[lineIdx++] = curY;
+                            linePositions[lineIdx++] = node.z;
+
+                            linePositions[lineIdx++] = other.x;
+                            linePositions[lineIdx++] = otherCurY;
+                            linePositions[lineIdx++] = other.z;
+
+                            lineColors[colIdx++] = alpha;
+                            lineColors[colIdx++] = alpha;
+                            lineColors[colIdx++] = alpha;
+
+                            lineColors[colIdx++] = alpha;
+                            lineColors[colIdx++] = alpha;
+                            lineColors[colIdx++] = alpha;
+
+                            lineCount++;
+                        }
+                    }
+                }
+
+                nodeGeometry.attributes.position.needsUpdate = true;
+
+                linesGeometry.setDrawRange(0, lineCount * 2);
+                linesGeometry.attributes.position.needsUpdate = true;
+                linesGeometry.attributes.color.needsUpdate = true;
+
+                renderer.render(scene, camera);
+            }
+
+            animate();
+        }
+        initHackerParticles();
+
+        // 10. Mobile Navigation Menu Logic
+        function initMobileMenu() {
+            const menuBtn = document.getElementById('mobile-menu-btn');
+            const drawer = document.getElementById('mobile-drawer');
+            const navLinks = document.querySelectorAll('.mobile-nav-link');
+            if (!menuBtn || !drawer) return;
+
+            let isOpen = false;
+
+            function toggleMenu(forceState) {
+                isOpen = typeof forceState === 'boolean' ? forceState : !isOpen;
+                if (isOpen) {
+                    menuBtn.classList.add('menu-open');
+                    drawer.classList.remove('opacity-0', 'pointer-events-none');
+                    drawer.classList.add('opacity-100', 'pointer-events-auto');
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    menuBtn.classList.remove('menu-open');
+                    drawer.classList.add('opacity-0', 'pointer-events-none');
+                    drawer.classList.remove('opacity-100', 'pointer-events-auto');
+                    document.body.style.overflow = '';
+                }
+            }
+
+            menuBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleMenu();
+            });
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    toggleMenu(false);
+                });
+            });
+
+            window.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && isOpen) toggleMenu(false);
+            });
+        }
+        initMobileMenu();
+
+        // 11. Top Scroll Progress Bar & Back to Top Button
+        function initScrollProgressAndBackToTop() {
+            const progressBar = document.getElementById('scroll-progress-bar');
+            const backToTopBtn = document.getElementById('back-to-top');
+
+            function onScroll() {
+                const scrollY = window.scrollY;
+                const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+                
+                // Progress Bar
+                if (progressBar && totalHeight > 0) {
+                    const pct = Math.min(100, Math.max(0, (scrollY / totalHeight) * 100));
+                    progressBar.style.width = pct + '%';
+                }
+
+                // Back to Top Button
+                if (backToTopBtn) {
+                    if (scrollY > 350) {
+                        backToTopBtn.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-3');
+                        backToTopBtn.classList.add('opacity-100', 'pointer-events-auto', 'translate-y-0');
+                    } else {
+                        backToTopBtn.classList.add('opacity-0', 'pointer-events-none', 'translate-y-3');
+                        backToTopBtn.classList.remove('opacity-100', 'pointer-events-auto', 'translate-y-0');
+                    }
+                }
+            }
+
+            window.addEventListener('scroll', onScroll, { passive: true });
+            onScroll();
+
+            if (backToTopBtn) {
+                backToTopBtn.addEventListener('click', () => {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+            }
+        }
+        initScrollProgressAndBackToTop();
+
+        // 12. Cyber Hacker Desk Pet (賽博桌寵)
+        function initCyberPet() {
+            const petContainer = document.getElementById('cyber-pet-container');
+            const botElem = document.getElementById('cyber-pet-bot');
+            const bubble = document.getElementById('cyber-pet-bubble');
+            const textElem = document.getElementById('cyber-pet-text');
+            const iconWrap = document.getElementById('cyber-pet-icon-wrap');
+            const tagElem = document.getElementById('cyber-pet-tag');
+            const closeBtn = document.getElementById('cyber-pet-close');
+            const minBtn = document.getElementById('cyber-pet-minimize');
+            const badge = document.getElementById('cyber-pet-badge');
+            const randomBtn = document.getElementById('cyber-pet-random-btn');
+            const pLeft = document.getElementById('pet-pupil-left');
+            const pRight = document.getElementById('pet-pupil-right');
+            const sleepLeft = document.getElementById('pet-sleep-left');
+            const sleepRight = document.getElementById('pet-sleep-right');
+
+            if (!petContainer || !botElem) return;
+
+            let isSleeping = false;
+            let isBubbleOpen = false;
+            let bubbleAutoCloseTimer = null;
+            let sleepTimer = null;
+            let clickCount = 0;
+            let clickResetTimer = null;
+            let dialogueIndex = 0;
+
+            const dialogues = [
+                {
+                    icon: "bot",
+                    tag: "[SYS.COMPANION]",
+                    color: "text-emerald-400",
+                    text: "您好，我是 Simon 的賽博終端桌寵，隨時點選下方快捷項或與我互動以導覽作品集。"
+                },
+                {
+                    icon: "file-text",
+                    tag: "[FC2026.RESEARCH]",
+                    color: "text-blue-400",
+                    text: "國際論文推薦：查看 Simon 發表於 FC 2026 研討會的機車智慧安全 (V.I.S.O.R.) 研究全文。"
+                },
+                {
+                    icon: "activity",
+                    tag: "[NEURAL.VIZ_2026]",
+                    color: "text-yellow-400",
+                    text: "全新上線：《2026 台灣六都選情觀測站》將複雜民調數據轉化為清晰易讀的互動圖表。"
+                },
+                {
+                    icon: "shield-check",
+                    tag: "[EDGE_AI.ADAS]",
+                    color: "text-purple-400",
+                    text: "離線端點 AI：Android 行車記錄器與 ADAS 系統，採用 YOLO26n 雙頭無 NMS 低延遲推論。"
+                },
+                {
+                    icon: "layers",
+                    tag: "[ESG.CURATION]",
+                    color: "text-cyan-400",
+                    text: "企業策展平台：Corner Museum 角落博物館 · 零碳古文明策展主題系統已正式上線。"
+                },
+                {
+                    icon: "terminal",
+                    tag: "[TECH.EXPERTISE]",
+                    color: "text-emerald-400",
+                    text: "核心技術掌握：精通 Python 自動化流程開發、Web App 前後端整合與邊緣運算視覺應用。"
+                },
+                {
+                    icon: "mail",
+                    tag: "[CONNECT.DEV]",
+                    color: "text-blue-400",
+                    text: "歡迎交流合作或面試邀約！隨時點擊下方聯絡按鈕直接寫信給 Simon。"
+                }
+            ];
+
+            // 1. Dynamic Eye Tracking with Cursor
+            function updatePetEyes(e) {
+                if (isSleeping) wakeUp();
+                resetSleepTimer();
+
+                const svg = document.getElementById('cyber-pet-svg');
+                if (!svg) return;
+                const rect = svg.getBoundingClientRect();
+                const botX = rect.left + rect.width / 2;
+                const botY = rect.top + rect.height / 2;
+                const dx = e.clientX - botX;
+                const dy = e.clientY - botY;
+                const angle = Math.atan2(dy, dx);
+                const dist = Math.min(2.8, Math.hypot(dx, dy) * 0.012);
+                const offsetX = Math.cos(angle) * dist;
+                const offsetY = Math.sin(angle) * dist;
+
+                if (pLeft && pRight) {
+                    pLeft.setAttribute('cx', 40 + offsetX);
+                    pLeft.setAttribute('cy', 46 + offsetY);
+                    pRight.setAttribute('cx', 60 + offsetX);
+                    pRight.setAttribute('cy', 46 + offsetY);
+                }
+            }
+            window.addEventListener('mousemove', updatePetEyes, { passive: true });
+
+            // 2. Speech Bubble Controls with Morphicon Transition
+            function showBubble(dialogueObjOrText, customIcon, customTag, customColor) {
+                let text, iconName, tag, color;
+                if (typeof dialogueObjOrText === 'object') {
+                    text = dialogueObjOrText.text;
+                    iconName = dialogueObjOrText.icon;
+                    tag = dialogueObjOrText.tag;
+                    color = dialogueObjOrText.color;
+                } else {
+                    text = dialogueObjOrText;
+                    iconName = customIcon || 'bot';
+                    tag = customTag || '[SYS.ALERT]';
+                    color = customColor || 'text-blue-400';
+                }
+
+                if (textElem) textElem.innerText = text;
+                if (tagElem) tagElem.innerText = tag;
+
+                // Morphicon transition: scale down & rotate, swap icon, then scale up
+                if (iconWrap) {
+                    iconWrap.classList.add('scale-50', 'opacity-0', 'rotate-45');
+                    setTimeout(() => {
+                        iconWrap.className = `w-6 h-6 rounded-md bg-white/10 flex items-center justify-center ${color} transition-all duration-300 transform scale-100 rotate-0`;
+                        iconWrap.innerHTML = `<i data-lucide="${iconName}" class="w-3.5 h-3.5"></i>`;
+                        lucide.createIcons();
+                    }, 120);
+                }
+
+                if (!bubble) return;
+                bubble.classList.remove('opacity-0', 'pointer-events-none', 'scale-95');
+                bubble.classList.add('opacity-100', 'pointer-events-auto', 'scale-100');
+                isBubbleOpen = true;
+
+                clearTimeout(bubbleAutoCloseTimer);
+                bubbleAutoCloseTimer = setTimeout(() => {
+                    closeBubble();
+                }, 10000);
+            }
+
+            function closeBubble() {
+                if (!bubble) return;
+                bubble.classList.add('opacity-0', 'pointer-events-none', 'scale-95');
+                bubble.classList.remove('opacity-100', 'pointer-events-auto', 'scale-100');
+                isBubbleOpen = false;
+                clearTimeout(bubbleAutoCloseTimer);
+            }
+
+            function nextDialogue() {
+                dialogueIndex = (dialogueIndex + 1) % dialogues.length;
+                showBubble(dialogues[dialogueIndex]);
+            }
+
+            if (closeBtn) closeBtn.addEventListener('click', closeBubble);
+
+            // 3. Click Interactions & 5-Clicks Easter Egg
+            botElem.addEventListener('click', () => {
+                if (isSleeping) {
+                    wakeUp();
+                    return;
+                }
+
+                clickCount++;
+                clearTimeout(clickResetTimer);
+                clickResetTimer = setTimeout(() => { clickCount = 0; }, 2000);
+
+                if (clickCount >= 5) {
+                    clickCount = 0;
+                    triggerEasterEgg();
+                } else {
+                    if (isBubbleOpen) {
+                        nextDialogue();
+                    } else {
+                        showBubble(dialogues[dialogueIndex]);
+                    }
+                }
+            });
+
+            function triggerEasterEgg() {
+                botElem.style.transition = 'transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                botElem.style.transform = 'scale(1.3) rotate(360deg)';
+                showBubble("彩蛋解鎖！感謝您仔細參觀 Simon 的個人作品集！[0xSimonRocks_2026]", "sparkles", "[EASTER_EGG.UNLOCKED]", "text-emerald-400");
+
+                setTimeout(() => {
+                    botElem.style.transition = '';
+                    botElem.style.transform = '';
+                }, 900);
+            }
+
+            // 4. Random Project Picker
+            if (randomBtn) {
+                randomBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const cards = document.querySelectorAll('.card-tilt');
+                    if (cards.length > 0) {
+                        const randomIndex = Math.floor(Math.random() * cards.length);
+                        const selectedCard = cards[randomIndex];
+                        const titleEl = selectedCard.querySelector('a, span');
+                        const pTitle = titleEl ? titleEl.textContent.trim() : "精選專案";
+
+                        showBubble(`已選中專案：【${pTitle}】，正在導航定位...`, "target", "[NAV.TARGET]", "text-yellow-400");
+                        selectedCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+                        const inner = selectedCard.querySelector('.card-tilt-inner');
+                        if (inner) {
+                            inner.classList.add('ring-2', 'ring-blue-500', 'shadow-[0_0_25px_rgba(59,130,246,0.35)]');
+                            setTimeout(() => {
+                                inner.classList.remove('ring-2', 'ring-blue-500', 'shadow-[0_0_25px_rgba(59,130,246,0.35)]');
+                            }, 3500);
+                        }
+                    }
+                });
+            }
+
+            // 5. Minimize & Restore (Collapsed by default)
+            function expandPet() {
+                badge.classList.add('hidden');
+                botElem.classList.remove('hidden');
+            }
+
+            function collapsePet() {
+                closeBubble();
+                botElem.classList.add('hidden');
+                badge.classList.remove('hidden');
+            }
+
+            if (minBtn && badge) {
+                minBtn.addEventListener('click', collapsePet);
+                badge.addEventListener('click', () => {
+                    expandPet();
+                    showBubble(dialogues[0]);
+                });
+            }
+
+            // 6. Sleep Mode on Inactivity (25s)
+            function goToSleep() {
+                isSleeping = true;
+                if (pLeft && pRight) {
+                    pLeft.classList.add('hidden');
+                    pRight.classList.add('hidden');
+                }
+                if (sleepLeft && sleepRight) {
+                    sleepLeft.classList.remove('hidden');
+                    sleepRight.classList.remove('hidden');
+                }
+                if (isBubbleOpen) {
+                    showBubble("系統進入待機休眠模式，移動游標或點擊可隨時喚醒。", "moon", "[STANDBY.SLEEP]", "text-zinc-500");
+                }
+            }
+
+            function wakeUp() {
+                isSleeping = false;
+                if (pLeft && pRight) {
+                    pLeft.classList.remove('hidden');
+                    pRight.classList.remove('hidden');
+                }
+                if (sleepLeft && sleepRight) {
+                    sleepLeft.classList.add('hidden');
+                    sleepRight.classList.add('hidden');
+                }
+            }
+
+            function resetSleepTimer() {
+                clearTimeout(sleepTimer);
+                sleepTimer = setTimeout(goToSleep, 25000);
+            }
+            resetSleepTimer();
+
+            // 7. Context Awareness on Scroll (Normal Triggering)
+            let spokenSections = {};
+            const sectionObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.getAttribute('id');
+                        if (id === 'work' && !spokenSections.work) {
+                            spokenSections.work = true;
+                            expandPet();
+                            showBubble("精選專案成果展示：涵蓋端點 AI、選情資料視覺化與多元全端 Web 應用。", "layers", "[SELECTED.PROJECTS]", "text-cyan-400");
+                        } else if (id === 'paper' && !spokenSections.paper) {
+                            spokenSections.paper = true;
+                            expandPet();
+                            showBubble("Simon 發表於 FC 2026 國際研討會的機車駕駛智慧輔助論文，點擊可直接閱讀全文 PDF。", "file-text", "[FC2026.PUBLICATION]", "text-blue-400");
+                        } else if (id === 'certs' && !spokenSections.certs) {
+                            spokenSections.certs = true;
+                            expandPet();
+                            showBubble("專業證照認證專區：包含微軟 Azure AI 認證、電腦硬體裝修與專利檢索證書。", "award", "[CERTIFICATIONS]", "text-purple-400");
+                        } else if (id === 'experience' && !spokenSections.experience) {
+                            spokenSections.experience = true;
+                            expandPet();
+                            showBubble("實務經歷：涵蓋兩年軟體開發工程師、IT 工程師與新聞現場編播導播經歷。", "terminal", "[CAREER.TIMELINE]", "text-emerald-400");
+                        } else if (id === 'contact' && !spokenSections.contact) {
+                            spokenSections.contact = true;
+                            expandPet();
+                            showBubble("歡迎聯繫交流！隨時點擊聯絡按鈕或直接寄信至 842679135jjj@gmail.com。", "mail", "[LET'S.CONNECT]", "text-blue-400");
+                        }
+                    }
+                });
+            }, { threshold: 0.25 });
+
+            document.querySelectorAll('section[id]').forEach(sec => sectionObserver.observe(sec));
+        }
+        initCyberPet();
 
     </script>
 </body>
