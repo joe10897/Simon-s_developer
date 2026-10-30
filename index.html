@@ -906,11 +906,12 @@
                 if (preloaderBar) preloaderBar.style.width = '100%';
                 if (preloaderPercent) preloaderPercent.innerText = '100%';
                 if (preloaderStatus) preloaderStatus.innerText = 'BOOT COMPLETE // ACCESS GRANTED';
+                preloader.style.pointerEvents = 'none';
                 
                 setTimeout(() => {
                     preloader.classList.add('opacity-0', 'pointer-events-none');
                     setTimeout(() => {
-                        preloader.style.display = 'none';
+                        preloader.remove();
                         startTypewriter();
                     }, 700);
                 }, 150);
@@ -939,6 +940,7 @@
             window.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape') finishPreloader();
             });
+            window.addEventListener('pageshow', finishPreloader);
 
             // Safety timeout
             setTimeout(finishPreloader, 2500);
