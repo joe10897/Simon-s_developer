@@ -1610,7 +1610,7 @@
             }
         }
 
-        // 0. High-Impact Kinetic Cyber Preloader (~2s + Split Curtain Reveal)
+        // 0. High-Impact Kinetic Cyber Preloader (~3.4s + Split Curtain Reveal)
         function initPreloader() {
             const preloader = document.getElementById('preloader');
             const hero = document.getElementById('hero');
@@ -1638,16 +1638,16 @@
 
             const targetBrand = "SIMON WONG";
             const scrambleChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#/_<>";
-            const duration = prefersReduced ? 600 : 1850;
+            const duration = prefersReduced ? 600 : 3400;
             const startTime = performance.now();
             let rafId = null;
             let finished = false;
             let logFlags = { l1: false, l2: false, l3: false };
 
             const bootSteps = [
-                { threshold: 28, status: "SYSTEM BOOT [0x7F]...", step: "// 0x01_KERNEL" },
-                { threshold: 58, status: "COMPILING THREE.JS PARTICLE MATRIX...", step: "// 0x02_WEBGL" },
-                { threshold: 88, status: "SYNCING 15 NEURAL REPOSITORIES...", step: "// 0x03_REPOS" },
+                { threshold: 25, status: "SYSTEM BOOT [0x7F]...", step: "// 0x01_KERNEL" },
+                { threshold: 55, status: "COMPILING THREE.JS PARTICLE MATRIX...", step: "// 0x02_WEBGL" },
+                { threshold: 85, status: "SYNCING 15 NEURAL REPOSITORIES...", step: "// 0x03_REPOS" },
                 { threshold: 100, status: "ACCESS GRANTED // BREACHING", step: "// 0x04_READY" }
             ];
 
@@ -1656,24 +1656,6 @@
                 el.textContent = text;
                 el.classList.remove('text-zinc-600');
                 el.classList.add('text-emerald-400');
-            }
-
-            function finishPreloader() {
-                if (finished) return;
-                finished = true;
-                clearInterval(loaderTimer);
-                if (preloaderBar) preloaderBar.style.width = '100%';
-                if (preloaderPercent) preloaderPercent.innerText = '100%';
-                if (preloaderStatus) preloaderStatus.innerText = 'BOOT COMPLETE // ACCESS GRANTED';
-                preloader.style.pointerEvents = 'none';
-                
-                setTimeout(() => {
-                    preloader.classList.add('opacity-0', 'pointer-events-none');
-                    setTimeout(() => {
-                        preloader.remove();
-                        startTypewriter();
-                    }, 700);
-                }, 150);
             }
 
             function renderScramble(ratio) {
@@ -1707,14 +1689,15 @@
                 markLogDone(log2, '[ OK ] 15 SELECTED REPOSITORIES INDEXED');
                 markLogDone(log3, '[ OK ] VIEWFINDER INTERFACE CALIBRATED');
 
-                const impactDelay = (immediate || prefersReduced) ? 0 : 210;
-                const splitDuration = (immediate || prefersReduced) ? 180 : 680;
+                const impactDelay = (immediate || prefersReduced) ? 0 : 280;
+                const splitDuration = (immediate || prefersReduced) ? 180 : 720;
 
                 if (!immediate && !prefersReduced) {
                     preloader.classList.add('is-impact');
                 }
 
                 setTimeout(() => {
+                    preloader.style.pointerEvents = 'none';
                     preloader.classList.add('is-splitting');
                     document.body.style.overflow = '';
                     if (hero && !prefersReduced) {
@@ -1726,6 +1709,7 @@
 
                     setTimeout(() => {
                         preloader.classList.add('is-done');
+                        preloader.remove();
                         if (hero) hero.classList.remove('hero-revealed');
                     }, splitDuration);
                 }, impactDelay);
@@ -1784,10 +1768,13 @@
                     finishPreloader(true);
                 }
             });
-            window.addEventListener('pageshow', finishPreloader);
+            // Only bypass preloader on bfcache restoration (Back/Forward), not initial load
+            window.addEventListener('pageshow', (e) => {
+                if (e.persisted) finishPreloader(true);
+            });
 
             // Safety timeout fallback
-            setTimeout(() => finishPreloader(false), 2600);
+            setTimeout(() => finishPreloader(false), 4500);
         }
         initPreloader();
 
