@@ -190,17 +190,562 @@
             padding-bottom: 4px;
         }
 
+        .nav-scrolled.nav-blend,
         .nav-scrolled .nav-blend {
             mix-blend-mode: normal;
         }
 
-        /* Preloader Shimmer */
-        @keyframes shimmer-sweep {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
+        /* Special Photography CTA Button (Viewfinder Shutter Style) */
+        .photo-cta-wrap {
+            position: relative;
+            display: inline-flex;
+            padding: 3px;
         }
-        .animate-shimmer {
-            animation: shimmer-sweep 1.8s infinite;
+
+        .photo-cta-wrap .vf-corner {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-color: rgba(255, 255, 255, 0.5);
+            pointer-events: none;
+            transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease;
+        }
+        .photo-cta-wrap .vf-tl { top: 0; left: 0; border-top: 1.5px solid; border-left: 1.5px solid; }
+        .photo-cta-wrap .vf-tr { top: 0; right: 0; border-top: 1.5px solid; border-right: 1.5px solid; }
+        .photo-cta-wrap .vf-bl { bottom: 0; left: 0; border-bottom: 1.5px solid; border-left: 1.5px solid; }
+        .photo-cta-wrap .vf-br { bottom: 0; right: 0; border-bottom: 1.5px solid; border-right: 1.5px solid; }
+
+        .photo-cta-wrap:hover .vf-corner { border-color: #ffffff; }
+        .photo-cta-wrap:hover .vf-tl { transform: translate(-2px, -2px); }
+        .photo-cta-wrap:hover .vf-tr { transform: translate(2px, -2px); }
+        .photo-cta-wrap:hover .vf-bl { transform: translate(-2px, 2px); }
+        .photo-cta-wrap:hover .vf-br { transform: translate(2px, 2px); }
+
+        .photo-cta-btn {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            padding: 0.42rem 0.9rem;
+            border-radius: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.28);
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: #ffffff;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            overflow: hidden;
+            transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, transform 0.2s cubic-bezier(0.33, 1, 0.68, 1);
+        }
+
+        .photo-cta-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -130%;
+            width: 85%;
+            height: 100%;
+            background: linear-gradient(110deg, transparent 20%, rgba(255, 255, 255, 0.32) 50%, transparent 80%);
+            animation: photo-shutter-sweep 4.8s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes photo-shutter-sweep {
+            0%, 68% { left: -130%; }
+            100% { left: 165%; }
+        }
+
+        .photo-cta-btn:hover {
+            background: #ffffff;
+            color: #000000;
+            border-color: #ffffff;
+            box-shadow: 0 0 22px rgba(255, 255, 255, 0.35);
+        }
+
+        .photo-cta-btn .aperture-icon {
+            transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .photo-cta-btn:hover .aperture-icon {
+            transform: rotate(120deg);
+        }
+
+        .photo-cta-btn .arrow-icon {
+            transition: transform 0.25s ease;
+        }
+
+        .photo-cta-btn:hover .arrow-icon {
+            transform: translate(2px, -2px);
+        }
+
+        @keyframes leica-pulse {
+            0%, 100% { opacity: 1; box-shadow: 0 0 6px rgba(239, 68, 68, 0.85); }
+            50% { opacity: 0.45; box-shadow: 0 0 2px rgba(239, 68, 68, 0.3); }
+        }
+
+        .leica-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 9999px;
+            background-color: #ef4444;
+            animation: leica-pulse 2.2s ease-in-out infinite;
+            flex-shrink: 0;
+        }
+
+        /* ===== MONOCHROME LAB CINEMATIC SHUTTER PORTAL ===== */
+        #monochrome-portal {
+            position: fixed;
+            inset: 0;
+            z-index: 200;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            user-select: none;
+            background: rgba(0, 0, 0, 0.86);
+            backdrop-filter: blur(10px) grayscale(100%) contrast(1.3);
+            -webkit-backdrop-filter: blur(10px) grayscale(100%) contrast(1.3);
+            opacity: 0;
+            transition: opacity 0.22s ease;
+        }
+
+        #monochrome-portal.is-active {
+            display: flex;
+            opacity: 1;
+        }
+
+        /* 35mm Silver Halide Film Grain */
+        .portal-grain {
+            position: absolute;
+            inset: -50%;
+            width: 200%;
+            height: 200%;
+            pointer-events: none;
+            opacity: 0.14;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+            animation: grain-shift 0.25s steps(3) infinite;
+            z-index: 1;
+        }
+
+        @keyframes grain-shift {
+            0% { transform: translate(0, 0); }
+            33% { transform: translate(-2%, 2%); }
+            66% { transform: translate(2%, -1%); }
+            100% { transform: translate(-1%, -2%); }
+        }
+
+        /* Viewfinder Outer Frame Slam */
+        .portal-vf-frame {
+            position: absolute;
+            inset: 1.25rem;
+            pointer-events: none;
+            z-index: 10;
+            transform: scale(1.22);
+            opacity: 0;
+            transition: transform 0.36s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+        }
+
+        @media (min-width: 768px) {
+            .portal-vf-frame {
+                inset: 2.5rem;
+            }
+        }
+
+        #monochrome-portal.phase-lock .portal-vf-frame {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .portal-vf-corner {
+            position: absolute;
+            width: 28px;
+            height: 28px;
+            border-color: rgba(255, 255, 255, 0.85);
+        }
+        .portal-vf-corner.tl { top: 0; left: 0; border-top: 2px solid; border-left: 2px solid; }
+        .portal-vf-corner.tr { top: 0; right: 0; border-top: 2px solid; border-right: 2px solid; }
+        .portal-vf-corner.bl { bottom: 0; left: 0; border-bottom: 2px solid; border-left: 2px solid; }
+        .portal-vf-corner.br { bottom: 0; right: 0; border-bottom: 2px solid; border-right: 2px solid; }
+
+        /* Center Optical Reticle & Focus Title */
+        .portal-center-stage {
+            position: relative;
+            z-index: 15;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 1.5rem;
+        }
+
+        .portal-reticle {
+            position: absolute;
+            width: 260px;
+            height: 260px;
+            pointer-events: none;
+            opacity: 0;
+            transform: scale(1.45) rotate(-45deg);
+            transition: transform 0.42s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.28s ease;
+        }
+
+        @media (min-width: 768px) {
+            .portal-reticle {
+                width: 340px;
+                height: 340px;
+            }
+        }
+
+        #monochrome-portal.phase-lock .portal-reticle {
+            opacity: 0.55;
+            transform: scale(1) rotate(0deg);
+        }
+
+        #monochrome-portal.phase-shutter .portal-reticle {
+            opacity: 0;
+            transform: scale(0.75) rotate(60deg);
+            transition: transform 0.22s ease-in, opacity 0.18s ease;
+        }
+
+        .portal-title {
+            filter: blur(18px);
+            transform: scale(1.18);
+            letter-spacing: 0.42em;
+            opacity: 0;
+            transition: filter 0.38s cubic-bezier(0.16, 1, 0.3, 1), transform 0.38s cubic-bezier(0.16, 1, 0.3, 1), letter-spacing 0.38s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+        }
+
+        #monochrome-portal.phase-lock .portal-title {
+            filter: blur(0px);
+            transform: scale(1);
+            letter-spacing: 0.18em;
+            opacity: 1;
+        }
+
+        /* Focal-Plane Mechanical Shutter Curtains */
+        .shutter-blade {
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 52%;
+            background: #000000;
+            z-index: 25;
+            pointer-events: none;
+            transition: transform 0.11s cubic-bezier(0.7, 0, 0.84, 0);
+        }
+
+        .shutter-blade-top {
+            top: 0;
+            transform: translateY(-102%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.22);
+        }
+
+        .shutter-blade-bottom {
+            bottom: 0;
+            transform: translateY(102%);
+            border-top: 1px solid rgba(255, 255, 255, 0.22);
+        }
+
+        #monochrome-portal.phase-shutter .shutter-blade-top,
+        #monochrome-portal.phase-shutter .shutter-blade-bottom {
+            transform: translateY(0%);
+        }
+
+        /* Strobe Camera Flash */
+        .portal-flash {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center, #ffffff 0%, rgba(255, 255, 255, 0.94) 55%, rgba(235, 235, 235, 0.85) 100%);
+            z-index: 35;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        #monochrome-portal.phase-flash .portal-flash {
+            animation: camera-strobe-flash 0.36s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes camera-strobe-flash {
+            0% { opacity: 0; }
+            14% { opacity: 0.98; }
+            100% { opacity: 0; }
+        }
+
+        /* Subtle Camera Mechanical Recoil Shake */
+        #monochrome-portal.phase-recoil {
+            animation: shutter-recoil 0.16s ease-out;
+        }
+
+        @keyframes shutter-recoil {
+            0% { transform: translate(0, 0); }
+            25% { transform: translate(-2px, 3px); }
+            50% { transform: translate(2px, -2px); }
+            75% { transform: translate(-1px, 1px); }
+            100% { transform: translate(0, 0); }
+        }
+
+        /* Post-Shutter Developing Stamp (Above Closed Blades) */
+        .portal-develop-stamp {
+            position: relative;
+            z-index: 30;
+            opacity: 0;
+            transform: translateY(8px);
+            transition: opacity 0.25s ease, transform 0.25s ease;
+        }
+
+        #monochrome-portal.phase-develop .portal-develop-stamp {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .portal-develop-bar {
+            width: 0%;
+            transition: width 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        #monochrome-portal.phase-develop .portal-develop-bar {
+            width: 100%;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .portal-grain,
+            #monochrome-portal.phase-recoil,
+            #monochrome-portal.phase-flash .portal-flash {
+                animation: none !important;
+            }
+            .portal-flash { display: none; }
+        }
+
+        /* ===== HIGH-IMPACT KINETIC CYBER PRELOADER ===== */
+        #preloader {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            overflow: hidden;
+            user-select: none;
+            pointer-events: auto;
+        }
+
+        #preloader.is-done {
+            display: none;
+            pointer-events: none;
+        }
+
+        /* Split-Screen Steel Curtains */
+        .preloader-curtain {
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 50.5%;
+            background: #000000;
+            z-index: 1;
+            transition: transform 0.68s cubic-bezier(0.85, 0, 0.15, 1);
+            will-change: transform;
+        }
+
+        .preloader-curtain-top {
+            top: 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .preloader-curtain-bottom {
+            bottom: 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        /* Subtle Tactical Grid on Curtains */
+        .preloader-curtain::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 48px 48px;
+            pointer-events: none;
+        }
+
+        #preloader.is-splitting .preloader-curtain-top {
+            transform: translateY(-102%);
+        }
+
+        #preloader.is-splitting .preloader-curtain-bottom {
+            transform: translateY(102%);
+        }
+
+        /* Vertical Laser Scanline */
+        .preloader-scanbeam {
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.65) 50%, transparent 100%);
+            box-shadow: 0 0 18px rgba(255, 255, 255, 0.45);
+            z-index: 4;
+            pointer-events: none;
+            animation: preloader-scan 1.6s linear infinite;
+            transition: opacity 0.2s ease;
+        }
+
+        @keyframes preloader-scan {
+            0% { top: -2%; opacity: 0; }
+            15% { opacity: 0.7; }
+            85% { opacity: 0.7; }
+            100% { top: 102%; opacity: 0; }
+        }
+
+        /* Monumental Background Percentage Counter */
+        .preloader-giant-num {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Inter', sans-serif;
+            font-weight: 900;
+            font-size: clamp(7.5rem, 29vw, 22rem);
+            line-height: 1;
+            letter-spacing: -0.06em;
+            font-variant-numeric: tabular-nums;
+            color: transparent;
+            -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.09);
+            pointer-events: none;
+            z-index: 3;
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease, -webkit-text-stroke-color 0.2s ease;
+        }
+
+        #preloader.is-impact .preloader-giant-num {
+            -webkit-text-stroke-color: rgba(255, 255, 255, 0.32);
+            transform: scale(1.06);
+        }
+
+        #preloader.is-splitting .preloader-giant-num,
+        #preloader.is-splitting .preloader-stage,
+        #preloader.is-splitting .preloader-hud,
+        #preloader.is-splitting .preloader-scanbeam {
+            opacity: 0;
+            transform: scale(1.08);
+            transition: opacity 0.22s ease, transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Edge-to-Edge Midline Razor Progress Seam */
+        .preloader-seam-track {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.08);
+            z-index: 6;
+            pointer-events: none;
+            overflow: visible;
+            transition: opacity 0.25s ease;
+        }
+
+        .preloader-seam-fill {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.35) 0%, #ffffff 50%, rgba(255, 255, 255, 0.35) 100%);
+            box-shadow: 0 0 18px rgba(255, 255, 255, 0.85), 0 0 40px rgba(255, 255, 255, 0.4);
+            transform: scaleX(0);
+            transform-origin: center center;
+            will-change: transform;
+        }
+
+        #preloader.is-impact .preloader-seam-fill {
+            height: 4px;
+            top: -1px;
+            box-shadow: 0 0 30px #ffffff, 0 0 70px rgba(255, 255, 255, 0.9);
+        }
+
+        #preloader.is-splitting .preloader-seam-track {
+            opacity: 0;
+        }
+
+        /* Center Emblem & Glitch Decode Stage */
+        .preloader-stage {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            transition: opacity 0.22s ease, transform 0.3s ease;
+        }
+
+        @keyframes preloader-ring-spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .preloader-ring-outer {
+            animation: preloader-ring-spin 6s linear infinite;
+        }
+
+        .preloader-ring-inner {
+            animation: preloader-ring-spin 3.5s linear infinite reverse;
+        }
+
+        @keyframes preloader-glitch-hit {
+            0% { transform: translate(0, 0) skewX(0deg); text-shadow: none; }
+            20% { transform: translate(-4px, 1px) skewX(-6deg); text-shadow: 3px 0 #38bdf8, -3px 0 #ef4444; }
+            45% { transform: translate(4px, -1px) skewX(5deg); text-shadow: -3px 0 #34d399, 3px 0 #ffffff; }
+            70% { transform: translate(-2px, 0) skewX(-2deg); text-shadow: 2px 0 #ffffff; }
+            100% { transform: translate(0, 0) skewX(0deg); text-shadow: 0 0 24px rgba(255, 255, 255, 0.55); }
+        }
+
+        #preloader.is-impact .preloader-brand-title {
+            animation: preloader-glitch-hit 0.24s steps(2) forwards;
+        }
+
+        /* High-Contrast Impact Flash on 100% */
+        .preloader-flash {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center, rgba(255, 255, 255, 0.92) 0%, rgba(255, 255, 255, 0.35) 45%, transparent 80%);
+            z-index: 15;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        #preloader.is-impact .preloader-flash {
+            animation: preloader-impact-burst 0.34s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes preloader-impact-burst {
+            0% { opacity: 0; transform: scale(0.85); }
+            25% { opacity: 0.85; transform: scale(1.05); }
+            100% { opacity: 0; transform: scale(1.25); }
+        }
+
+        /* Hero Depth Zoom-In synced with Preloader Split */
+        #hero.hero-pre-reveal {
+            transform: scale(1.07);
+            filter: brightness(1.25) contrast(1.1);
+            transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1), filter 0.85s ease;
+        }
+
+        #hero.hero-revealed {
+            transform: scale(1);
+            filter: brightness(1) contrast(1);
+            transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1), filter 0.85s ease;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .preloader-scanbeam,
+            .preloader-ring-outer,
+            .preloader-ring-inner,
+            #preloader.is-impact .preloader-brand-title,
+            #preloader.is-impact .preloader-flash {
+                animation: none !important;
+            }
+            .preloader-flash { display: none; }
         }
 
         /* Cyber Pet Floating & Pulse */
@@ -258,38 +803,73 @@
 
 <body class="antialiased">
 
-    <!-- 2-Second Hacker Preloader -->
-    <div id="preloader" class="fixed inset-0 z-[100] bg-black flex flex-col items-center justify-center transition-opacity duration-700 select-none">
-        <div class="w-full max-w-xs px-6 flex flex-col items-center text-center">
-            <!-- Pulsing Cyber Logo Badge -->
-            <div class="relative mb-6">
-                <div class="w-16 h-16 rounded-2xl border border-white/20 flex items-center justify-center bg-white/5 backdrop-blur-md relative overflow-hidden shadow-[0_0_25px_rgba(255,255,255,0.08)]">
-                    <span class="font-mono text-2xl font-black tracking-tighter text-white">SW</span>
-                    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer"></div>
+    <!-- High-Impact Kinetic Cyber Preloader (~2s) -->
+    <div id="preloader" class="flex flex-col items-center justify-center">
+        <!-- Split-Screen Curtains -->
+        <div class="preloader-curtain preloader-curtain-top"></div>
+        <div class="preloader-curtain preloader-curtain-bottom"></div>
+
+        <!-- Laser Scanline & Impact Flash -->
+        <div class="preloader-scanbeam"></div>
+        <div class="preloader-flash"></div>
+
+        <!-- Monumental Outlined Background Counter -->
+        <div class="preloader-giant-num" id="preloader-giant-num">00</div>
+
+        <!-- Edge-to-Edge Midline Razor Progress Seam -->
+        <div class="preloader-seam-track">
+            <div class="preloader-seam-fill" id="preloader-bar"></div>
+        </div>
+
+        <!-- Corner Cyber Telemetry HUD -->
+        <div class="preloader-hud fixed inset-5 sm:inset-8 pointer-events-none z-10 flex flex-col justify-between font-mono text-[9px] sm:text-[10px] tracking-widest uppercase text-zinc-500">
+            <div class="flex items-center justify-between">
+                <span class="flex items-center gap-2 text-zinc-300">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+                    <span>SIMON_DEV // KERNEL v2.6</span>
+                </span>
+                <span id="preloader-step" class="text-zinc-400">// 0x00_BOOT</span>
+            </div>
+            <div class="flex items-end justify-between">
+                <div class="space-y-0.5 text-left hidden sm:block">
+                    <div id="preloader-log-1" class="text-zinc-600 transition-colors">[ .. ] INIT THREE.JS WEBGL MATRIX</div>
+                    <div id="preloader-log-2" class="text-zinc-600 transition-colors">[ .. ] MOUNT 15 SELECTED REPOSITORIES</div>
+                    <div id="preloader-log-3" class="text-zinc-600 transition-colors">[ .. ] CALIBRATE VIEWFINDER INTERFACE</div>
                 </div>
-                <div class="absolute -inset-2 rounded-2xl border border-white/10 animate-ping opacity-20 pointer-events-none"></div>
+                <span class="text-zinc-400 sm:ml-auto">
+                    LOAD <strong id="preloader-percent" class="text-white text-xs sm:text-sm ml-1">00%</strong>
+                </span>
+            </div>
+        </div>
+
+        <!-- Centerpiece Emblem & Kinetic Decode Title -->
+        <div class="preloader-stage px-6">
+            <!-- Rotating Dual-Ring Emblem -->
+            <div class="relative w-20 h-20 sm:w-24 sm:h-24 mb-5 flex items-center justify-center">
+                <svg class="preloader-ring-outer absolute inset-0 w-full h-full" viewBox="0 0 100 100" fill="none">
+                    <circle cx="50" cy="50" r="46" stroke="rgba(255,255,255,0.22)" stroke-width="1" stroke-dasharray="10 8" />
+                    <path d="M50 2 A48 48 0 0 1 98 50" stroke="#ffffff" stroke-width="1.6" />
+                </svg>
+                <svg class="preloader-ring-inner absolute inset-2 w-[calc(100%-16px)] h-[calc(100%-16px)]" viewBox="0 0 100 100" fill="none">
+                    <circle cx="50" cy="50" r="44" stroke="rgba(255,255,255,0.16)" stroke-width="1" stroke-dasharray="4 6" />
+                </svg>
+                <span class="font-mono text-xl sm:text-2xl font-black tracking-tighter text-white">SW</span>
             </div>
 
-            <!-- Terminal Typewriter / Loading status -->
-            <div class="font-mono text-xs tracking-widest text-zinc-400 mb-3 flex items-center gap-2">
-                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                <span id="preloader-status">INITIALIZING SYSTEM...</span>
+            <!-- Kinetic Scramble Brand Title -->
+            <div id="preloader-title" class="preloader-brand-title font-mono text-2xl sm:text-4xl font-black tracking-[0.28em] text-white uppercase mb-3">
+                S1M0N W0NG
             </div>
 
-            <!-- Progress bar -->
-            <div class="w-full bg-zinc-900 border border-zinc-800 rounded-full h-1.5 overflow-hidden mb-2.5">
-                <div id="preloader-bar" class="h-full bg-gradient-to-r from-zinc-400 to-white transition-all duration-75 ease-out" style="width: 0%;"></div>
+            <!-- Live Boot Status Pill -->
+            <div class="px-3.5 py-1 rounded-full bg-black/80 border border-white/15 backdrop-blur-md font-mono text-[10px] sm:text-xs tracking-widest text-zinc-300 flex items-center gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span id="preloader-status">INITIALIZING NEURAL CORE...</span>
             </div>
 
-            <!-- Counter & Subtext -->
-            <div class="w-full flex justify-between font-mono text-[10px] text-zinc-600">
-                <span id="preloader-step">// 0x00_BOOT</span>
-                <span id="preloader-percent" class="text-zinc-400 font-bold">0%</span>
-            </div>
-
-            <!-- Skip prompt -->
-            <button id="preloader-skip" class="mt-8 text-[10px] font-mono text-zinc-500 hover:text-zinc-300 transition-colors uppercase tracking-widest cursor-pointer">
-                [ Click to Skip ]
+            <!-- Skip Trigger -->
+            <button id="preloader-skip" class="mt-7 text-[10px] font-mono text-zinc-500 hover:text-white transition-colors uppercase tracking-[0.25em] cursor-pointer pointer-events-auto">
+                [ SKIP // ESC ]
             </button>
         </div>
     </div>
@@ -298,11 +878,11 @@
     <div id="scroll-progress-bar" class="fixed top-0 left-0 h-[2.5px] bg-gradient-to-r from-zinc-500 via-white to-blue-400 z-[60] transition-all duration-75 ease-out" style="width: 0%;"></div>
 
     <!-- Navigation -->
-    <nav class="fixed top-0 w-full z-50 px-8 py-6 flex justify-between items-center nav-blend text-white">
+    <nav class="fixed top-0 w-full z-50 px-6 md:px-8 py-5 md:py-6 flex justify-between items-center nav-blend text-white">
         <div class="text-xl font-bold tracking-tighter reveal-on-scroll is-visible" style="transition-delay: 0.1s;">
             SIMON WONG
         </div>
-        <div class="hidden md:flex gap-8 text-sm uppercase tracking-widest">
+        <div class="hidden md:flex items-center gap-5 lg:gap-8 text-sm uppercase tracking-widest">
             <a href="#work" class="hover:line-through transition-all cursor-pointer">Work</a>
             <a href="#experience" class="hover:line-through transition-all cursor-pointer">Experience</a>
             <a href="#certs" class="hover:line-through transition-all cursor-pointer">Certs</a>
@@ -310,13 +890,39 @@
             <a href="#contact" class="hover:line-through transition-all cursor-pointer">Contact</a>
             <a href="resume.html" target="_blank"
                 class="hover:line-through transition-all cursor-pointer text-blue-400">Resume</a>
+            <!-- Special Photography CTA Button (Monochrome Lab) -->
+            <div class="photo-cta-wrap magnetic-btn">
+                <span class="vf-corner vf-tl"></span>
+                <span class="vf-corner vf-tr"></span>
+                <span class="vf-corner vf-bl"></span>
+                <span class="vf-corner vf-br"></span>
+                <a href="https://www.monochromelab.idv.tw" target="_blank" rel="noopener noreferrer"
+                    title="前往 Monochrome Lab 攝影作品集"
+                    class="photo-cta-btn monochrome-portal-trigger whitespace-nowrap">
+                    <span class="leica-dot"></span>
+                    <i data-lucide="aperture" class="w-3.5 h-3.5 aperture-icon"></i>
+                    <span class="hidden lg:inline">Monochrome Lab</span>
+                    <span class="lg:hidden">Photo</span>
+                    <i data-lucide="arrow-up-right" class="w-3.5 h-3.5 arrow-icon opacity-75"></i>
+                </a>
+            </div>
         </div>
-        <!-- Mobile Menu Toggle Button -->
-        <button id="mobile-menu-btn" aria-label="Toggle Navigation" class="md:hidden flex flex-col justify-center items-center w-10 h-10 border border-white/20 rounded-md bg-black/40 backdrop-blur-md text-white hover:border-white transition-all p-2 z-50">
-            <span class="w-5 h-0.5 bg-white transition-transform duration-300 mb-1" id="menu-bar-1"></span>
-            <span class="w-5 h-0.5 bg-white transition-opacity duration-300 mb-1" id="menu-bar-2"></span>
-            <span class="w-5 h-0.5 bg-white transition-transform duration-300" id="menu-bar-3"></span>
-        </button>
+        <!-- Mobile Right Controls (Photography Quick CTA + Hamburger) -->
+        <div class="md:hidden flex items-center gap-2.5 z-50">
+            <a href="https://www.monochromelab.idv.tw" target="_blank" rel="noopener noreferrer"
+                title="Monochrome Lab 攝影作品集"
+                class="photo-cta-btn monochrome-portal-trigger !py-1.5 !px-2.5 !text-[10px]">
+                <span class="leica-dot"></span>
+                <i data-lucide="aperture" class="w-3.5 h-3.5 aperture-icon"></i>
+                <span>Photo</span>
+            </a>
+            <!-- Mobile Menu Toggle Button -->
+            <button id="mobile-menu-btn" aria-label="Toggle Navigation" class="flex flex-col justify-center items-center w-10 h-10 border border-white/20 rounded-md bg-black/40 backdrop-blur-md text-white hover:border-white transition-all p-2">
+                <span class="w-5 h-0.5 bg-white transition-transform duration-300 mb-1" id="menu-bar-1"></span>
+                <span class="w-5 h-0.5 bg-white transition-opacity duration-300 mb-1" id="menu-bar-2"></span>
+                <span class="w-5 h-0.5 bg-white transition-transform duration-300" id="menu-bar-3"></span>
+            </button>
+        </div>
     </nav>
 
     <!-- Mobile Navigation Drawer -->
@@ -331,6 +937,19 @@
             <a href="resume.html" target="_blank" class="mobile-nav-link text-blue-400 hover:text-blue-300 flex items-center gap-2">
                 Resume <i data-lucide="external-link" class="w-4 h-4"></i>
             </a>
+            <div class="photo-cta-wrap mt-2">
+                <span class="vf-corner vf-tl"></span>
+                <span class="vf-corner vf-tr"></span>
+                <span class="vf-corner vf-bl"></span>
+                <span class="vf-corner vf-br"></span>
+                <a href="https://www.monochromelab.idv.tw" target="_blank" rel="noopener noreferrer"
+                    class="photo-cta-btn monochrome-portal-trigger mobile-nav-link !py-2.5 !px-5 !text-xs">
+                    <span class="leica-dot"></span>
+                    <i data-lucide="aperture" class="w-4 h-4 aperture-icon"></i>
+                    <span>Monochrome Lab 攝影站</span>
+                    <i data-lucide="arrow-up-right" class="w-4 h-4 arrow-icon"></i>
+                </a>
+            </div>
         </div>
         <div class="absolute bottom-8 font-mono text-[10px] text-zinc-600 tracking-widest uppercase">
             © 2026 Simon Wong CHAK YIN
@@ -842,6 +1461,84 @@
         </div>
     </div>
 
+    <!-- Monochrome Lab Cinematic Camera Shutter Portal -->
+    <div id="monochrome-portal" aria-hidden="true">
+        <!-- 35mm Film Grain -->
+        <div class="portal-grain"></div>
+
+        <!-- Viewfinder Corner Brackets + EXIF Telemetry -->
+        <div class="portal-vf-frame">
+            <span class="portal-vf-corner tl"></span>
+            <span class="portal-vf-corner tr"></span>
+            <span class="portal-vf-corner bl"></span>
+            <span class="portal-vf-corner br"></span>
+
+            <!-- Top EXIF Bar -->
+            <div class="absolute top-3 left-4 right-4 sm:top-4 sm:left-6 sm:right-6 flex items-center justify-between font-mono text-[9px] sm:text-xs text-zinc-300 tracking-widest">
+                <span class="flex items-center gap-2">
+                    <span class="leica-dot"></span>
+                    <span>MONOCHROME_M</span>
+                </span>
+                <span class="hidden sm:inline text-zinc-500">35MM SUMMILUX · F/1.4</span>
+                <span id="portal-af-status" class="text-zinc-400">[ AF-SEEK ]</span>
+            </div>
+
+            <!-- Bottom EXIF Bar -->
+            <div class="absolute bottom-3 left-4 right-4 sm:bottom-4 sm:left-6 sm:right-6 flex items-center justify-between font-mono text-[9px] sm:text-xs text-zinc-400 tracking-widest">
+                <span>1/1000s · F/1.4 · ISO 400</span>
+                <span class="hidden sm:inline text-zinc-500">[ -2 · -1 · 0 · +1 · +2 ]</span>
+                <span class="text-zinc-300">RAW // B&amp;W</span>
+            </div>
+        </div>
+
+        <!-- Center Rangefinder & Focus Typography -->
+        <div class="portal-center-stage">
+            <!-- Rangefinder Optical Reticle SVG -->
+            <svg class="portal-reticle" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="120" cy="120" r="108" stroke="rgba(255,255,255,0.28)" stroke-width="1" stroke-dasharray="6 8" />
+                <circle cx="120" cy="120" r="78" stroke="rgba(255,255,255,0.45)" stroke-width="1" />
+                <circle cx="120" cy="120" r="24" stroke="rgba(255,255,255,0.75)" stroke-width="1.2" />
+                <line x1="120" y1="6" x2="120" y2="34" stroke="rgba(255,255,255,0.7)" stroke-width="1.2" />
+                <line x1="120" y1="206" x2="120" y2="234" stroke="rgba(255,255,255,0.7)" stroke-width="1.2" />
+                <line x1="6" y1="120" x2="34" y2="120" stroke="rgba(255,255,255,0.7)" stroke-width="1.2" />
+                <line x1="206" y1="120" x2="234" y2="120" stroke="rgba(255,255,255,0.7)" stroke-width="1.2" />
+                <path d="M96 120 H108 M132 120 H144 M120 96 V108 M120 132 V144" stroke="#ef4444" stroke-width="1.5" />
+            </svg>
+
+            <div class="portal-title">
+                <p class="font-mono text-[10px] sm:text-xs text-zinc-400 tracking-[0.35em] uppercase mb-3">
+                    VISUAL ARCHIVE // ENTERING
+                </p>
+                <h2 class="text-3xl sm:text-5xl md:text-7xl font-black text-white uppercase">
+                    MONOCHROME LAB
+                </h2>
+            </div>
+        </div>
+
+        <!-- Mechanical Focal-Plane Shutter Curtains -->
+        <div class="shutter-blade shutter-blade-top"></div>
+        <div class="shutter-blade shutter-blade-bottom"></div>
+
+        <!-- Strobe Flash Layer -->
+        <div class="portal-flash"></div>
+
+        <!-- Post-Shutter Developing Stamp -->
+        <div class="portal-develop-stamp fixed inset-0 flex flex-col items-center justify-center px-6 text-center pointer-events-none">
+            <div class="flex items-center gap-2.5 mb-3">
+                <span class="leica-dot"></span>
+                <span class="font-mono text-xs sm:text-sm font-bold tracking-[0.32em] text-white uppercase">
+                    MONOCHROME LAB
+                </span>
+            </div>
+            <div class="w-48 sm:w-64 h-[1.5px] bg-zinc-800 overflow-hidden mb-3">
+                <div class="portal-develop-bar h-full bg-white"></div>
+            </div>
+            <span class="font-mono text-[10px] text-zinc-500 tracking-[0.25em] uppercase">
+                EXPOSURE CAPTURED // MONOCHROMELAB.IDV.TW
+            </span>
+        </div>
+    </div>
+
     <!-- JAVASCRIPT LOGIC -->
     <script>
         // 1. Initialize Icons
@@ -873,75 +1570,165 @@
             }
         }
 
-        // 0. 2-Second Hacker Preloader Logic
+        // 0. High-Impact Kinetic Cyber Preloader (~2s + Split Curtain Reveal)
         function initPreloader() {
             const preloader = document.getElementById('preloader');
+            const hero = document.getElementById('hero');
             const preloaderBar = document.getElementById('preloader-bar');
             const preloaderPercent = document.getElementById('preloader-percent');
+            const preloaderGiant = document.getElementById('preloader-giant-num');
+            const preloaderTitle = document.getElementById('preloader-title');
             const preloaderStatus = document.getElementById('preloader-status');
             const preloaderStep = document.getElementById('preloader-step');
+            const log1 = document.getElementById('preloader-log-1');
+            const log2 = document.getElementById('preloader-log-2');
+            const log3 = document.getElementById('preloader-log-3');
             const skipBtn = document.getElementById('preloader-skip');
+
             if (!preloader) {
                 startTypewriter();
                 return;
             }
 
-            let progress = 0;
-            const duration = 2000; // 2 seconds
-            const interval = 20; // 20ms
-            const stepIncrement = 100 / (duration / interval);
+            const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (hero && !prefersReduced) {
+                hero.classList.add('hero-pre-reveal');
+            }
+            document.body.style.overflow = 'hidden';
+
+            const targetBrand = "SIMON WONG";
+            const scrambleChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#/_<>";
+            const duration = prefersReduced ? 600 : 1850;
+            const startTime = performance.now();
+            let rafId = null;
             let finished = false;
+            let logFlags = { l1: false, l2: false, l3: false };
 
             const bootSteps = [
-                { threshold: 25, status: "SYSTEM BOOT [0x7F]...", step: "// 0x01_CORE" },
-                { threshold: 55, status: "COMPILING THREE.JS PARTICLES...", step: "// 0x02_SHADERS" },
-                { threshold: 85, status: "SYNCING NEURAL REPOSITORIES...", step: "// 0x03_PROJECTS" },
-                { threshold: 100, status: "BOOT COMPLETE // ACCESS GRANTED", step: "// 0x04_READY" }
+                { threshold: 28, status: "SYSTEM BOOT [0x7F]...", step: "// 0x01_KERNEL" },
+                { threshold: 58, status: "COMPILING THREE.JS PARTICLE MATRIX...", step: "// 0x02_WEBGL" },
+                { threshold: 88, status: "SYNCING 15 NEURAL REPOSITORIES...", step: "// 0x03_REPOS" },
+                { threshold: 100, status: "ACCESS GRANTED // BREACHING", step: "// 0x04_READY" }
             ];
 
-            function finishPreloader() {
-                if (finished) return;
-                finished = true;
-                clearInterval(loaderTimer);
-                if (preloaderBar) preloaderBar.style.width = '100%';
-                if (preloaderPercent) preloaderPercent.innerText = '100%';
-                if (preloaderStatus) preloaderStatus.innerText = 'BOOT COMPLETE // ACCESS GRANTED';
-                
-                setTimeout(() => {
-                    preloader.classList.add('opacity-0', 'pointer-events-none');
-                    setTimeout(() => {
-                        preloader.style.display = 'none';
-                        startTypewriter();
-                    }, 700);
-                }, 150);
+            function markLogDone(el, text) {
+                if (!el) return;
+                el.textContent = text;
+                el.classList.remove('text-zinc-600');
+                el.classList.add('text-emerald-400');
             }
 
-            const loaderTimer = setInterval(() => {
-                progress += stepIncrement;
-                if (progress >= 100) {
-                    finishPreloader();
-                } else {
-                    const rounded = Math.floor(progress);
-                    if (preloaderBar) preloaderBar.style.width = rounded + '%';
-                    if (preloaderPercent) preloaderPercent.innerText = rounded + '%';
-
-                    const currentStep = bootSteps.find(s => rounded <= s.threshold);
-                    if (currentStep) {
-                        if (preloaderStatus) preloaderStatus.innerText = currentStep.status;
-                        if (preloaderStep) preloaderStep.innerText = currentStep.step;
+            function renderScramble(ratio) {
+                if (!preloaderTitle) return;
+                const lockedCount = Math.floor(ratio * targetBrand.length);
+                let out = "";
+                for (let i = 0; i < targetBrand.length; i++) {
+                    if (targetBrand[i] === " ") {
+                        out += " ";
+                    } else if (i < lockedCount) {
+                        out += targetBrand[i];
+                    } else {
+                        out += scrambleChars[Math.floor(Math.random() * scrambleChars.length)];
                     }
                 }
-            }, interval);
+                preloaderTitle.textContent = out;
+            }
+
+            function finishPreloader(immediate) {
+                if (finished) return;
+                finished = true;
+                if (rafId) cancelAnimationFrame(rafId);
+
+                if (preloaderBar) preloaderBar.style.transform = 'scaleX(1)';
+                if (preloaderPercent) preloaderPercent.textContent = '100%';
+                if (preloaderGiant) preloaderGiant.textContent = '100';
+                if (preloaderTitle) preloaderTitle.textContent = targetBrand;
+                if (preloaderStatus) preloaderStatus.textContent = 'ACCESS GRANTED // BREACHING';
+                if (preloaderStep) preloaderStep.textContent = '// 0x04_READY';
+                markLogDone(log1, '[ OK ] THREE.JS WEBGL MATRIX ONLINE');
+                markLogDone(log2, '[ OK ] 15 SELECTED REPOSITORIES INDEXED');
+                markLogDone(log3, '[ OK ] VIEWFINDER INTERFACE CALIBRATED');
+
+                const impactDelay = (immediate || prefersReduced) ? 0 : 210;
+                const splitDuration = (immediate || prefersReduced) ? 180 : 680;
+
+                if (!immediate && !prefersReduced) {
+                    preloader.classList.add('is-impact');
+                }
+
+                setTimeout(() => {
+                    preloader.classList.add('is-splitting');
+                    document.body.style.overflow = '';
+                    if (hero && !prefersReduced) {
+                        hero.classList.remove('hero-pre-reveal');
+                        hero.classList.add('hero-revealed');
+                    }
+                    // Start hero typewriter right as curtains split open
+                    startTypewriter();
+
+                    setTimeout(() => {
+                        preloader.classList.add('is-done');
+                        if (hero) hero.classList.remove('hero-revealed');
+                    }, splitDuration);
+                }, impactDelay);
+            }
+
+            function tick(now) {
+                if (finished) return;
+                const elapsed = now - startTime;
+                const t = Math.min(1, elapsed / duration);
+                // Energetic ease-in-out cubic curve with crisp sprint at the end
+                const eased = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+                const pct = Math.min(100, Math.floor(eased * 100));
+                const padded = String(pct).padStart(2, '0');
+
+                if (preloaderBar) preloaderBar.style.transform = `scaleX(${eased.toFixed(4)})`;
+                if (preloaderPercent) preloaderPercent.textContent = padded + '%';
+                if (preloaderGiant) preloaderGiant.textContent = padded;
+
+                // Kinetic text decode finishes around 92%
+                renderScramble(Math.min(1, eased / 0.92));
+
+                if (pct >= 30 && !logFlags.l1) {
+                    logFlags.l1 = true;
+                    markLogDone(log1, '[ OK ] THREE.JS WEBGL MATRIX ONLINE');
+                }
+                if (pct >= 62 && !logFlags.l2) {
+                    logFlags.l2 = true;
+                    markLogDone(log2, '[ OK ] 15 SELECTED REPOSITORIES INDEXED');
+                }
+                if (pct >= 88 && !logFlags.l3) {
+                    logFlags.l3 = true;
+                    markLogDone(log3, '[ OK ] VIEWFINDER INTERFACE CALIBRATED');
+                }
+
+                const currentStep = bootSteps.find(s => pct <= s.threshold);
+                if (currentStep) {
+                    if (preloaderStatus) preloaderStatus.textContent = currentStep.status;
+                    if (preloaderStep) preloaderStep.textContent = currentStep.step;
+                }
+
+                if (t >= 1) {
+                    finishPreloader(false);
+                } else {
+                    rafId = requestAnimationFrame(tick);
+                }
+            }
+
+            rafId = requestAnimationFrame(tick);
 
             if (skipBtn) {
-                skipBtn.addEventListener('click', finishPreloader);
+                skipBtn.addEventListener('click', () => finishPreloader(true));
             }
             window.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') finishPreloader();
+                if (!finished && (e.key === 'Escape' || e.key === ' ')) {
+                    if (e.key === ' ') e.preventDefault();
+                    finishPreloader(true);
+                }
             });
 
-            // Safety timeout
-            setTimeout(finishPreloader, 2500);
+            // Safety timeout fallback
+            setTimeout(() => finishPreloader(false), 2600);
         }
         initPreloader();
 
@@ -1947,6 +2734,136 @@
             document.querySelectorAll('section[id]').forEach(sec => sectionObserver.observe(sec));
         }
         initCyberPet();
+
+        // 13. Monochrome Lab Cinematic Camera Shutter Portal
+        function initMonochromePortal() {
+            const portal = document.getElementById('monochrome-portal');
+            const afStatus = document.getElementById('portal-af-status');
+            const triggers = document.querySelectorAll('.monochrome-portal-trigger');
+            if (!portal || !triggers.length) return;
+
+            let timers = [];
+            let isTransitioning = false;
+
+            // Synthesize a crisp 2-stage mechanical camera shutter click via Web Audio API
+            function playShutterSound() {
+                try {
+                    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+                    if (!AudioCtx) return;
+                    const ctx = new AudioCtx();
+                    const now = ctx.currentTime;
+
+                    function triggerBladeClick(startTime, freq, duration, gainPeak) {
+                        const bufferSize = Math.floor(ctx.sampleRate * duration);
+                        const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+                        const data = buffer.getChannelData(0);
+                        for (let i = 0; i < bufferSize; i++) {
+                            const env = Math.pow(1 - i / bufferSize, 3.2);
+                            data[i] = (Math.random() * 2 - 1) * env;
+                        }
+                        const noise = ctx.createBufferSource();
+                        noise.buffer = buffer;
+
+                        const filter = ctx.createBiquadFilter();
+                        filter.type = 'bandpass';
+                        filter.frequency.setValueAtTime(freq, startTime);
+                        filter.Q.setValueAtTime(1.8, startTime);
+
+                        const gain = ctx.createGain();
+                        gain.gain.setValueAtTime(gainPeak, startTime);
+                        gain.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
+
+                        noise.connect(filter);
+                        filter.connect(gain);
+                        gain.connect(ctx.destination);
+                        noise.start(startTime);
+                    }
+
+                    // First curtain release + second curtain snap
+                    triggerBladeClick(now, 2400, 0.045, 0.28);
+                    triggerBladeClick(now + 0.065, 1650, 0.055, 0.22);
+                    setTimeout(() => { ctx.close().catch(() => {}); }, 350);
+                } catch (_) {
+                    // Fail silently if audio context is unavailable
+                }
+            }
+
+            function resetPortal() {
+                timers.forEach(clearTimeout);
+                timers = [];
+                isTransitioning = false;
+                portal.classList.remove('is-active', 'phase-lock', 'phase-shutter', 'phase-flash', 'phase-recoil', 'phase-develop');
+                portal.setAttribute('aria-hidden', 'true');
+                if (afStatus) {
+                    afStatus.textContent = '[ AF-SEEK ]';
+                    afStatus.classList.remove('text-emerald-400');
+                    afStatus.classList.add('text-zinc-400');
+                }
+                document.body.style.overflow = '';
+            }
+
+            // Ensure clean state when returning via browser Back button (bfcache)
+            window.addEventListener('pageshow', resetPortal);
+            window.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && isTransitioning) resetPortal();
+            });
+
+            triggers.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    // Preserve normal new-tab behavior for Ctrl/Cmd/Shift/Middle-click
+                    if (e.ctrlKey || e.metaKey || e.shiftKey || e.altKey || e.button !== 0) return;
+
+                    e.preventDefault();
+                    if (isTransitioning) return;
+                    isTransitioning = true;
+
+                    const targetUrl = link.getAttribute('href') || 'https://www.monochromelab.idv.tw';
+                    const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+                    document.body.style.overflow = 'hidden';
+                    portal.setAttribute('aria-hidden', 'false');
+                    portal.classList.add('is-active');
+
+                    if (prefersReduced) {
+                        portal.classList.add('phase-shutter', 'phase-develop');
+                        timers.push(setTimeout(() => { window.location.href = targetUrl; }, 350));
+                        return;
+                    }
+
+                    // Phase 1: Viewfinder frame slam & optical focus lock-in
+                    requestAnimationFrame(() => {
+                        requestAnimationFrame(() => {
+                            portal.classList.add('phase-lock');
+                        });
+                    });
+
+                    timers.push(setTimeout(() => {
+                        if (afStatus) {
+                            afStatus.textContent = '[ AF-LOCK ● ]';
+                            afStatus.classList.remove('text-zinc-400');
+                            afStatus.classList.add('text-emerald-400');
+                        }
+                    }, 240));
+
+                    // Phase 2: Mechanical shutter snap + strobe flash + recoil + click audio
+                    timers.push(setTimeout(() => {
+                        playShutterSound();
+                        portal.classList.add('phase-shutter', 'phase-flash', 'phase-recoil');
+                    }, 460));
+
+                    // Phase 3: Darkroom developing stamp
+                    timers.push(setTimeout(() => {
+                        portal.classList.add('phase-develop');
+                    }, 610));
+
+                    // Phase 4: Seamless handoff to Monochrome Lab
+                    timers.push(setTimeout(() => {
+                        window.location.href = targetUrl;
+                    }, 1080));
+                });
+            });
+        }
+        initMonochromePortal();
 
     </script>
 </body>
