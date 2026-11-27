@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /Simon-s_developer/dist/
+Disallow: /Simon-s_developer/contact.html
+
+Sitemap: https://monochromelab.idv.tw/Simon-s_developer/sitemap.xml
